@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.40629.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Survey", "Demo\Survey.csproj", "{B21C4046-1CC3-4AE0-9674-F8C69440F480}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChartBox", "ChartBox\ChartBox.csproj", "{68E43F8A-306E-43F0-8258-429EB937AAF3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B21C4046-1CC3-4AE0-9674-F8C69440F480}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B21C4046-1CC3-4AE0-9674-F8C69440F480}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B21C4046-1CC3-4AE0-9674-F8C69440F480}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B21C4046-1CC3-4AE0-9674-F8C69440F480}.Release|Any CPU.Build.0 = Release|Any CPU
+		{68E43F8A-306E-43F0-8258-429EB937AAF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68E43F8A-306E-43F0-8258-429EB937AAF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68E43F8A-306E-43F0-8258-429EB937AAF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68E43F8A-306E-43F0-8258-429EB937AAF3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
