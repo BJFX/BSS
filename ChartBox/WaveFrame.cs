@@ -24,7 +24,7 @@ namespace ChartBox
             wave = new double[len];
             Ymax = amp;
             Xmax = width;
-            canvas = new Bitmap(650, 150);
+            canvas = new Bitmap(650, 120);
             Graphics g = Graphics.FromImage(canvas);
             g.Clear(Color.Black);
             g.Dispose();

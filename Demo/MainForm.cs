@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Text;
 using System.Windows.Forms;
 using DevComponents.DotNetBar;
@@ -10,13 +11,63 @@ using DevComponents.DotNetBar.Metro;
 
 namespace Demo
 {
-    public partial class MainForm : MetroForm
+    public partial class MainForm : OfficeForm
     {
+        private XTFFILEHEADER Header = new XTFFILEHEADER();
+        private XTFPINGCHANHEADER PingchanHeader = new XTFPINGCHANHEADER();
+        private XTFPINGHEADER PingHeader = new XTFPINGHEADER();
+        public int pixellevel = 3;
+        //used for file mode
+        public BinaryReader playbackFileStream;
+        public FileInfo fi = null;
+        public long offset = 0;
+        public string filename;
+        public int tick = 64;
+        //show flag of windows
+        private bool bShowNavi = false;
+        private bool bShowSensor = false;
+        private bool bShowRaw = false;
+        private bool bShowInfo = true;
+        private int block = 1024;
+        
+        //windows collection
+        private NavigationView NaviView = null;
+        private ChartForm BssView1 = null;
+        private ChartForm BssView2 = null;
+        private bool bPanel1triger;
+        private bool bPanel2triger;
         public MainForm()
         {
             InitializeComponent();
         }
 
+        public void ChildFormClose(Form child)
+        {
+            if (NaviView == child)
+            {
+                NaviView = null;
+                bShowNavi = false;
+                ShowNavi.Checked = false;
+            }
+            if (BssView1 == child)
+            {
+                BssView1.Close();
+                BssView1 = null;
+                if (BssView2 != null)
+                    ShowView2Max();
+                else
+                    NoneView();
+            }
+            if (BssView2 == child)
+            {
+                BssView2.Close();
+                BssView2 = null;
+                if (BssView1 != null)
+                        ShowView1Max();
+               else
+                        NoneView();
+            }
+        }
         private void Help_Click(object sender, EventArgs e)
         {
             AboutBox ab = new AboutBox();
@@ -40,12 +91,601 @@ namespace Demo
             }
         }
 
-        private void OpenBssChart_Click(object sender, EventArgs e)
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            PlaybackTime.Enabled = false;
+            DataSaveBox.BackColor = Color.Red;
+            ShowInfoRegion.Checked = bShowInfo;
+            NoneView();
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            string message = "是否退出程序？";
+            string caption = "消息";
+            MessageBoxButtons buttons = MessageBoxButtons.OKCancel;
+            MessageBoxIcon icon = MessageBoxIcon.Question;
+            MessageBoxDefaultButton defaultResult = MessageBoxDefaultButton.Button2;
+            // Show message box
+            DialogResult result = MessageBox.Show(message, caption, buttons, icon, defaultResult);
+            e.Cancel = true;
+            if (result == DialogResult.OK)
+            {
+                PlaybackTime.Stop();
+                if (playbackFileStream!=null)
+                    playbackFileStream.Close();
+                e.Cancel = false;
+            }
+            
+
+        }
+
+        private void Playback_Tick(object sender, EventArgs e)
+        {
+            float persentage = offset * 100 / fi.Length;
+            //playpercent.Value = (int)persentage;
+            this.Text = "XTF回放" + " - " + filename + "(" + persentage.ToString("F01") + "%)";
+            GetOnePingData();
+        }
+
+        private void GetOnePingData()
+        {
+            if (offset == 0) //文件头
+                offset = ReadFileHeader();
+            if (offset < 1024 || playbackFileStream.BaseStream.Position >= fi.Length)
+                return;
+        ReadMagic:
+            //读数据包
+            if (offset >= fi.Length)//end
+            {
+                playbackFileStream.Close();
+                PlaybackTime.Enabled = false;
+                float persentage = offset * 100 / fi.Length;
+                this.Text = "XTF回放" + " - " + filename + "(" + persentage.ToString("F01") + "%)";
+                //playpercent.Value = (int)persentage;
+                tick = 512;
+                offset = 0;
+                //回放ToolStripMenuItem.Enabled = true;
+                //暂停ToolStripMenuItem.Enabled = false;
+                //重置ToolStripMenuItem.Enabled = false;
+                //加速ToolStripMenuItem.Enabled = false;
+                //减速ToolStripMenuItem.Enabled = false;
+                return;
+            }
+            var magic = playbackFileStream.ReadUInt16();
+            while (magic != 0xFACE)
+            {
+                playbackFileStream.BaseStream.Position--;//后退一字节
+                magic = playbackFileStream.ReadUInt16();
+                if (playbackFileStream.BaseStream.Position >= fi.Length)
+                    break;
+            }
+            if (magic == 0xFACE)//找到包头
+            {
+                if (playbackFileStream.PeekChar() == 3) //姿态数据
+                {
+                    playbackFileStream.BaseStream.Position += 64 - 2;//跳过这个姿态包
+                    offset = playbackFileStream.BaseStream.Position;
+                    goto ReadMagic;
+                }
+                playbackFileStream.BaseStream.Position -= 2;//回到包头前
+                offset = ReadPingHeader();
+                if (offset < 0)
+                    return;
+                if (PingHeader.HeaderType == 0) //测扫
+                {
+                    while (true)
+                    {
+
+                        if (ReadPingchanHeader() < 0)
+                            return;
+                        uint DataNeedToRead = Header.ChanInfo[PingchanHeader.ChannelNumber].bytesPerSample * PingchanHeader.NumSamples;
+                        byte[] buf = playbackFileStream.ReadBytes((int)DataNeedToRead);
+                        offset = playbackFileStream.BaseStream.Position;
+                        //display
+
+                        if (offset >= fi.Length)
+                            goto ReadMagic;//file end 
+                    }
+
+                }
+                else//测深包
+                {
+                    playbackFileStream.BaseStream.Position += PingHeader.NumbytesThisRecord - 256;//读完包头，再跳过不要的内容
+                    offset = playbackFileStream.BaseStream.Position;
+                    return;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 读取XTF文件头
+        /// </summary>
+        /// <returns>文件头大小</returns>
+        private int ReadFileHeader()
+        {
+            Header.FileFormat = playbackFileStream.ReadByte();
+            if (Header.FileFormat != 0x7B)
+                return -1;
+            try
+            {
+                Header.SystemType = playbackFileStream.ReadByte();
+                Buffer.BlockCopy(playbackFileStream.ReadChars(8), 0, Header.RecordingProgramName, 0, 8);
+                Buffer.BlockCopy(playbackFileStream.ReadChars(8), 0, Header.RecordingProgramVersion, 0, 8);
+                Buffer.BlockCopy(playbackFileStream.ReadChars(16), 0, Header.SonarName, 0, 16);
+                Header.SonarType = playbackFileStream.ReadUInt16();
+                Buffer.BlockCopy(playbackFileStream.ReadChars(64), 0, Header.NoteString, 0, 64);
+                Buffer.BlockCopy(playbackFileStream.ReadChars(64), 0, Header.ThisFileName, 0, 64);
+                Header.NavUnits = playbackFileStream.ReadUInt16();
+                Header.NumberOfSonarChannels = playbackFileStream.ReadUInt16();
+                Header.NumberOfBathymetryChannels = playbackFileStream.ReadUInt16();
+                Header.NumberOfForwardLookArrays = playbackFileStream.ReadUInt16();
+                Header.NumberOfEchoStrengthChannels = playbackFileStream.ReadUInt16();
+                Header.NumberOfInterferometryChannels = playbackFileStream.ReadByte();
+                playbackFileStream.ReadBytes(29);//not used
+                Header.NavigationLatency = playbackFileStream.ReadUInt32();
+                playbackFileStream.ReadBytes(8);//not used
+                Header.NavOffsetY = playbackFileStream.ReadSingle();
+                Header.NavOffsetX = playbackFileStream.ReadSingle();
+                Header.NavOffsetZ = playbackFileStream.ReadSingle();
+                Header.NavOffsetYaw = playbackFileStream.ReadSingle();
+                Header.MRUOffsetY = playbackFileStream.ReadSingle();
+                Header.MRUOffsetX = playbackFileStream.ReadSingle();
+                Header.MRUOffsetZ = playbackFileStream.ReadSingle();
+                Header.MRUOffsetYaw = playbackFileStream.ReadSingle();
+                Header.MRUOffsetPitch = playbackFileStream.ReadSingle();
+                Header.MRUOffsetRoll = playbackFileStream.ReadSingle();
+                for (int i = 0; i < 6; i++)//应该不会大于6
+                {
+                    Header.ChanInfo[i].TypeOfChannel = playbackFileStream.ReadByte();
+                    Header.ChanInfo[i].SubChannelNumber = playbackFileStream.ReadByte();
+                    Header.ChanInfo[i].CorrectionFlags = playbackFileStream.ReadUInt16();
+                    Header.ChanInfo[i].UniPolar = playbackFileStream.ReadUInt16();
+                    Header.ChanInfo[i].bytesPerSample = playbackFileStream.ReadUInt16();
+                    playbackFileStream.ReadBytes(4);
+                    Buffer.BlockCopy(playbackFileStream.ReadChars(16), 0, Header.ChanInfo[i].ChannelName, 0, 16);
+                    Header.ChanInfo[i].VoltScale = playbackFileStream.ReadSingle();
+                    Header.ChanInfo[i].Frequency = playbackFileStream.ReadSingle();
+                    Header.ChanInfo[i].HorizBeamAngle = playbackFileStream.ReadSingle();
+                    Header.ChanInfo[i].TiltAngle = playbackFileStream.ReadSingle();
+                    Header.ChanInfo[i].BeamWidth = playbackFileStream.ReadSingle();
+                    Header.ChanInfo[i].OffsetX = playbackFileStream.ReadSingle();
+                    Header.ChanInfo[i].OffsetY = playbackFileStream.ReadSingle();
+                    Header.ChanInfo[i].OffsetZ = playbackFileStream.ReadSingle();
+                    Header.ChanInfo[i].OffsetYaw = playbackFileStream.ReadSingle();
+                    Header.ChanInfo[i].OffsetPitch = playbackFileStream.ReadSingle();
+                    Header.ChanInfo[i].OffsetRoll = playbackFileStream.ReadSingle();
+                    Header.ChanInfo[i].BeamsPerArray = playbackFileStream.ReadUInt16();
+                    Header.ChanInfo[i].SampleFormat = playbackFileStream.ReadByte();
+                    playbackFileStream.ReadBytes(53);
+                }
+                return (int)playbackFileStream.BaseStream.Position;
+            }
+            catch (Exception e)
+            {
+                return -2;
+            }
+
+
+        }
+
+        /// <summary>
+        /// 读取ping/bath header，更新界面
+        /// </summary>
+        /// <returns></returns>
+        private int ReadPingHeader()
+        {
+            PingHeader.MagicNumber = playbackFileStream.ReadUInt16();
+            if (PingHeader.MagicNumber != 0xFACE)
+                return -1;
+            try
+            {
+                bool show = false;
+                PingHeader.HeaderType = playbackFileStream.ReadByte();
+                PingHeader.SubChannelNumber = playbackFileStream.ReadByte();
+                PingHeader.NumChansToFollow = playbackFileStream.ReadUInt16();
+                PingHeader.Reserved1[0] = playbackFileStream.ReadUInt16();
+                PingHeader.Reserved1[1] = playbackFileStream.ReadUInt16();
+                PingHeader.NumbytesThisRecord = playbackFileStream.ReadUInt32();
+                PingHeader.Year = playbackFileStream.ReadUInt16();
+                PingHeader.Month = playbackFileStream.ReadByte();
+                PingHeader.Day = playbackFileStream.ReadByte();
+                PingHeader.Hour = playbackFileStream.ReadByte();
+                PingHeader.Minute = playbackFileStream.ReadByte();
+                PingHeader.Second = playbackFileStream.ReadByte();
+                PingHeader.HSeconds = playbackFileStream.ReadByte();
+                if (PingHeader.Year != 0)
+                    show = true;
+                if (show)
+                    PingTimeLabel.Text = PingHeader.Hour.ToString("D2") + ":" + PingHeader.Minute.ToString("D2") +
+                                     ":" +
+                                     PingHeader.Second.ToString("D2") + "." + PingHeader.HSeconds.ToString("D2");
+                if (show)
+                    DateLabel.Text = PingHeader.Year.ToString("D") + "//" + PingHeader.Month.ToString("D2") + "//" +
+                                     PingHeader.Day.ToString("d2");
+                PingHeader.JulianDay = playbackFileStream.ReadUInt16();
+                PingHeader.EventNumber = playbackFileStream.ReadUInt32();
+                PingHeader.PingNumber = playbackFileStream.ReadUInt32();
+                if (show)
+                    PingNo.Text = PingHeader.PingNumber.ToString();
+                PingHeader.SoundVelocity = playbackFileStream.ReadSingle();
+                PingHeader.OceanTide = playbackFileStream.ReadSingle();
+                PingHeader.Reserved2 = playbackFileStream.ReadUInt32();
+                PingHeader.ConductivityFreq = playbackFileStream.ReadSingle();
+                PingHeader.TemperatureFreq = playbackFileStream.ReadSingle();
+                PingHeader.PressureFreq = playbackFileStream.ReadSingle();
+                PingHeader.PressureTemp = playbackFileStream.ReadSingle();
+                PingHeader.Conductivity = playbackFileStream.ReadSingle();
+                PingHeader.WaterTemperature = playbackFileStream.ReadSingle();
+                Templabel.Text = PingHeader.WaterTemperature.ToString("F01") + "°C";
+                PingHeader.Pressure = playbackFileStream.ReadSingle();
+                PingHeader.ComputedSoundVelocity = playbackFileStream.ReadSingle();
+                PingHeader.MagX = playbackFileStream.ReadSingle();
+                PingHeader.MagY = playbackFileStream.ReadSingle();
+                PingHeader.MagZ = playbackFileStream.ReadSingle();
+                PingHeader.AuxVal1 = playbackFileStream.ReadSingle();
+                PingHeader.AuxVal2 = playbackFileStream.ReadSingle();
+                PingHeader.AuxVal3 = playbackFileStream.ReadSingle();
+                PingHeader.AuxVal4 = playbackFileStream.ReadSingle();
+                PingHeader.AuxVal5 = playbackFileStream.ReadSingle();
+                PingHeader.AuxVal6 = playbackFileStream.ReadSingle();
+                PingHeader.SpeedLog = playbackFileStream.ReadSingle();
+                PingHeader.Turbidity = playbackFileStream.ReadSingle();
+                PingHeader.ShipSpeed = playbackFileStream.ReadSingle();
+                if (show)
+                    SpeedLabel.Text = PingHeader.ShipSpeed.ToString("f2") + "节";
+                PingHeader.ShipGyro = playbackFileStream.ReadSingle();
+                PingHeader.ShipYcoordinate = playbackFileStream.ReadDouble();
+                if (show)
+                {
+                    if (PingHeader.ShipYcoordinate > 0)
+                        Lat.Text = PingHeader.ShipYcoordinate.ToString("F06") + "°" + "N";
+                    else
+                    {
+                        Lat.Text = PingHeader.ShipYcoordinate.ToString("F06") + "°" + "S";
+                    }
+                }
+
+                PingHeader.ShipXcoordinate = playbackFileStream.ReadDouble();
+                if (show)
+                {
+                    if (PingHeader.ShipXcoordinate > 0)
+                        Long.Text = PingHeader.ShipXcoordinate.ToString("F06") + "°" + "E";
+                    else
+                        Long.Text = PingHeader.ShipXcoordinate.ToString("F06") + "°" + "W";
+                }
+
+                PingHeader.ShipAltitude = playbackFileStream.ReadUInt16();
+
+                PingHeader.ShipDepth = playbackFileStream.ReadUInt16();
+                PingHeader.FixTimeHour = playbackFileStream.ReadByte();
+                PingHeader.FixTimeMinute = playbackFileStream.ReadByte();
+                PingHeader.FixTimeSecond = playbackFileStream.ReadByte();
+                PingHeader.FixTimeHSecond = playbackFileStream.ReadByte();
+                PingHeader.SensorSpeed = playbackFileStream.ReadSingle();
+                PingHeader.KP = playbackFileStream.ReadSingle();
+                PingHeader.SensorYcoordinate = playbackFileStream.ReadDouble();
+                PingHeader.SensorXcoordinate = playbackFileStream.ReadDouble();
+                PingHeader.SonarStatus = playbackFileStream.ReadUInt16();
+                PingHeader.RangeToFish = playbackFileStream.ReadUInt16();
+                PingHeader.BearingToFish = playbackFileStream.ReadUInt16();
+                PingHeader.CableOut = playbackFileStream.ReadUInt16();
+                PingHeader.Layback = playbackFileStream.ReadSingle();
+                PingHeader.CableTension = playbackFileStream.ReadSingle();
+                PingHeader.SensorDepth = playbackFileStream.ReadSingle();
+                Depthlabel.Text = PingHeader.SensorDepth.ToString("F03") + "m";
+                PingHeader.SensorPrimaryAltitude = playbackFileStream.ReadSingle();
+                SonarHeightBox.Text = PingHeader.SensorPrimaryAltitude.ToString("F01");
+                PingHeader.SensorAuxAltitude = playbackFileStream.ReadSingle();
+                PingHeader.SensorPitch = playbackFileStream.ReadSingle();
+                if (show)
+                    PitchLabel.Text = PingHeader.SensorPitch.ToString("F2");
+                PingHeader.SensorRoll = playbackFileStream.ReadSingle();
+                if (show)
+                    RollLabel.Text = PingHeader.SensorRoll.ToString("F02");
+                PingHeader.SensorHeading = playbackFileStream.ReadSingle();
+                if (show)
+                    HeadLabel.Text = PingHeader.SensorHeading.ToString("F2");
+                PingHeader.Heave = playbackFileStream.ReadSingle();
+                if (show)
+                    PressLabel.Text = PingHeader.Heave.ToString("F2");
+                PingHeader.Yaw = playbackFileStream.ReadSingle();
+
+                PingHeader.AttitudeTimeTag = playbackFileStream.ReadUInt32();
+                PingHeader.DOT = playbackFileStream.ReadSingle();
+                PingHeader.NavFixMilliseconds = playbackFileStream.ReadUInt32();
+                PingHeader.ComputerClockHour = playbackFileStream.ReadByte();
+                PingHeader.ComputerClockMinute = playbackFileStream.ReadByte();
+                PingHeader.ComputerClockSecond = playbackFileStream.ReadByte();
+                PingHeader.ComputerClockHsec = playbackFileStream.ReadByte();
+                PingHeader.FishPositionDeltaX = playbackFileStream.ReadInt16();
+                PingHeader.FishPositionDeltaY = playbackFileStream.ReadInt16();
+                PingHeader.FishPositionErrorCode = playbackFileStream.ReadByte();
+                Buffer.BlockCopy(playbackFileStream.ReadChars(11), 0, PingHeader.ReservedSpace2, 0, 11);
+                return (int)playbackFileStream.BaseStream.Position;
+            }
+            catch (Exception e)
+            {
+                return -2;
+            }
+        }
+
+        private int ReadPingchanHeader()
+        {
+            PingchanHeader.ChannelNumber = playbackFileStream.ReadUInt16();
+            if (PingchanHeader.ChannelNumber > 3)//可能是0xface
+            {
+                playbackFileStream.BaseStream.Position -= 2;//退回开始读的位置，可能是下一个包头
+                return -1;
+            }
+
+            try
+            {
+                PingchanHeader.DownsampleMethod = playbackFileStream.ReadUInt16();
+                PingchanHeader.SlantRange = playbackFileStream.ReadSingle();
+                Rangelabel.Text = PingchanHeader.SlantRange.ToString("F0") + "m";
+                PingchanHeader.GroundRange = playbackFileStream.ReadSingle();
+                PingchanHeader.TimeDelay = playbackFileStream.ReadSingle();
+                PingchanHeader.TimeDuration = playbackFileStream.ReadSingle();
+                PingchanHeader.SecondsPerPing = playbackFileStream.ReadSingle();
+                PingchanHeader.ProcessingFlags = playbackFileStream.ReadUInt16();
+                PingchanHeader.Frequency = playbackFileStream.ReadUInt16();
+                PingchanHeader.InitialGainCode = playbackFileStream.ReadUInt16();
+                PingchanHeader.GainCode = playbackFileStream.ReadUInt16();
+                PingchanHeader.BandWidth = playbackFileStream.ReadUInt16();
+                PingchanHeader.ContactNumber = playbackFileStream.ReadUInt32();
+                PingchanHeader.ContactClassification = playbackFileStream.ReadUInt16();
+                PingchanHeader.ContactSubNumber = playbackFileStream.ReadByte();
+                PingchanHeader.ContactType = playbackFileStream.ReadByte();
+                PingchanHeader.NumSamples = playbackFileStream.ReadUInt32();
+                PingchanHeader.MillivoltScale = playbackFileStream.ReadUInt16();
+                PingchanHeader.ContactTimeOffTrack = playbackFileStream.ReadSingle();
+                PingchanHeader.ContactCloseNumber = playbackFileStream.ReadByte();
+                PingchanHeader.Reserved2 = playbackFileStream.ReadByte();
+                PingchanHeader.FixedVSOP = playbackFileStream.ReadSingle();
+                PingchanHeader.Weight = playbackFileStream.ReadUInt16();
+                Buffer.BlockCopy(playbackFileStream.ReadChars(4), 0, PingchanHeader.ReservedSpace, 0, 4);
+                return (int)playbackFileStream.BaseStream.Position;
+            }
+            catch (Exception e)
+            {
+                return -2;
+            }
+        }
+        #region Menu
+
+        //第一个图放大（第二图关闭或创建第一个图）
+        private void ShowView1Max()
+        {
+            chartmenubar1.Visible = true;
+            chartmenubar2.Visible = false;
+            tableLayoutPanel.RowStyles[0].Height = 30;
+            tableLayoutPanel.RowStyles[1].SizeType = SizeType.Percent;
+            tableLayoutPanel.RowStyles[1].Height= 100;
+            tableLayoutPanel.RowStyles[2].Height = 0;
+            tableLayoutPanel.RowStyles[3].SizeType = SizeType.Percent;
+            tableLayoutPanel.RowStyles[3].Height = 0;
+        }
+        //第二个图放大（第一个图关闭）
+        private void ShowView2Max()
+        {
+            chartmenubar1.Visible = false;
+            chartmenubar2.Visible = true;
+            tableLayoutPanel.RowStyles[2].Height = 30;
+            tableLayoutPanel.RowStyles[3].SizeType = SizeType.Percent;
+            tableLayoutPanel.RowStyles[3].Height = 100;
+            tableLayoutPanel.RowStyles[0].Height = 0;
+            tableLayoutPanel.RowStyles[1].SizeType = SizeType.Percent;
+            tableLayoutPanel.RowStyles[1].Height = 0;
+        }
+        //有两个图一起出现
+        private void ShowAllView()
+        {
+            chartmenubar1.Visible = true;
+            chartmenubar2.Visible = true;
+            tableLayoutPanel.RowStyles[0].Height = 30;
+            tableLayoutPanel.RowStyles[1].SizeType = SizeType.Percent;
+            tableLayoutPanel.RowStyles[1].Height = 50;
+            tableLayoutPanel.RowStyles[2].Height = 30;
+            tableLayoutPanel.RowStyles[3].SizeType = SizeType.Percent;
+            tableLayoutPanel.RowStyles[3].Height = 50;
+        }
+
+        private void NoneView()
+        {
+            chartmenubar1.Visible = false;
+            chartmenubar2.Visible = false;
+            tableLayoutPanel.RowStyles[0].Height = 0;
+            tableLayoutPanel.RowStyles[1].SizeType = SizeType.Percent;
+            tableLayoutPanel.RowStyles[1].Height = 50;
+            tableLayoutPanel.RowStyles[2].Height = 0;
+            tableLayoutPanel.RowStyles[3].SizeType = SizeType.Percent;
+            tableLayoutPanel.RowStyles[3].Height = 50;
+        }
+        private void InitMenu1()
+        {
+            Chart1Title.Text = "----------";
+            RangeSelectBox.Text = "150";
+            OpenBtn.Enabled = false;
+            SpeedBtn.Enabled = false;
+            SlowBtn.Enabled = false;
+            ResetBtn.Enabled = false;
+            CableOutInput.Value = 5;
+            StartInput.Value = 1;
+            EndInput.Value = 70;
+        }
+        private void InitMenu2()
+        {
+            Chart2Title.Text = "----------";
+            Range2SelectBox.Text = "150";
+            Open2Btn.Enabled = false;
+            Speed2Btn.Enabled = false;
+            Slow2Btn.Enabled = false;
+            Reset2Btn.Enabled = false;
+            CableOutInput2.Value = 5;
+            StartInput2.Value = 1;
+            EndInput2.Value = 70;
+        }
+        private void ShowBss_Click(object sender, EventArgs e)
+        {
+            if (BssView1 == null)//没有侧扫1窗口
+            {
+                BssView1 = new ChartForm(this);
+                //BssView1.TopLevel = false;
+                BssView1.MdiParent =this ;
+                BssView1.Parent = Panel1;
+                
+                BssView1.WindowState = FormWindowState.Normal;
+                BssView1.Show();
+                InitMenu1();
+                if (BssView2 == null)//没有view2
+                    ShowView1Max();
+                else
+                    ShowAllView();
+            }
+            else if (BssView2 == null)//没有侧扫2窗口
+            {
+                BssView2 = new ChartForm(this);
+                //BssView2. TopLevel = false;
+                BssView2.MdiParent =this ;
+                BssView2.Parent = Panel2;
+                
+                BssView2.WindowState = FormWindowState.Normal;
+                BssView2.Show();
+                InitMenu2();
+                //BssView2.Update();
+                
+                ShowAllView();
+            }
+            else//2个BSS
+            {
+
+            }
+            
+        }
+        private void ShowNavi_Click(object sender, EventArgs e)
+        {
+            if (!bShowNavi)
+            {
+                if(NaviView==null)
+                    NaviView = new NavigationView(this);
+
+                NaviView.Show();
+                bShowNavi = true;
+            }
+            else
+            {
+                if(NaviView!=null)
+                    NaviView.Hide();
+                bShowNavi = false;
+            }
+        }
+        
+
+        private void ShowSensor_Click(object sender, EventArgs e)
         {
 
         }
 
+        private void ShowRaw_Click(object sender, EventArgs e)
+        {
+
+        }
+        private void ShowInfoRegion_Click(object sender, EventArgs e)
+        {
+            if (bShowInfo == true)
+            {
+                DataPanel.Height = 0;
+                bShowInfo = false;
+                ShowInfoRegion.Checked = bShowInfo;
+            }
+            else
+            {
+                DataPanel.Height = 107;
+                bShowInfo = true;
+                ShowInfoRegion.Checked = bShowInfo;
+            }
+
+        }
+        #endregion
+
+        private void MainForm_SizeChanged(object sender, EventArgs e)
+        {
+            Point last1, last2, newp;
+            last1 = new Point(-1,-1);
+            last2 = new Point(-1, -1);
+            newp = new Point(0, 0);
+            if (BssView1 != null)
+            {
+                if (Panel1.Width > BssView1.Width)
+                {
+                    newp.X = last1.X + (Panel1.Width - BssView1.Width)/2;
+                    newp.Y = last1.Y;
+                    BssView1.Location = newp;
+                    BssView1.Update();
+                }
+                else
+                {
+                    BssView1.Location = last1;
+                    BssView1.Update();
+                }
+            }
+            if (BssView2 != null)
+            {
+                if (Panel2.Width > BssView2.Width)
+                {
+
+                    newp.X = last2.X + (Panel2.Width - BssView2.Width) / 2;
+                    newp.Y = last2.Y;
+                    BssView2.Location = newp;
+                    BssView2.Update();
+                }
+                else
+                {
+                    BssView2.Location = last2;
+                    BssView2.Update();
+                }
+            }
+        }
+
+        private void Panel1_Scroll(object sender, ScrollEventArgs e)
+        {
+            bPanel1triger = true;
+            if (!bPanel2triger)
+                Panel2.VerticalScroll.Value = e.NewValue;
+            bPanel1triger = false;
+        }
+
+        private void Panel2_Scroll(object sender, ScrollEventArgs e)
+        {
+            bPanel2triger = true;
+            if (!bPanel1triger)
+                Panel1.VerticalScroll.Value = e.NewValue;
+            bPanel2triger = false;
+        }
+
+        private void HideView1_Click(object sender, EventArgs e)
+        {
+            ChildFormClose(BssView1);
+        }
+
+        private void HideView2_Click(object sender, EventArgs e)
+        {
+            ChildFormClose(BssView2);
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Close();
+            
+        }
 
 
+
+       
+
+        
+
+        
     }
 }

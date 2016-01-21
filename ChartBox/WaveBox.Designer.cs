@@ -37,20 +37,23 @@
             this.WaveSection.BackColor = System.Drawing.Color.Black;
             this.WaveSection.Dock = System.Windows.Forms.DockStyle.Fill;
             this.WaveSection.Location = new System.Drawing.Point(0, 0);
+            this.WaveSection.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.WaveSection.Name = "WaveSection";
-            this.WaveSection.Size = new System.Drawing.Size(650, 150);
+            this.WaveSection.Size = new System.Drawing.Size(650, 120);
             this.WaveSection.TabIndex = 0;
             this.WaveSection.TabStop = false;
             // 
             // WaveBox
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.Controls.Add(this.WaveSection);
             this.DoubleBuffered = true;
+            this.Font = new System.Drawing.Font("宋体", 12F);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "WaveBox";
-            this.Size = new System.Drawing.Size(650, 150);
+            this.Size = new System.Drawing.Size(650, 120);
             ((System.ComponentModel.ISupportInitialize)(this.WaveSection)).EndInit();
             this.ResumeLayout(false);
 

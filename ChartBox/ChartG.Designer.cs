@@ -40,19 +40,21 @@
             this.GisChart.BackColor = System.Drawing.Color.Black;
             this.GisChart.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GisChart.Location = new System.Drawing.Point(0, 0);
+            this.GisChart.Margin = new System.Windows.Forms.Padding(4);
             this.GisChart.Name = "GisChart";
             this.GisChart.Size = new System.Drawing.Size(650, 450);
-            this.GisChart.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.GisChart.TabIndex = 1;
             this.GisChart.TabStop = false;
             // 
             // ChartG
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.Controls.Add(this.GisChart);
             this.DoubleBuffered = true;
+            this.Font = new System.Drawing.Font("宋体", 12F);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "ChartG";
             this.Size = new System.Drawing.Size(650, 450);
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
