@@ -111,7 +111,7 @@
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.ShowInfoRegion = new System.Windows.Forms.ToolStripMenuItem();
             this.ShowNavi = new System.Windows.Forms.ToolStripMenuItem();
-            this.传感器图ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ShowSensor = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dockContainerItem13 = new DevComponents.DotNetBar.DockContainerItem();
             this.dockContainerItem7 = new DevComponents.DotNetBar.DockContainerItem();
@@ -125,7 +125,8 @@
             this.dockContainerItem11 = new DevComponents.DotNetBar.DockContainerItem();
             this.dockContainerItem12 = new DevComponents.DotNetBar.DockContainerItem();
             this.splitter1 = new System.Windows.Forms.Splitter();
-            this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.splitViewer = new System.Windows.Forms.SplitContainer();
+            this.LeftTable = new System.Windows.Forms.TableLayoutPanel();
             this.chartmenubar1 = new DevComponents.DotNetBar.Bar();
             this.CableOutInput = new System.Windows.Forms.NumericUpDown();
             this.StartInput = new System.Windows.Forms.NumericUpDown();
@@ -163,7 +164,7 @@
             this.labelItem4 = new DevComponents.DotNetBar.LabelItem();
             this.controlContainerItem4 = new DevComponents.DotNetBar.ControlContainerItem();
             this.HideView1 = new DevComponents.DotNetBar.ButtonItem();
-            this.Panel2 = new System.Windows.Forms.Panel();
+            this.Bss2Panel = new System.Windows.Forms.Panel();
             this.chartmenubar2 = new DevComponents.DotNetBar.Bar();
             this.CableOutInput2 = new System.Windows.Forms.NumericUpDown();
             this.StartInput2 = new System.Windows.Forms.NumericUpDown();
@@ -183,7 +184,7 @@
             this.comboItem11 = new DevComponents.Editors.ComboItem();
             this.comboItem12 = new DevComponents.Editors.ComboItem();
             this.Open2Btn = new DevComponents.DotNetBar.ButtonItem();
-            this.buttonItem4 = new DevComponents.DotNetBar.ButtonItem();
+            this.Stop2Btn = new DevComponents.DotNetBar.ButtonItem();
             this.Start2Btn = new DevComponents.DotNetBar.ButtonItem();
             this.Speed2Btn = new DevComponents.DotNetBar.ButtonItem();
             this.Slow2Btn = new DevComponents.DotNetBar.ButtonItem();
@@ -201,14 +202,20 @@
             this.labelItem8 = new DevComponents.DotNetBar.LabelItem();
             this.controlContainerItem6 = new DevComponents.DotNetBar.ControlContainerItem();
             this.HideView2 = new DevComponents.DotNetBar.ButtonItem();
-            this.Panel1 = new System.Windows.Forms.Panel();
+            this.Bss1Panel = new System.Windows.Forms.Panel();
+            this.RightTable = new System.Windows.Forms.TableLayoutPanel();
+            this.Sensorpanel = new System.Windows.Forms.Panel();
+            this.Navipanel = new System.Windows.Forms.Panel();
             this.DataPanel.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
-            this.tableLayoutPanel.SuspendLayout();
+            this.splitViewer.Panel1.SuspendLayout();
+            this.splitViewer.Panel2.SuspendLayout();
+            this.splitViewer.SuspendLayout();
+            this.LeftTable.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chartmenubar1)).BeginInit();
             this.chartmenubar1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.CableOutInput)).BeginInit();
@@ -219,6 +226,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.CableOutInput2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.StartInput2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.EndInput2)).BeginInit();
+            this.RightTable.SuspendLayout();
             this.SuspendLayout();
             // 
             // qatCustomizeItem1
@@ -1030,7 +1038,7 @@
             this.toolStripSeparator3,
             this.ShowInfoRegion,
             this.ShowNavi,
-            this.传感器图ToolStripMenuItem});
+            this.ShowSensor});
             this.windowToolStripMenuItem.Name = "windowToolStripMenuItem";
             this.windowToolStripMenuItem.Size = new System.Drawing.Size(67, 21);
             this.windowToolStripMenuItem.Text = "Window";
@@ -1038,20 +1046,21 @@
             // 原始数据ToolStripMenuItem
             // 
             this.原始数据ToolStripMenuItem.Name = "原始数据ToolStripMenuItem";
-            this.原始数据ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.原始数据ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.原始数据ToolStripMenuItem.Text = "原始数据";
+            this.原始数据ToolStripMenuItem.Click += new System.EventHandler(this.ShowRaw_Click);
             // 
             // 声纳图像ToolStripMenuItem
             // 
             this.声纳图像ToolStripMenuItem.Name = "声纳图像ToolStripMenuItem";
-            this.声纳图像ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.声纳图像ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.声纳图像ToolStripMenuItem.Text = "声纳图像";
             this.声纳图像ToolStripMenuItem.Click += new System.EventHandler(this.ShowBss_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(121, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(133, 6);
             // 
             // ShowInfoRegion
             // 
@@ -1059,7 +1068,7 @@
             this.ShowInfoRegion.CheckOnClick = true;
             this.ShowInfoRegion.CheckState = System.Windows.Forms.CheckState.Checked;
             this.ShowInfoRegion.Name = "ShowInfoRegion";
-            this.ShowInfoRegion.Size = new System.Drawing.Size(124, 22);
+            this.ShowInfoRegion.Size = new System.Drawing.Size(136, 22);
             this.ShowInfoRegion.Text = "信息";
             this.ShowInfoRegion.Click += new System.EventHandler(this.ShowInfoRegion_Click);
             // 
@@ -1067,17 +1076,17 @@
             // 
             this.ShowNavi.CheckOnClick = true;
             this.ShowNavi.Name = "ShowNavi";
-            this.ShowNavi.Size = new System.Drawing.Size(124, 22);
-            this.ShowNavi.Text = "导航图";
+            this.ShowNavi.Size = new System.Drawing.Size(136, 22);
+            this.ShowNavi.Text = "导航";
             this.ShowNavi.Click += new System.EventHandler(this.ShowNavi_Click);
             // 
-            // 传感器图ToolStripMenuItem
+            // ShowSensor
             // 
-            this.传感器图ToolStripMenuItem.CheckOnClick = true;
-            this.传感器图ToolStripMenuItem.Name = "传感器图ToolStripMenuItem";
-            this.传感器图ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
-            this.传感器图ToolStripMenuItem.Text = "传感器图";
-            this.传感器图ToolStripMenuItem.Click += new System.EventHandler(this.ShowSensor_Click);
+            this.ShowSensor.CheckOnClick = true;
+            this.ShowSensor.Name = "ShowSensor";
+            this.ShowSensor.Size = new System.Drawing.Size(136, 22);
+            this.ShowSensor.Text = "传感器数据";
+            this.ShowSensor.Click += new System.EventHandler(this.ShowSensor_Click);
             // 
             // helpToolStripMenuItem
             // 
@@ -1147,25 +1156,44 @@
             this.splitter1.TabIndex = 34;
             this.splitter1.TabStop = false;
             // 
-            // tableLayoutPanel
+            // splitViewer
             // 
-            this.tableLayoutPanel.ColumnCount = 1;
-            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel.Controls.Add(this.chartmenubar1, 0, 0);
-            this.tableLayoutPanel.Controls.Add(this.Panel2, 0, 3);
-            this.tableLayoutPanel.Controls.Add(this.chartmenubar2, 0, 2);
-            this.tableLayoutPanel.Controls.Add(this.Panel1, 0, 1);
-            this.tableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel.Location = new System.Drawing.Point(3, 50);
-            this.tableLayoutPanel.Name = "tableLayoutPanel";
-            this.tableLayoutPanel.RowCount = 4;
-            this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel.Size = new System.Drawing.Size(1325, 543);
-            this.tableLayoutPanel.TabIndex = 37;
+            this.splitViewer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitViewer.Location = new System.Drawing.Point(3, 50);
+            this.splitViewer.Name = "splitViewer";
+            // 
+            // splitViewer.Panel1
+            // 
+            this.splitViewer.Panel1.Controls.Add(this.LeftTable);
+            // 
+            // splitViewer.Panel2
+            // 
+            this.splitViewer.Panel2.Controls.Add(this.RightTable);
+            this.splitViewer.Panel2MinSize = 0;
+            this.splitViewer.Size = new System.Drawing.Size(1325, 543);
+            this.splitViewer.SplitterDistance = 1299;
+            this.splitViewer.SplitterWidth = 1;
+            this.splitViewer.TabIndex = 10003;
+            // 
+            // LeftTable
+            // 
+            this.LeftTable.ColumnCount = 1;
+            this.LeftTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.LeftTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.LeftTable.Controls.Add(this.chartmenubar1, 0, 0);
+            this.LeftTable.Controls.Add(this.Bss2Panel, 0, 3);
+            this.LeftTable.Controls.Add(this.chartmenubar2, 0, 2);
+            this.LeftTable.Controls.Add(this.Bss1Panel, 0, 1);
+            this.LeftTable.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.LeftTable.Location = new System.Drawing.Point(0, 0);
+            this.LeftTable.Name = "LeftTable";
+            this.LeftTable.RowCount = 4;
+            this.LeftTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.LeftTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.LeftTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.LeftTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.LeftTable.Size = new System.Drawing.Size(1299, 543);
+            this.LeftTable.TabIndex = 38;
             // 
             // chartmenubar1
             // 
@@ -1203,7 +1231,7 @@
             this.HideView1});
             this.chartmenubar1.Location = new System.Drawing.Point(3, 3);
             this.chartmenubar1.Name = "chartmenubar1";
-            this.chartmenubar1.Size = new System.Drawing.Size(1319, 28);
+            this.chartmenubar1.Size = new System.Drawing.Size(1293, 28);
             this.chartmenubar1.Stretch = true;
             this.chartmenubar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.chartmenubar1.TabIndex = 43;
@@ -1432,19 +1460,20 @@
             // 
             // HideView1
             // 
+            this.HideView1.HotFontBold = true;
             this.HideView1.Name = "HideView1";
             this.HideView1.Text = "关闭";
             this.HideView1.Click += new System.EventHandler(this.HideView1_Click);
             // 
-            // Panel2
+            // Bss2Panel
             // 
-            this.Panel2.AutoScroll = true;
-            this.Panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Panel2.Location = new System.Drawing.Point(3, 304);
-            this.Panel2.Name = "Panel2";
-            this.Panel2.Size = new System.Drawing.Size(1319, 236);
-            this.Panel2.TabIndex = 42;
-            this.Panel2.Scroll += new System.Windows.Forms.ScrollEventHandler(this.Panel2_Scroll);
+            this.Bss2Panel.AutoScroll = true;
+            this.Bss2Panel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Bss2Panel.Location = new System.Drawing.Point(3, 304);
+            this.Bss2Panel.Name = "Bss2Panel";
+            this.Bss2Panel.Size = new System.Drawing.Size(1293, 236);
+            this.Bss2Panel.TabIndex = 42;
+            this.Bss2Panel.Scroll += new System.Windows.Forms.ScrollEventHandler(this.Panel2_Scroll);
             // 
             // chartmenubar2
             // 
@@ -1462,7 +1491,7 @@
             this.Chart2Title,
             this.Range2SelectBox,
             this.Open2Btn,
-            this.buttonItem4,
+            this.Stop2Btn,
             this.Start2Btn,
             this.Speed2Btn,
             this.Slow2Btn,
@@ -1482,7 +1511,7 @@
             this.HideView2});
             this.chartmenubar2.Location = new System.Drawing.Point(3, 274);
             this.chartmenubar2.Name = "chartmenubar2";
-            this.chartmenubar2.Size = new System.Drawing.Size(1319, 28);
+            this.chartmenubar2.Size = new System.Drawing.Size(1293, 28);
             this.chartmenubar2.Stretch = true;
             this.chartmenubar2.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.chartmenubar2.TabIndex = 40;
@@ -1616,11 +1645,11 @@
             this.Open2Btn.Name = "Open2Btn";
             this.Open2Btn.Text = "打开";
             // 
-            // buttonItem4
+            // Stop2Btn
             // 
-            this.buttonItem4.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText;
-            this.buttonItem4.Name = "buttonItem4";
-            this.buttonItem4.Text = "停止";
+            this.Stop2Btn.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText;
+            this.Stop2Btn.Name = "Stop2Btn";
+            this.Stop2Btn.Text = "停止";
             // 
             // Start2Btn
             // 
@@ -1710,19 +1739,55 @@
             // 
             // HideView2
             // 
+            this.HideView2.HotFontBold = true;
             this.HideView2.Name = "HideView2";
             this.HideView2.Text = "关闭";
             this.HideView2.Click += new System.EventHandler(this.HideView2_Click);
             // 
-            // Panel1
+            // Bss1Panel
             // 
-            this.Panel1.AutoScroll = true;
-            this.Panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Panel1.Location = new System.Drawing.Point(3, 33);
-            this.Panel1.Name = "Panel1";
-            this.Panel1.Size = new System.Drawing.Size(1319, 235);
-            this.Panel1.TabIndex = 41;
-            this.Panel1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.Panel1_Scroll);
+            this.Bss1Panel.AutoScroll = true;
+            this.Bss1Panel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Bss1Panel.Location = new System.Drawing.Point(3, 33);
+            this.Bss1Panel.Name = "Bss1Panel";
+            this.Bss1Panel.Size = new System.Drawing.Size(1293, 235);
+            this.Bss1Panel.TabIndex = 41;
+            this.Bss1Panel.Scroll += new System.Windows.Forms.ScrollEventHandler(this.Panel1_Scroll);
+            // 
+            // RightTable
+            // 
+            this.RightTable.ColumnCount = 1;
+            this.RightTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.RightTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.RightTable.Controls.Add(this.Sensorpanel, 0, 1);
+            this.RightTable.Controls.Add(this.Navipanel, 0, 0);
+            this.RightTable.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.RightTable.Location = new System.Drawing.Point(0, 0);
+            this.RightTable.Margin = new System.Windows.Forms.Padding(0);
+            this.RightTable.Name = "RightTable";
+            this.RightTable.RowCount = 2;
+            this.RightTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.RightTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.RightTable.Size = new System.Drawing.Size(25, 543);
+            this.RightTable.TabIndex = 0;
+            // 
+            // Sensorpanel
+            // 
+            this.Sensorpanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Sensorpanel.Location = new System.Drawing.Point(0, 271);
+            this.Sensorpanel.Margin = new System.Windows.Forms.Padding(0);
+            this.Sensorpanel.Name = "Sensorpanel";
+            this.Sensorpanel.Size = new System.Drawing.Size(25, 272);
+            this.Sensorpanel.TabIndex = 1;
+            // 
+            // Navipanel
+            // 
+            this.Navipanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Navipanel.Location = new System.Drawing.Point(0, 0);
+            this.Navipanel.Margin = new System.Windows.Forms.Padding(0);
+            this.Navipanel.Name = "Navipanel";
+            this.Navipanel.Size = new System.Drawing.Size(25, 271);
+            this.Navipanel.TabIndex = 0;
             // 
             // MainForm
             // 
@@ -1731,7 +1796,7 @@
             this.BackColor = System.Drawing.Color.DimGray;
             this.CaptionFont = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.ClientSize = new System.Drawing.Size(1328, 729);
-            this.Controls.Add(this.tableLayoutPanel);
+            this.Controls.Add(this.splitViewer);
             this.Controls.Add(this.splitter1);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.menuStrip1);
@@ -1758,7 +1823,10 @@
             this.toolStrip1.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            this.tableLayoutPanel.ResumeLayout(false);
+            this.splitViewer.Panel1.ResumeLayout(false);
+            this.splitViewer.Panel2.ResumeLayout(false);
+            this.splitViewer.ResumeLayout(false);
+            this.LeftTable.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.chartmenubar1)).EndInit();
             this.chartmenubar1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.CableOutInput)).EndInit();
@@ -1769,6 +1837,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.CableOutInput2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.StartInput2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.EndInput2)).EndInit();
+            this.RightTable.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1854,7 +1923,7 @@
         private System.Windows.Forms.ToolStripMenuItem 声纳图像ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ShowInfoRegion;
         private System.Windows.Forms.ToolStripMenuItem ShowNavi;
-        private System.Windows.Forms.ToolStripMenuItem 传感器图ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ShowSensor;
         private System.Windows.Forms.ToolStripMenuItem 原始数据ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
@@ -1870,47 +1939,9 @@
         private DevComponents.DotNetBar.DockContainerItem dockContainerItem12;
         private DevComponents.DotNetBar.DockContainerItem dockContainerItem13;
         private System.Windows.Forms.Splitter splitter1;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel;
-        private DevComponents.DotNetBar.Bar chartmenubar2;
-        private System.Windows.Forms.NumericUpDown CableOutInput2;
-        private System.Windows.Forms.NumericUpDown StartInput2;
-        private System.Windows.Forms.NumericUpDown EndInput2;
-        private DevComponents.DotNetBar.ComboBoxItem Range2SelectBox;
-        private DevComponents.Editors.ComboItem comboItem1;
-        private DevComponents.Editors.ComboItem comboItem2;
-        private DevComponents.Editors.ComboItem comboItem3;
-        private DevComponents.Editors.ComboItem comboItem4;
-        private DevComponents.Editors.ComboItem comboItem5;
-        private DevComponents.Editors.ComboItem comboItem6;
-        private DevComponents.Editors.ComboItem comboItem7;
-        private DevComponents.Editors.ComboItem comboItem8;
-        private DevComponents.Editors.ComboItem comboItem9;
-        private DevComponents.Editors.ComboItem comboItem10;
-        private DevComponents.Editors.ComboItem comboItem11;
-        private DevComponents.Editors.ComboItem comboItem12;
-        private DevComponents.DotNetBar.ButtonItem Open2Btn;
-        private DevComponents.DotNetBar.ButtonItem buttonItem4;
-        private DevComponents.DotNetBar.ButtonItem Start2Btn;
-        private DevComponents.DotNetBar.ButtonItem Speed2Btn;
-        private DevComponents.DotNetBar.ButtonItem Slow2Btn;
-        private DevComponents.DotNetBar.ButtonItem Reset2Btn;
-        private DevComponents.DotNetBar.ButtonItem Measure2Btn;
-        private DevComponents.DotNetBar.ButtonItem TVGSet2Btn;
-        private DevComponents.DotNetBar.ButtonItem Color2Btn;
-        private DevComponents.DotNetBar.ButtonItem Option2Btn;
-        private DevComponents.DotNetBar.LabelItem labelItem5;
-        private DevComponents.DotNetBar.ControlContainerItem controlContainerItem1;
-        private DevComponents.DotNetBar.ButtonItem Apply2Btn;
-        private DevComponents.DotNetBar.LabelItem labelItem6;
-        private DevComponents.DotNetBar.LabelItem labelItem7;
-        private DevComponents.DotNetBar.ControlContainerItem controlContainerItem5;
-        private DevComponents.DotNetBar.LabelItem labelItem8;
-        private DevComponents.DotNetBar.ControlContainerItem controlContainerItem6;
-        private System.Windows.Forms.Panel Panel2;
-        private System.Windows.Forms.Panel Panel1;
-        private DevComponents.DotNetBar.LabelItem Chart2Title;
-        private DevComponents.DotNetBar.ButtonItem HideView2;
         private System.Windows.Forms.TextBox SonarHeightBox;
+        private System.Windows.Forms.SplitContainer splitViewer;
+        private System.Windows.Forms.TableLayoutPanel LeftTable;
         private DevComponents.DotNetBar.Bar chartmenubar1;
         private System.Windows.Forms.NumericUpDown CableOutInput;
         private System.Windows.Forms.NumericUpDown StartInput;
@@ -1948,5 +1979,47 @@
         private DevComponents.DotNetBar.LabelItem labelItem4;
         private DevComponents.DotNetBar.ControlContainerItem controlContainerItem4;
         private DevComponents.DotNetBar.ButtonItem HideView1;
+        private System.Windows.Forms.Panel Bss2Panel;
+        private DevComponents.DotNetBar.Bar chartmenubar2;
+        private System.Windows.Forms.NumericUpDown CableOutInput2;
+        private System.Windows.Forms.NumericUpDown StartInput2;
+        private System.Windows.Forms.NumericUpDown EndInput2;
+        private DevComponents.DotNetBar.LabelItem Chart2Title;
+        private DevComponents.DotNetBar.ComboBoxItem Range2SelectBox;
+        private DevComponents.Editors.ComboItem comboItem1;
+        private DevComponents.Editors.ComboItem comboItem2;
+        private DevComponents.Editors.ComboItem comboItem3;
+        private DevComponents.Editors.ComboItem comboItem4;
+        private DevComponents.Editors.ComboItem comboItem5;
+        private DevComponents.Editors.ComboItem comboItem6;
+        private DevComponents.Editors.ComboItem comboItem7;
+        private DevComponents.Editors.ComboItem comboItem8;
+        private DevComponents.Editors.ComboItem comboItem9;
+        private DevComponents.Editors.ComboItem comboItem10;
+        private DevComponents.Editors.ComboItem comboItem11;
+        private DevComponents.Editors.ComboItem comboItem12;
+        private DevComponents.DotNetBar.ButtonItem Open2Btn;
+        private DevComponents.DotNetBar.ButtonItem Stop2Btn;
+        private DevComponents.DotNetBar.ButtonItem Start2Btn;
+        private DevComponents.DotNetBar.ButtonItem Speed2Btn;
+        private DevComponents.DotNetBar.ButtonItem Slow2Btn;
+        private DevComponents.DotNetBar.ButtonItem Reset2Btn;
+        private DevComponents.DotNetBar.ButtonItem Measure2Btn;
+        private DevComponents.DotNetBar.ButtonItem TVGSet2Btn;
+        private DevComponents.DotNetBar.ButtonItem Color2Btn;
+        private DevComponents.DotNetBar.ButtonItem Option2Btn;
+        private DevComponents.DotNetBar.LabelItem labelItem5;
+        private DevComponents.DotNetBar.ControlContainerItem controlContainerItem1;
+        private DevComponents.DotNetBar.ButtonItem Apply2Btn;
+        private DevComponents.DotNetBar.LabelItem labelItem6;
+        private DevComponents.DotNetBar.LabelItem labelItem7;
+        private DevComponents.DotNetBar.ControlContainerItem controlContainerItem5;
+        private DevComponents.DotNetBar.LabelItem labelItem8;
+        private DevComponents.DotNetBar.ControlContainerItem controlContainerItem6;
+        private DevComponents.DotNetBar.ButtonItem HideView2;
+        private System.Windows.Forms.Panel Bss1Panel;
+        private System.Windows.Forms.TableLayoutPanel RightTable;
+        private System.Windows.Forms.Panel Sensorpanel;
+        private System.Windows.Forms.Panel Navipanel;
     }
 }

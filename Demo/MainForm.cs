@@ -32,10 +32,13 @@ namespace Demo
         
         //windows collection
         private NavigationView NaviView = null;
+        private SensorForm SensorView = null;
         private ChartForm BssView1 = null;
         private ChartForm BssView2 = null;
         private bool bPanel1triger;
         private bool bPanel2triger;
+
+        private int rightpanelminwidth = 400;
         public MainForm()
         {
             InitializeComponent();
@@ -47,25 +50,39 @@ namespace Demo
             {
                 NaviView = null;
                 bShowNavi = false;
+                if (SensorView != null)
+                    ShowSensorOnly();
+                else
+                    NoneNaviAndSensor();
                 ShowNavi.Checked = false;
+            }
+            if (SensorView == child)
+            {
+                SensorView = null;
+                bShowSensor = false;
+                if (NaviView != null)
+                    ShowNaviOnly();
+                else
+                    NoneNaviAndSensor();
+                ShowSensor.Checked = false;
             }
             if (BssView1 == child)
             {
-                BssView1.Close();
+
                 BssView1 = null;
                 if (BssView2 != null)
                     ShowView2Max();
                 else
-                    NoneView();
+                    NoneBssView();
             }
             if (BssView2 == child)
             {
-                BssView2.Close();
+
                 BssView2 = null;
                 if (BssView1 != null)
                         ShowView1Max();
                else
-                        NoneView();
+                        NoneBssView();
             }
         }
         private void Help_Click(object sender, EventArgs e)
@@ -96,7 +113,8 @@ namespace Demo
             PlaybackTime.Enabled = false;
             DataSaveBox.BackColor = Color.Red;
             ShowInfoRegion.Checked = bShowInfo;
-            NoneView();
+            splitViewer.SplitterDistance = splitViewer.Width;
+            NoneBssView();
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -452,56 +470,90 @@ namespace Demo
                 return -2;
             }
         }
-        #region Menu
-
+        
+        #region layout
         //第一个图放大（第二图关闭或创建第一个图）
         private void ShowView1Max()
         {
             chartmenubar1.Visible = true;
             chartmenubar2.Visible = false;
-            tableLayoutPanel.RowStyles[0].Height = 30;
-            tableLayoutPanel.RowStyles[1].SizeType = SizeType.Percent;
-            tableLayoutPanel.RowStyles[1].Height= 100;
-            tableLayoutPanel.RowStyles[2].Height = 0;
-            tableLayoutPanel.RowStyles[3].SizeType = SizeType.Percent;
-            tableLayoutPanel.RowStyles[3].Height = 0;
+            LeftTable.RowStyles[0].Height = 30;
+            LeftTable.RowStyles[1].SizeType = SizeType.Percent;
+            LeftTable.RowStyles[1].Height= 100;
+            LeftTable.RowStyles[2].Height = 0;
+            LeftTable.RowStyles[3].SizeType = SizeType.Percent;
+            LeftTable.RowStyles[3].Height = 0;
         }
         //第二个图放大（第一个图关闭）
         private void ShowView2Max()
         {
             chartmenubar1.Visible = false;
             chartmenubar2.Visible = true;
-            tableLayoutPanel.RowStyles[2].Height = 30;
-            tableLayoutPanel.RowStyles[3].SizeType = SizeType.Percent;
-            tableLayoutPanel.RowStyles[3].Height = 100;
-            tableLayoutPanel.RowStyles[0].Height = 0;
-            tableLayoutPanel.RowStyles[1].SizeType = SizeType.Percent;
-            tableLayoutPanel.RowStyles[1].Height = 0;
+            LeftTable.RowStyles[2].Height = 30;
+            LeftTable.RowStyles[3].SizeType = SizeType.Percent;
+            LeftTable.RowStyles[3].Height = 100;
+            LeftTable.RowStyles[0].Height = 0;
+            LeftTable.RowStyles[1].SizeType = SizeType.Percent;
+            LeftTable.RowStyles[1].Height = 0;
         }
         //有两个图一起出现
-        private void ShowAllView()
+        private void ShowAllBssView()
         {
             chartmenubar1.Visible = true;
             chartmenubar2.Visible = true;
-            tableLayoutPanel.RowStyles[0].Height = 30;
-            tableLayoutPanel.RowStyles[1].SizeType = SizeType.Percent;
-            tableLayoutPanel.RowStyles[1].Height = 50;
-            tableLayoutPanel.RowStyles[2].Height = 30;
-            tableLayoutPanel.RowStyles[3].SizeType = SizeType.Percent;
-            tableLayoutPanel.RowStyles[3].Height = 50;
+            LeftTable.RowStyles[0].Height = 30;
+            LeftTable.RowStyles[1].SizeType = SizeType.Percent;
+            LeftTable.RowStyles[1].Height = 50;
+            LeftTable.RowStyles[2].Height = 30;
+            LeftTable.RowStyles[3].SizeType = SizeType.Percent;
+            LeftTable.RowStyles[3].Height = 50;
         }
-
-        private void NoneView()
+        private void NoneBssView()
         {
             chartmenubar1.Visible = false;
             chartmenubar2.Visible = false;
-            tableLayoutPanel.RowStyles[0].Height = 0;
-            tableLayoutPanel.RowStyles[1].SizeType = SizeType.Percent;
-            tableLayoutPanel.RowStyles[1].Height = 50;
-            tableLayoutPanel.RowStyles[2].Height = 0;
-            tableLayoutPanel.RowStyles[3].SizeType = SizeType.Percent;
-            tableLayoutPanel.RowStyles[3].Height = 50;
+            LeftTable.RowStyles[0].Height = 0;
+            LeftTable.RowStyles[1].SizeType = SizeType.Percent;
+            LeftTable.RowStyles[1].Height = 50;
+            LeftTable.RowStyles[2].Height = 0;
+            LeftTable.RowStyles[3].SizeType = SizeType.Percent;
+            LeftTable.RowStyles[3].Height = 50;
         }
+
+        private void ShowNaviOnly()
+        {
+            if (splitViewer.SplitterDistance + rightpanelminwidth > splitViewer.Width)
+                splitViewer.SplitterDistance = splitViewer.Width - rightpanelminwidth-7;
+            splitViewer.Panel2MinSize = 400;
+            RightTable.RowStyles[0].SizeType = SizeType.Percent;
+            RightTable.RowStyles[0].Height = 100;
+            RightTable.RowStyles[1].SizeType = SizeType.Percent;
+            RightTable.RowStyles[1].Height = 0;
+        }
+        private void ShowSensorOnly()
+        {
+            if (splitViewer.SplitterDistance + rightpanelminwidth > splitViewer.Width)
+                splitViewer.SplitterDistance = splitViewer.Width - rightpanelminwidth-7;
+            splitViewer.Panel2MinSize = 400;
+            RightTable.RowStyles[0].Height = 0;
+            RightTable.RowStyles[0].SizeType = SizeType.Percent;
+            
+            RightTable.RowStyles[1].Height = 100;
+            RightTable.RowStyles[1].SizeType = SizeType.Percent;
+        }
+        private void ShowNaviAndSensor()
+        {
+            RightTable.RowStyles[0].SizeType = SizeType.Percent;
+            RightTable.RowStyles[0].Height = 50;
+            RightTable.RowStyles[1].SizeType = SizeType.Percent;
+            RightTable.RowStyles[1].Height = 50;
+        }
+        private void NoneNaviAndSensor()
+        {
+            splitViewer.Panel2MinSize = 0;
+            splitViewer.SplitterDistance = splitViewer.Width+7;
+        }
+        #endregion
         private void InitMenu1()
         {
             Chart1Title.Text = "----------";
@@ -526,6 +578,7 @@ namespace Demo
             StartInput2.Value = 1;
             EndInput2.Value = 70;
         }
+        #region Menu
         private void ShowBss_Click(object sender, EventArgs e)
         {
             if (BssView1 == null)//没有侧扫1窗口
@@ -533,7 +586,7 @@ namespace Demo
                 BssView1 = new ChartForm(this);
                 //BssView1.TopLevel = false;
                 BssView1.MdiParent =this ;
-                BssView1.Parent = Panel1;
+                BssView1.Parent = Bss1Panel;
                 
                 BssView1.WindowState = FormWindowState.Normal;
                 BssView1.Show();
@@ -541,21 +594,21 @@ namespace Demo
                 if (BssView2 == null)//没有view2
                     ShowView1Max();
                 else
-                    ShowAllView();
+                    ShowAllBssView();
             }
             else if (BssView2 == null)//没有侧扫2窗口
             {
                 BssView2 = new ChartForm(this);
                 //BssView2. TopLevel = false;
                 BssView2.MdiParent =this ;
-                BssView2.Parent = Panel2;
+                BssView2.Parent = Bss2Panel;
                 
                 BssView2.WindowState = FormWindowState.Normal;
                 BssView2.Show();
                 InitMenu2();
                 //BssView2.Update();
                 
-                ShowAllView();
+                ShowAllBssView();
             }
             else//2个BSS
             {
@@ -569,14 +622,24 @@ namespace Demo
             {
                 if(NaviView==null)
                     NaviView = new NavigationView(this);
-
+                NaviView.MdiParent = this;
+                NaviView.Parent = Navipanel;
+                NaviView.Dock = DockStyle.Fill;
                 NaviView.Show();
                 bShowNavi = true;
+                if(SensorView==null)
+                    ShowNaviOnly();
+                else
+                    ShowNaviAndSensor();
             }
             else
             {
                 if(NaviView!=null)
-                    NaviView.Hide();
+                    ChildFormClose(NaviView);
+                if (SensorView == null)
+                    NoneNaviAndSensor();
+                else
+                    ShowSensorOnly();
                 bShowNavi = false;
             }
         }
@@ -584,7 +647,30 @@ namespace Demo
 
         private void ShowSensor_Click(object sender, EventArgs e)
         {
-
+            if (!bShowSensor)
+            {
+                if(SensorView==null)
+                    SensorView = new SensorForm(this);
+                SensorView.MdiParent = this;
+                SensorView.Parent = Sensorpanel;
+                SensorView.Dock = DockStyle.Fill;
+                SensorView.Show();
+                bShowSensor = true;
+                if(NaviView==null)
+                    ShowSensorOnly();
+                else
+                    ShowNaviAndSensor();
+            }
+            else
+            {
+                if(SensorView!=null)
+                    ChildFormClose(SensorView);
+                bShowSensor = false;
+                if (NaviView == null)
+                    NoneNaviAndSensor();
+                else
+                    ShowNaviOnly();
+            }
         }
 
         private void ShowRaw_Click(object sender, EventArgs e)
@@ -617,9 +703,9 @@ namespace Demo
             newp = new Point(0, 0);
             if (BssView1 != null)
             {
-                if (Panel1.Width > BssView1.Width)
+                if (Bss1Panel.Width > BssView1.Width)
                 {
-                    newp.X = last1.X + (Panel1.Width - BssView1.Width)/2;
+                    newp.X = last1.X + (Bss1Panel.Width - BssView1.Width)/2;
                     newp.Y = last1.Y;
                     BssView1.Location = newp;
                     BssView1.Update();
@@ -632,10 +718,10 @@ namespace Demo
             }
             if (BssView2 != null)
             {
-                if (Panel2.Width > BssView2.Width)
+                if (Bss2Panel.Width > BssView2.Width)
                 {
 
-                    newp.X = last2.X + (Panel2.Width - BssView2.Width) / 2;
+                    newp.X = last2.X + (Bss2Panel.Width - BssView2.Width) / 2;
                     newp.Y = last2.Y;
                     BssView2.Location = newp;
                     BssView2.Update();
@@ -652,15 +738,26 @@ namespace Demo
         {
             bPanel1triger = true;
             if (!bPanel2triger)
-                Panel2.VerticalScroll.Value = e.NewValue;
+            {
+                if(e.ScrollOrientation == ScrollOrientation.VerticalScroll)
+                    Bss2Panel.VerticalScroll.Value = e.NewValue;
+                if (e.ScrollOrientation == ScrollOrientation.HorizontalScroll)
+                    Bss2Panel.HorizontalScroll.Value = e.NewValue;
+            }
             bPanel1triger = false;
         }
 
         private void Panel2_Scroll(object sender, ScrollEventArgs e)
         {
+
             bPanel2triger = true;
             if (!bPanel1triger)
-                Panel1.VerticalScroll.Value = e.NewValue;
+            {
+                if (e.ScrollOrientation == ScrollOrientation.VerticalScroll)
+                    Bss1Panel.VerticalScroll.Value = e.NewValue;
+                if (e.ScrollOrientation == ScrollOrientation.HorizontalScroll)
+                    Bss1Panel.HorizontalScroll.Value = e.NewValue;
+            }
             bPanel2triger = false;
         }
 
