@@ -82,13 +82,13 @@
             this.ContentPanel = new System.Windows.Forms.ToolStripContentPanel();
             this.miniToolStrip = new System.Windows.Forms.ToolStrip();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.OpenBssChart = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton5 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton6 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton7 = new System.Windows.Forms.ToolStripButton();
+            this.TaskWizard = new System.Windows.Forms.ToolStripButton();
+            this.OpenBssView = new System.Windows.Forms.ToolStripButton();
+            this.OpenNaviView = new System.Windows.Forms.ToolStripButton();
+            this.NaviTrackSet = new System.Windows.Forms.ToolStripButton();
+            this.SensorSetup = new System.Windows.Forms.ToolStripButton();
+            this.OpenSensorView = new System.Windows.Forms.ToolStripButton();
+            this.SystemSetup = new System.Windows.Forms.ToolStripButton();
             this.DataSaveBox = new System.Windows.Forms.ToolStripTextBox();
             this.dockContainerItem2 = new DevComponents.DotNetBar.DockContainerItem();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -206,6 +206,7 @@
             this.RightTable = new System.Windows.Forms.TableLayoutPanel();
             this.Sensorpanel = new System.Windows.Forms.Panel();
             this.Navipanel = new System.Windows.Forms.Panel();
+            this.openXtfFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.DataPanel.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -586,9 +587,9 @@
             this.label14.Location = new System.Drawing.Point(440, 74);
             this.label14.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(72, 16);
+            this.label14.Size = new System.Drawing.Size(40, 16);
             this.label14.TabIndex = 16;
-            this.label14.Text = "航迹方向";
+            this.label14.Text = "航向";
             this.label14.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // Depthlabel
@@ -838,13 +839,13 @@
             // toolStrip1
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.OpenBssChart,
-            this.toolStripButton2,
-            this.toolStripButton3,
-            this.toolStripButton4,
-            this.toolStripButton5,
-            this.toolStripButton6,
-            this.toolStripButton7,
+            this.TaskWizard,
+            this.OpenBssView,
+            this.OpenNaviView,
+            this.NaviTrackSet,
+            this.SensorSetup,
+            this.OpenSensorView,
+            this.SystemSetup,
             this.DataSaveBox});
             this.toolStrip1.Location = new System.Drawing.Point(0, 25);
             this.toolStrip1.Name = "toolStrip1";
@@ -852,68 +853,69 @@
             this.toolStrip1.TabIndex = 17;
             this.toolStrip1.Text = "toolStrip1";
             // 
-            // OpenBssChart
+            // TaskWizard
             // 
-            this.OpenBssChart.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.OpenBssChart.Image = ((System.Drawing.Image)(resources.GetObject("OpenBssChart.Image")));
-            this.OpenBssChart.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.OpenBssChart.Name = "OpenBssChart";
-            this.OpenBssChart.Size = new System.Drawing.Size(23, 22);
-            this.OpenBssChart.Text = "toolStripButton1";
+            this.TaskWizard.Image = ((System.Drawing.Image)(resources.GetObject("TaskWizard.Image")));
+            this.TaskWizard.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.TaskWizard.Name = "TaskWizard";
+            this.TaskWizard.Size = new System.Drawing.Size(76, 22);
+            this.TaskWizard.Text = "任务向导";
+            this.TaskWizard.Click += new System.EventHandler(this.TaskWizard_Click);
             // 
-            // toolStripButton2
+            // OpenBssView
             // 
-            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
-            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton2.Text = "toolStripButton2";
+            this.OpenBssView.Image = ((System.Drawing.Image)(resources.GetObject("OpenBssView.Image")));
+            this.OpenBssView.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.OpenBssView.Name = "OpenBssView";
+            this.OpenBssView.Size = new System.Drawing.Size(64, 22);
+            this.OpenBssView.Text = "瀑布图";
+            this.OpenBssView.Click += new System.EventHandler(this.OpenBssView_Click);
             // 
-            // toolStripButton3
+            // OpenNaviView
             // 
-            this.toolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton3.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton3.Image")));
-            this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton3.Name = "toolStripButton3";
-            this.toolStripButton3.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton3.Text = "toolStripButton3";
+            this.OpenNaviView.Image = ((System.Drawing.Image)(resources.GetObject("OpenNaviView.Image")));
+            this.OpenNaviView.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.OpenNaviView.Name = "OpenNaviView";
+            this.OpenNaviView.Size = new System.Drawing.Size(76, 22);
+            this.OpenNaviView.Text = "导航显示";
+            this.OpenNaviView.Click += new System.EventHandler(this.OpenNaviView_Click);
             // 
-            // toolStripButton4
+            // NaviTrackSet
             // 
-            this.toolStripButton4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton4.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton4.Image")));
-            this.toolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton4.Name = "toolStripButton4";
-            this.toolStripButton4.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton4.Text = "toolStripButton4";
+            this.NaviTrackSet.Image = ((System.Drawing.Image)(resources.GetObject("NaviTrackSet.Image")));
+            this.NaviTrackSet.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.NaviTrackSet.Name = "NaviTrackSet";
+            this.NaviTrackSet.Size = new System.Drawing.Size(88, 22);
+            this.NaviTrackSet.Text = "航迹线设置";
+            this.NaviTrackSet.Click += new System.EventHandler(this.NaviTrackSet_Click);
             // 
-            // toolStripButton5
+            // SensorSetup
             // 
-            this.toolStripButton5.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton5.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton5.Image")));
-            this.toolStripButton5.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton5.Name = "toolStripButton5";
-            this.toolStripButton5.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton5.Text = "toolStripButton5";
+            this.SensorSetup.Image = ((System.Drawing.Image)(resources.GetObject("SensorSetup.Image")));
+            this.SensorSetup.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.SensorSetup.Name = "SensorSetup";
+            this.SensorSetup.Size = new System.Drawing.Size(88, 22);
+            this.SensorSetup.Text = "传感器位置";
+            this.SensorSetup.Click += new System.EventHandler(this.SensorSetup_Click);
             // 
-            // toolStripButton6
+            // OpenSensorView
             // 
-            this.toolStripButton6.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton6.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton6.Image")));
-            this.toolStripButton6.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton6.Name = "toolStripButton6";
-            this.toolStripButton6.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton6.Text = "toolStripButton6";
+            this.OpenSensorView.Image = ((System.Drawing.Image)(resources.GetObject("OpenSensorView.Image")));
+            this.OpenSensorView.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.OpenSensorView.Name = "OpenSensorView";
+            this.OpenSensorView.Size = new System.Drawing.Size(88, 22);
+            this.OpenSensorView.Text = "传感器数据";
+            this.OpenSensorView.ToolTipText = "打开传感器数据显示";
+            this.OpenSensorView.Click += new System.EventHandler(this.OpenSensorView_Click);
             // 
-            // toolStripButton7
+            // SystemSetup
             // 
-            this.toolStripButton7.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton7.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton7.Image")));
-            this.toolStripButton7.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton7.Name = "toolStripButton7";
-            this.toolStripButton7.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton7.Text = "toolStripButton7";
+            this.SystemSetup.Image = ((System.Drawing.Image)(resources.GetObject("SystemSetup.Image")));
+            this.SystemSetup.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.SystemSetup.Name = "SystemSetup";
+            this.SystemSetup.Size = new System.Drawing.Size(76, 22);
+            this.SystemSetup.Text = "系统设置";
+            this.SystemSetup.Click += new System.EventHandler(this.SystemSetup_Click);
             // 
             // DataSaveBox
             // 
@@ -1017,12 +1019,14 @@
             this.towFishToolStripMenuItem.Name = "towFishToolStripMenuItem";
             this.towFishToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
             this.towFishToolStripMenuItem.Text = "TowFish";
+            this.towFishToolStripMenuItem.Click += new System.EventHandler(this.towFishToolStripMenuItem_Click);
             // 
             // hardDiskToolStripMenuItem
             // 
             this.hardDiskToolStripMenuItem.Name = "hardDiskToolStripMenuItem";
             this.hardDiskToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
             this.hardDiskToolStripMenuItem.Text = "Hard Disk";
+            this.hardDiskToolStripMenuItem.Click += new System.EventHandler(this.hardDiskToolStripMenuItem_Click);
             // 
             // printToolStripMenuItem
             // 
@@ -1054,7 +1058,7 @@
             // 
             this.声纳图像ToolStripMenuItem.Name = "声纳图像ToolStripMenuItem";
             this.声纳图像ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
-            this.声纳图像ToolStripMenuItem.Text = "声纳图像";
+            this.声纳图像ToolStripMenuItem.Text = "瀑布图";
             this.声纳图像ToolStripMenuItem.Click += new System.EventHandler(this.ShowBss_Click);
             // 
             // toolStripSeparator3
@@ -1364,6 +1368,7 @@
             // 
             this.OpenBtn.Name = "OpenBtn";
             this.OpenBtn.Text = "打开";
+            this.OpenBtn.Click += new System.EventHandler(this.OpenBtn_Click);
             // 
             // StopBtn
             // 
@@ -1644,6 +1649,7 @@
             // 
             this.Open2Btn.Name = "Open2Btn";
             this.Open2Btn.Text = "打开";
+            this.Open2Btn.Click += new System.EventHandler(this.Open2Btn_Click);
             // 
             // Stop2Btn
             // 
@@ -1789,6 +1795,10 @@
             this.Navipanel.Size = new System.Drawing.Size(25, 271);
             this.Navipanel.TabIndex = 0;
             // 
+            // openXtfFileDialog
+            // 
+            this.openXtfFileDialog.FileName = "openFileDialog1";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -1890,13 +1900,12 @@
         private System.Windows.Forms.Label DateLabel;
         public System.Windows.Forms.Timer PlaybackTime;
         private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.ToolStripButton OpenBssChart;
-        private System.Windows.Forms.ToolStripButton toolStripButton2;
-        private System.Windows.Forms.ToolStripButton toolStripButton3;
-        private System.Windows.Forms.ToolStripButton toolStripButton4;
-        private System.Windows.Forms.ToolStripButton toolStripButton5;
-        private System.Windows.Forms.ToolStripButton toolStripButton6;
-        private System.Windows.Forms.ToolStripButton toolStripButton7;
+        private System.Windows.Forms.ToolStripButton TaskWizard;
+        private System.Windows.Forms.ToolStripButton OpenBssView;
+        private System.Windows.Forms.ToolStripButton OpenNaviView;
+        private System.Windows.Forms.ToolStripButton NaviTrackSet;
+        private System.Windows.Forms.ToolStripButton SensorSetup;
+        private System.Windows.Forms.ToolStripButton SystemSetup;
         private System.Windows.Forms.ToolStripTextBox DataSaveBox;
         private System.Windows.Forms.ToolStripPanel BottomToolStripPanel;
         private System.Windows.Forms.ToolStripPanel TopToolStripPanel;
@@ -2021,5 +2030,7 @@
         private System.Windows.Forms.TableLayoutPanel RightTable;
         private System.Windows.Forms.Panel Sensorpanel;
         private System.Windows.Forms.Panel Navipanel;
+        private System.Windows.Forms.ToolStripButton OpenSensorView;
+        private System.Windows.Forms.OpenFileDialog openXtfFileDialog;
     }
 }

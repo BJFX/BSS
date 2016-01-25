@@ -39,6 +39,7 @@ namespace Demo
         private bool bPanel2triger;
 
         private int rightpanelminwidth = 400;
+        public static MainForm mf;
         public MainForm()
         {
             InitializeComponent();
@@ -68,7 +69,7 @@ namespace Demo
             }
             if (BssView1 == child)
             {
-
+                BssView1.Close();
                 BssView1 = null;
                 if (BssView2 != null)
                     ShowView2Max();
@@ -77,12 +78,18 @@ namespace Demo
             }
             if (BssView2 == child)
             {
-
+                BssView2.Close();
                 BssView2 = null;
                 if (BssView1 != null)
                         ShowView1Max();
                else
                         NoneBssView();
+            }
+            if (BssView1 == null && BssView2 == null)
+            {
+                PlaybackTime.Stop();
+                if (playbackFileStream != null)
+                    playbackFileStream.Close();
             }
         }
         private void Help_Click(object sender, EventArgs e)
@@ -110,11 +117,14 @@ namespace Demo
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            mf = this;
             PlaybackTime.Enabled = false;
             DataSaveBox.BackColor = Color.Red;
             ShowInfoRegion.Checked = bShowInfo;
             splitViewer.SplitterDistance = splitViewer.Width;
             NoneBssView();
+            towFishToolStripMenuItem_Click(sender, e);
+            StatusLabel.Text = "就绪";
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -471,6 +481,155 @@ namespace Demo
             }
         }
         
+    
+        #region system Menu
+        private void towFishToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            hardDiskToolStripMenuItem.Checked = false;
+            towFishToolStripMenuItem.Checked = true;
+            Configuration.DiskMode = false;
+            OpenBtn.Enabled = Configuration.DiskMode;
+            SpeedBtn.Enabled = Configuration.DiskMode;
+            SlowBtn.Enabled = Configuration.DiskMode;
+            ResetBtn.Enabled = Configuration.DiskMode;
+            Open2Btn.Enabled = Configuration.DiskMode;
+            Speed2Btn.Enabled = Configuration.DiskMode;
+            Slow2Btn.Enabled = Configuration.DiskMode;
+            Reset2Btn.Enabled = Configuration.DiskMode;
+        }
+
+        private void hardDiskToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            hardDiskToolStripMenuItem.Checked = true;
+            towFishToolStripMenuItem.Checked = false;
+            Configuration.DiskMode = true;
+            OpenBtn.Enabled = Configuration.DiskMode;
+            SpeedBtn.Enabled = Configuration.DiskMode;
+            SlowBtn.Enabled = Configuration.DiskMode;
+            ResetBtn.Enabled = Configuration.DiskMode;
+            Open2Btn.Enabled = Configuration.DiskMode;
+            Speed2Btn.Enabled = Configuration.DiskMode;
+            Slow2Btn.Enabled = Configuration.DiskMode;
+            Reset2Btn.Enabled = Configuration.DiskMode;
+        }
+        private void ShowBss_Click(object sender, EventArgs e)
+        {
+            if (BssView1 == null)//没有侧扫1窗口
+            {
+                BssView1 = new ChartForm();
+                //BssView1.TopLevel = false;
+                BssView1.MdiParent =this ;
+                BssView1.Parent = Bss1Panel;
+                
+                BssView1.WindowState = FormWindowState.Normal;
+                BssView1.Show();
+                InitMenu1();
+                if (BssView2 == null)//没有view2
+                    ShowView1Max();
+                else
+                    ShowAllBssView();
+            }
+            else if (BssView2 == null)//没有侧扫2窗口
+            {
+                BssView2 = new ChartForm();
+                //BssView2. TopLevel = false;
+                BssView2.MdiParent =this ;
+                BssView2.Parent = Bss2Panel;
+                
+                BssView2.WindowState = FormWindowState.Normal;
+                BssView2.Show();
+                InitMenu2();
+                //BssView2.Update();
+                
+                ShowAllBssView();
+            }
+            else//2个BSS
+            {
+
+            }
+            
+        }
+        private void ShowNavi_Click(object sender, EventArgs e)
+        {
+            if (!bShowNavi)
+            {
+                if(NaviView==null)
+                    NaviView = new NavigationView(this);
+                NaviView.MdiParent = this;
+                NaviView.Parent = Navipanel;
+                NaviView.Dock = DockStyle.Fill;
+                NaviView.Show();
+                bShowNavi = true;
+                if(SensorView==null)
+                    ShowNaviOnly();
+                else
+                    ShowNaviAndSensor();
+            }
+            else
+            {
+                if (NaviView != null)
+                {
+                    NaviView.Close();
+                }
+                if (SensorView == null)
+                    NoneNaviAndSensor();
+                else
+                    ShowSensorOnly();
+                bShowNavi = false;
+            }
+        }
+        
+
+        private void ShowSensor_Click(object sender, EventArgs e)
+        {
+            if (!bShowSensor)
+            {
+                if(SensorView==null)
+                    SensorView = new SensorForm(this);
+                SensorView.MdiParent = this;
+                SensorView.Parent = Sensorpanel;
+                SensorView.Dock = DockStyle.Fill;
+                SensorView.Show();
+                bShowSensor = true;
+                if(NaviView==null)
+                    ShowSensorOnly();
+                else
+                    ShowNaviAndSensor();
+            }
+            else
+            {
+                if(SensorView!=null)
+                    SensorView.Close();
+                bShowSensor = false;
+                if (NaviView == null)
+                    NoneNaviAndSensor();
+                else
+                    ShowNaviOnly();
+            }
+        }
+
+        private void ShowRaw_Click(object sender, EventArgs e)
+        {
+
+        }
+        private void ShowInfoRegion_Click(object sender, EventArgs e)
+        {
+            if (bShowInfo == true)
+            {
+                DataPanel.Height = 0;
+                bShowInfo = false;
+                ShowInfoRegion.Checked = bShowInfo;
+            }
+            else
+            {
+                DataPanel.Height = 107;
+                bShowInfo = true;
+                ShowInfoRegion.Checked = bShowInfo;
+            }
+
+        }
+        #endregion
+
         #region layout
         //第一个图放大（第二图关闭或创建第一个图）
         private void ShowView1Max()
@@ -479,7 +638,7 @@ namespace Demo
             chartmenubar2.Visible = false;
             LeftTable.RowStyles[0].Height = 30;
             LeftTable.RowStyles[1].SizeType = SizeType.Percent;
-            LeftTable.RowStyles[1].Height= 100;
+            LeftTable.RowStyles[1].Height = 100;
             LeftTable.RowStyles[2].Height = 0;
             LeftTable.RowStyles[3].SizeType = SizeType.Percent;
             LeftTable.RowStyles[3].Height = 0;
@@ -523,7 +682,7 @@ namespace Demo
         private void ShowNaviOnly()
         {
             if (splitViewer.SplitterDistance + rightpanelminwidth > splitViewer.Width)
-                splitViewer.SplitterDistance = splitViewer.Width - rightpanelminwidth-7;
+                splitViewer.SplitterDistance = splitViewer.Width - rightpanelminwidth - 7;
             splitViewer.Panel2MinSize = 400;
             RightTable.RowStyles[0].SizeType = SizeType.Percent;
             RightTable.RowStyles[0].Height = 100;
@@ -533,11 +692,11 @@ namespace Demo
         private void ShowSensorOnly()
         {
             if (splitViewer.SplitterDistance + rightpanelminwidth > splitViewer.Width)
-                splitViewer.SplitterDistance = splitViewer.Width - rightpanelminwidth-7;
+                splitViewer.SplitterDistance = splitViewer.Width - rightpanelminwidth - 7;
             splitViewer.Panel2MinSize = 400;
             RightTable.RowStyles[0].Height = 0;
             RightTable.RowStyles[0].SizeType = SizeType.Percent;
-            
+
             RightTable.RowStyles[1].Height = 100;
             RightTable.RowStyles[1].SizeType = SizeType.Percent;
         }
@@ -551,17 +710,17 @@ namespace Demo
         private void NoneNaviAndSensor()
         {
             splitViewer.Panel2MinSize = 0;
-            splitViewer.SplitterDistance = splitViewer.Width+7;
+            splitViewer.SplitterDistance = splitViewer.Width + 7;
         }
-        #endregion
+
         private void InitMenu1()
         {
             Chart1Title.Text = "----------";
             RangeSelectBox.Text = "150";
-            OpenBtn.Enabled = false;
-            SpeedBtn.Enabled = false;
-            SlowBtn.Enabled = false;
-            ResetBtn.Enabled = false;
+            OpenBtn.Enabled = Configuration.DiskMode;
+            SpeedBtn.Enabled = Configuration.DiskMode;
+            SlowBtn.Enabled = Configuration.DiskMode;
+            ResetBtn.Enabled = Configuration.DiskMode;
             CableOutInput.Value = 5;
             StartInput.Value = 1;
             EndInput.Value = 70;
@@ -570,131 +729,14 @@ namespace Demo
         {
             Chart2Title.Text = "----------";
             Range2SelectBox.Text = "150";
-            Open2Btn.Enabled = false;
-            Speed2Btn.Enabled = false;
-            Slow2Btn.Enabled = false;
-            Reset2Btn.Enabled = false;
+            Open2Btn.Enabled = Configuration.DiskMode;
+            Speed2Btn.Enabled = Configuration.DiskMode;
+            Slow2Btn.Enabled = Configuration.DiskMode;
+            Reset2Btn.Enabled = Configuration.DiskMode;
             CableOutInput2.Value = 5;
             StartInput2.Value = 1;
             EndInput2.Value = 70;
         }
-        #region Menu
-        private void ShowBss_Click(object sender, EventArgs e)
-        {
-            if (BssView1 == null)//没有侧扫1窗口
-            {
-                BssView1 = new ChartForm(this);
-                //BssView1.TopLevel = false;
-                BssView1.MdiParent =this ;
-                BssView1.Parent = Bss1Panel;
-                
-                BssView1.WindowState = FormWindowState.Normal;
-                BssView1.Show();
-                InitMenu1();
-                if (BssView2 == null)//没有view2
-                    ShowView1Max();
-                else
-                    ShowAllBssView();
-            }
-            else if (BssView2 == null)//没有侧扫2窗口
-            {
-                BssView2 = new ChartForm(this);
-                //BssView2. TopLevel = false;
-                BssView2.MdiParent =this ;
-                BssView2.Parent = Bss2Panel;
-                
-                BssView2.WindowState = FormWindowState.Normal;
-                BssView2.Show();
-                InitMenu2();
-                //BssView2.Update();
-                
-                ShowAllBssView();
-            }
-            else//2个BSS
-            {
-
-            }
-            
-        }
-        private void ShowNavi_Click(object sender, EventArgs e)
-        {
-            if (!bShowNavi)
-            {
-                if(NaviView==null)
-                    NaviView = new NavigationView(this);
-                NaviView.MdiParent = this;
-                NaviView.Parent = Navipanel;
-                NaviView.Dock = DockStyle.Fill;
-                NaviView.Show();
-                bShowNavi = true;
-                if(SensorView==null)
-                    ShowNaviOnly();
-                else
-                    ShowNaviAndSensor();
-            }
-            else
-            {
-                if(NaviView!=null)
-                    ChildFormClose(NaviView);
-                if (SensorView == null)
-                    NoneNaviAndSensor();
-                else
-                    ShowSensorOnly();
-                bShowNavi = false;
-            }
-        }
-        
-
-        private void ShowSensor_Click(object sender, EventArgs e)
-        {
-            if (!bShowSensor)
-            {
-                if(SensorView==null)
-                    SensorView = new SensorForm(this);
-                SensorView.MdiParent = this;
-                SensorView.Parent = Sensorpanel;
-                SensorView.Dock = DockStyle.Fill;
-                SensorView.Show();
-                bShowSensor = true;
-                if(NaviView==null)
-                    ShowSensorOnly();
-                else
-                    ShowNaviAndSensor();
-            }
-            else
-            {
-                if(SensorView!=null)
-                    ChildFormClose(SensorView);
-                bShowSensor = false;
-                if (NaviView == null)
-                    NoneNaviAndSensor();
-                else
-                    ShowNaviOnly();
-            }
-        }
-
-        private void ShowRaw_Click(object sender, EventArgs e)
-        {
-
-        }
-        private void ShowInfoRegion_Click(object sender, EventArgs e)
-        {
-            if (bShowInfo == true)
-            {
-                DataPanel.Height = 0;
-                bShowInfo = false;
-                ShowInfoRegion.Checked = bShowInfo;
-            }
-            else
-            {
-                DataPanel.Height = 107;
-                bShowInfo = true;
-                ShowInfoRegion.Checked = bShowInfo;
-            }
-
-        }
-        #endregion
-
         private void MainForm_SizeChanged(object sender, EventArgs e)
         {
             Point last1, last2, newp;
@@ -737,7 +779,7 @@ namespace Demo
         private void Panel1_Scroll(object sender, ScrollEventArgs e)
         {
             bPanel1triger = true;
-            if (!bPanel2triger)
+            if (!bPanel2triger&&BssView2!=null)
             {
                 if(e.ScrollOrientation == ScrollOrientation.VerticalScroll)
                     Bss2Panel.VerticalScroll.Value = e.NewValue;
@@ -751,7 +793,7 @@ namespace Demo
         {
 
             bPanel2triger = true;
-            if (!bPanel1triger)
+            if (!bPanel1triger&&BssView1!=null)
             {
                 if (e.ScrollOrientation == ScrollOrientation.VerticalScroll)
                     Bss1Panel.VerticalScroll.Value = e.NewValue;
@@ -776,13 +818,87 @@ namespace Demo
             Close();
             
         }
+        #endregion
+
+        #region tool button
+        private void TaskWizard_Click(object sender, EventArgs e)
+        {
+            ConnectForm cf  =new ConnectForm();
+            cf.ShowDialog();
+        }
+
+        private void OpenBssView_Click(object sender, EventArgs e)
+        {
+            ShowBss_Click(sender, e);
+        }
+
+        private void OpenNaviView_Click(object sender, EventArgs e)
+        {
+            ShowNavi_Click(sender,e);
+            ShowNavi.Checked = (NaviView!=null);
+        }
+        private void OpenSensorView_Click(object sender, EventArgs e)
+        {
+            ShowSensor_Click(sender,e);
+            ShowSensor.Checked = (SensorView!=null);
+        }
+        private void NaviTrackSet_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void SensorSetup_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void SystemSetup_Click(object sender, EventArgs e)
+        {
+
+        }
+        #endregion
+
+        #region menu event
+        private void OpenBtn_Click(object sender, EventArgs e)
+        {
+            if (openXtfFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                MainForm.mf.filename = openXtfFileDialog.SafeFileName;
+                MainForm.mf.fi = new FileInfo(openXtfFileDialog.FileName);
+                if (MainForm.mf.playbackFileStream != null)
+                    MainForm.mf.playbackFileStream.Close();
+                MainForm.mf.playbackFileStream = new BinaryReader(openXtfFileDialog.OpenFile());
+                this.Text += "-回放" + " - " + filename;
+
+                MainForm.mf.PlaybackTime.Enabled = true;
+                MainForm.mf.PlaybackTime.Interval = MainForm.mf.tick;
+                MainForm.mf.PlaybackTime.Start();
+                MainForm.mf.offset = 0;
+                BssView1.Initial();
+
+            }
+        }
+        private void Open2Btn_Click(object sender, EventArgs e)
+        {
+            if (openXtfFileDialog.ShowDialog() == DialogResult.OK)
+            {
+               filename = openXtfFileDialog.SafeFileName;
+               fi = new FileInfo(openXtfFileDialog.FileName);
+                if (playbackFileStream != null)
+                    playbackFileStream.Close();
+                playbackFileStream = new BinaryReader(openXtfFileDialog.OpenFile());
+                this.Text += "-回放" + " - " + filename;
+
+                PlaybackTime.Enabled = true;
+                PlaybackTime.Interval = MainForm.mf.tick;
+                PlaybackTime.Start();
+                offset = 0;
+                BssView2.Initial();
+
+            }
+        }
+        #endregion
 
 
-
-       
-
-        
-
-        
     }
 }

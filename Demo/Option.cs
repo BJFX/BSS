@@ -4,18 +4,11 @@ using System.Text;
 
 namespace Demo
 {
-    /// <summary>
-    /// 系统设置
-    /// </summary>
-    public class Option
-    {
-
-    }
 
     public class ChartOption
     {
-        public int Mode;//0:tcp,1:file
-        
+        public int Frequence = 0;//0:低频 1:高频
+        public bool bShowRaw = true;
     }
 
     public class NaviOption
