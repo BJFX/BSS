@@ -11,7 +11,7 @@ namespace Demo
         public static string SlnName;
         public static string DataPath;
         public static string prefix;
-        public static int Intelval;
+        public static int Interval;
         public static int SaveOption;//0,1,2
         public static string TargetCatalogFile;
         public static string SurveyRouteFile;

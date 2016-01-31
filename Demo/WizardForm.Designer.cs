@@ -140,6 +140,7 @@
             this.wizardPage6,
             this.wizardPage7,
             this.wizardPage8});
+            this.SurveyWizard.FinishButtonClick += new System.ComponentModel.CancelEventHandler(this.SurveyWizard_FinishButtonClick);
             // 
             // NamePage
             // 

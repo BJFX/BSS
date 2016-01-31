@@ -56,10 +56,14 @@ namespace ChartBox
             get { return _displayWidthMax; }
             set { _displayWidthMax = value; }
         }
-        public void SetLevel(int value)
+        public void SetColor(Color startColor,Color endColor,float gamma)
         {
-            if(GisFrame!=null) 
-                GisFrame.level = value;
+            if (GisFrame != null)
+            {
+                GisFrame.StartColor = startColor;
+                GisFrame.EndColor = endColor;
+                GisFrame.Gamma = gamma;
+            }
         }
         public int DisplayAmpMax
         {
@@ -87,5 +91,14 @@ namespace ChartBox
                 }
                  
         }
+
+        private void GisChart_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                base.OnMouseClick(e);
+            }
+        }
+
     }
 }

@@ -24,7 +24,7 @@ namespace Demo
             sb.AppendLine();
             sb.AppendLine("数据文件目录：" + Configuration.DataPath);
             sb.AppendLine("数据文件前缀：" + Configuration.prefix);
-            sb.AppendLine("数据文件保存间隔（分）：" + Configuration.Intelval.ToString());
+            sb.AppendLine("数据文件保存间隔（分）：" + Configuration.Interval.ToString());
             sb.AppendLine();
             sb.AppendLine("目标文件目录：" + Configuration.TargetCatalogFile);
             sb.AppendLine();
@@ -148,7 +148,7 @@ namespace Demo
         {
             Configuration.DataPath = SelectPath.Text;
             Configuration.prefix = PrefixBox.Text;
-            Configuration.Intelval = StoreInteval.Value;
+            Configuration.Interval = StoreInteval.Value;
             Configuration.SaveOption = OnlyRawRd.Checked ? 0 : OnlyResultRd.Checked ? 1 : 2;
         }
 
@@ -175,6 +175,14 @@ namespace Demo
                     MessageBox.Show("数据输入有误！");
                     e.Cancel = true;
                 }
+            }
+        }
+
+        private void SurveyWizard_FinishButtonClick(object sender, CancelEventArgs e)
+        {
+            if (Configuration.SaveStateFileAfterSurveyFinish)
+            {
+                
             }
         }
 

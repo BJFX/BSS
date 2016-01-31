@@ -42,9 +42,11 @@
             this.GisChart.Location = new System.Drawing.Point(0, 0);
             this.GisChart.Margin = new System.Windows.Forms.Padding(4);
             this.GisChart.Name = "GisChart";
-            this.GisChart.Size = new System.Drawing.Size(650, 450);
+            this.GisChart.Size = new System.Drawing.Size(644, 416);
+            this.GisChart.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.GisChart.TabIndex = 1;
             this.GisChart.TabStop = false;
+            this.GisChart.MouseClick += new System.Windows.Forms.MouseEventHandler(this.GisChart_MouseClick);
             // 
             // ChartG
             // 
@@ -56,7 +58,7 @@
             this.Font = new System.Drawing.Font("宋体", 12F);
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "ChartG";
-            this.Size = new System.Drawing.Size(650, 450);
+            this.Size = new System.Drawing.Size(644, 416);
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.GisChart)).EndInit();
             this.ResumeLayout(false);

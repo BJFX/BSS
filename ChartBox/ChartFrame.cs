@@ -10,7 +10,9 @@ namespace ChartBox
 {
     public class ChartFrame
     {
-        public int level = 1;
+        public Color StartColor = Color.Black;
+        public Color EndColor = Color.White;
+        public float Gamma = 1;
         Point[] p;
         private double[] wave;
         double min = double.MaxValue;
@@ -25,7 +27,7 @@ namespace ChartBox
             wave = new double[len];
             Ymax = amp;
             Xmax = width;
-            fftcanvas = new Bitmap(676, 374);
+            fftcanvas = new Bitmap(644, 416);
             Graphics g = Graphics.FromImage(fftcanvas);
             g.Clear(Color.Black);
             g.Dispose();
@@ -105,7 +107,6 @@ namespace ChartBox
             int height = fftcanvas.Height;
 
             double range = 65535;
-            int GisLevel = level;
             // lock image
             PixelFormat format = fftcanvas.PixelFormat;
             BitmapData data = fftcanvas.LockBits(new Rectangle(0, 0, width, height), ImageLockMode.ReadOnly, format);
@@ -141,10 +142,12 @@ namespace ChartBox
                         {
                             double amplitude = (wave[(int)(distance * y)]);
 
-                            int color = GetColor(amplitude, GisLevel);
-                            pixel[0] = (byte)color;
-                            pixel[1] = (byte)color;
-                            pixel[2] = (byte)color;
+                            byte color = GetColor(amplitude,0);
+                            pixel[0] = color;
+                            color = GetColor(amplitude, 1);
+                            pixel[1] = color;
+                            color = GetColor(amplitude, 2);
+                            pixel[2] = color;
                             pixel[3] = 255;
                             pixel +=4;
                             pixel += offset;
@@ -167,22 +170,39 @@ namespace ChartBox
 
 
         /// <summary>
-        /// Get color in the range of 0-255 for amplitude sample
+        /// Get color
         /// </summary>
-        /// <param name="min"></param>
-        /// <param name="max"></param>
-        /// <param name="range"></param>
-        /// <param name="amplitude"></param>
+
         /// <returns></returns>
-        private static int GetColor(double amplitude,int level)
+        private byte GetColor(double amplitude,int index)
         {
-            double color;
-            color = Math.Sqrt(amplitude) * level;
+            double color = 0;
+            double max = 255;
+            switch (index)
+            {
+                case 0:
+                    color = amplitude*(EndColor.B - StartColor.B)/255 + StartColor.B;
+                    max = EndColor.B - StartColor.B;
+                    break;
+                case 1:
+                    color = amplitude * (EndColor.G - StartColor.G) / 255 + StartColor.G;
+                    max = EndColor.G - StartColor.G;
+                    break;
+                case 2:
+                    color = amplitude * (EndColor.R - StartColor.R) / 255 + StartColor.R;
+                    max = EndColor.R - StartColor.R;
+                    break;
+                default:
+                    color = 255;
+                    break;
+
+            }
+            color = Math.Pow(color / max, Gamma) * max;
             if (color > 255)
                 color = 255;
             if (color < 0)
                 color = 0;
-            return (int)color;
+            return (byte)color;
         }
         public void SetTitle(ref PictureBox picbox,string title)
         {

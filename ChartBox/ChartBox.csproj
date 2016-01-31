@@ -57,6 +57,12 @@
     <Compile Include="WaveBox.Designer.cs">
       <DependentUpon>WaveBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="WaveBoxV.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WaveBoxV.Designer.cs">
+      <DependentUpon>WaveBoxV.cs</DependentUpon>
+    </Compile>
     <Compile Include="WaveFrame.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -69,6 +75,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="WaveBox.resx">
       <DependentUpon>WaveBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WaveBoxV.resx">
+      <DependentUpon>WaveBoxV.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

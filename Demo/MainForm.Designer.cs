@@ -1049,6 +1049,9 @@
             // 
             // 原始数据ToolStripMenuItem
             // 
+            this.原始数据ToolStripMenuItem.Checked = true;
+            this.原始数据ToolStripMenuItem.CheckOnClick = true;
+            this.原始数据ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.原始数据ToolStripMenuItem.Name = "原始数据ToolStripMenuItem";
             this.原始数据ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.原始数据ToolStripMenuItem.Text = "原始数据";
@@ -1373,28 +1376,37 @@
             // StopBtn
             // 
             this.StopBtn.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText;
+            this.StopBtn.Enabled = false;
             this.StopBtn.Name = "StopBtn";
             this.StopBtn.Text = "停止";
+            this.StopBtn.Click += new System.EventHandler(this.StopBtn_Click);
             // 
             // StartBtn
             // 
             this.StartBtn.Name = "StartBtn";
             this.StartBtn.Text = "开始";
+            this.StartBtn.Click += new System.EventHandler(this.StartBtn_Click);
             // 
             // SpeedBtn
             // 
+            this.SpeedBtn.Enabled = false;
             this.SpeedBtn.Name = "SpeedBtn";
             this.SpeedBtn.Text = "加速";
+            this.SpeedBtn.Click += new System.EventHandler(this.SpeedBtn_Click);
             // 
             // SlowBtn
             // 
+            this.SlowBtn.Enabled = false;
             this.SlowBtn.Name = "SlowBtn";
             this.SlowBtn.Text = "减速";
+            this.SlowBtn.Click += new System.EventHandler(this.SlowBtn_Click);
             // 
             // ResetBtn
             // 
+            this.ResetBtn.Enabled = false;
             this.ResetBtn.Name = "ResetBtn";
             this.ResetBtn.Text = "重置";
+            this.ResetBtn.Click += new System.EventHandler(this.ResetBtn_Click);
             // 
             // MeasureBtn
             // 
@@ -1405,16 +1417,19 @@
             // 
             this.TVGSetBtn.Name = "TVGSetBtn";
             this.TVGSetBtn.Text = "TVG设置";
+            this.TVGSetBtn.Click += new System.EventHandler(this.TVGSetBtn_Click);
             // 
             // ColorBtn
             // 
             this.ColorBtn.Name = "ColorBtn";
             this.ColorBtn.Text = "颜色";
+            this.ColorBtn.Click += new System.EventHandler(this.ColorBtn_Click);
             // 
             // OptionBtn
             // 
             this.OptionBtn.Name = "OptionBtn";
             this.OptionBtn.Text = "设置";
+            this.OptionBtn.Click += new System.EventHandler(this.OptionBtn_Click);
             // 
             // labelItem1
             // 
@@ -1433,6 +1448,7 @@
             this.ApplyBtn.AutoCheckOnClick = true;
             this.ApplyBtn.Name = "ApplyBtn";
             this.ApplyBtn.Text = "应用";
+            this.ApplyBtn.Click += new System.EventHandler(this.ApplyBtn_Click);
             // 
             // labelItem2
             // 
@@ -1654,28 +1670,37 @@
             // Stop2Btn
             // 
             this.Stop2Btn.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText;
+            this.Stop2Btn.Enabled = false;
             this.Stop2Btn.Name = "Stop2Btn";
             this.Stop2Btn.Text = "停止";
+            this.Stop2Btn.Click += new System.EventHandler(this.Stop2Btn_Click);
             // 
             // Start2Btn
             // 
             this.Start2Btn.Name = "Start2Btn";
             this.Start2Btn.Text = "开始";
+            this.Start2Btn.Click += new System.EventHandler(this.Start2Btn_Click);
             // 
             // Speed2Btn
             // 
+            this.Speed2Btn.Enabled = false;
             this.Speed2Btn.Name = "Speed2Btn";
             this.Speed2Btn.Text = "加速";
+            this.Speed2Btn.Click += new System.EventHandler(this.Speed2Btn_Click);
             // 
             // Slow2Btn
             // 
+            this.Slow2Btn.Enabled = false;
             this.Slow2Btn.Name = "Slow2Btn";
             this.Slow2Btn.Text = "减速";
+            this.Slow2Btn.Click += new System.EventHandler(this.Slow2Btn_Click);
             // 
             // Reset2Btn
             // 
+            this.Reset2Btn.Enabled = false;
             this.Reset2Btn.Name = "Reset2Btn";
             this.Reset2Btn.Text = "重置";
+            this.Reset2Btn.Click += new System.EventHandler(this.Reset2Btn_Click);
             // 
             // Measure2Btn
             // 
@@ -1686,16 +1711,19 @@
             // 
             this.TVGSet2Btn.Name = "TVGSet2Btn";
             this.TVGSet2Btn.Text = "TVG设置";
+            this.TVGSet2Btn.Click += new System.EventHandler(this.TVGSet2Btn_Click);
             // 
             // Color2Btn
             // 
             this.Color2Btn.Name = "Color2Btn";
             this.Color2Btn.Text = "颜色";
+            this.Color2Btn.Click += new System.EventHandler(this.Color2Btn_Click);
             // 
             // Option2Btn
             // 
             this.Option2Btn.Name = "Option2Btn";
             this.Option2Btn.Text = "设置";
+            this.Option2Btn.Click += new System.EventHandler(this.Option2Btn_Click);
             // 
             // labelItem5
             // 
@@ -1713,6 +1741,7 @@
             // 
             this.Apply2Btn.Name = "Apply2Btn";
             this.Apply2Btn.Text = "应用";
+            this.Apply2Btn.Click += new System.EventHandler(this.Apply2Btn_Click);
             // 
             // labelItem6
             // 

@@ -13,21 +13,21 @@ namespace Demo
 {
     public partial class MainForm : OfficeForm
     {
+        private string Title = "Version 2.01 BSS Sonar Processing System –UAI（北京联合声信海洋技术有限公司）";
         private XTFFILEHEADER Header = new XTFFILEHEADER();
         private XTFPINGCHANHEADER PingchanHeader = new XTFPINGCHANHEADER();
         private XTFPINGHEADER PingHeader = new XTFPINGHEADER();
-        public int pixellevel = 3;
         //used for file mode
         public BinaryReader playbackFileStream;
         public FileInfo fi = null;
         public long offset = 0;
         public string filename;
-        public int tick = 64;
+        public int tick = 128;
         //show flag of windows
-        private bool bShowNavi = false;
-        private bool bShowSensor = false;
-        private bool bShowRaw = false;
-        private bool bShowInfo = true;
+        public bool bShowNavi = false;
+        public bool bShowSensor = false;
+        public bool bShowRaw = false;
+        public bool bShowInfo = true;
         private int block = 1024;
         
         //windows collection
@@ -37,7 +37,8 @@ namespace Demo
         private ChartForm BssView2 = null;
         private bool bPanel1triger;
         private bool bPanel2triger;
-
+        private bool bView1Playing = false;
+        private bool bView2Playing = false;
         private int rightpanelminwidth = 400;
         public static MainForm mf;
         public MainForm()
@@ -57,7 +58,7 @@ namespace Demo
                     NoneNaviAndSensor();
                 ShowNavi.Checked = false;
             }
-            if (SensorView == child)
+            else if (SensorView == child)
             {
                 SensorView = null;
                 bShowSensor = false;
@@ -67,34 +68,39 @@ namespace Demo
                     NoneNaviAndSensor();
                 ShowSensor.Checked = false;
             }
-            if (BssView1 == child)
+            else if (BssView1 == child)
             {
                 BssView1.Close();
                 BssView1 = null;
                 if (BssView2 != null)
                     ShowView2Max();
                 else
+                {
                     NoneBssView();
+                }
             }
-            if (BssView2 == child)
+            else if (BssView2 == child)
             {
                 BssView2.Close();
                 BssView2 = null;
                 if (BssView1 != null)
-                        ShowView1Max();
-               else
-                        NoneBssView();
+                    ShowView1Max();
+                else
+                {
+                    NoneBssView();
+                }
             }
             if (BssView1 == null && BssView2 == null)
             {
                 PlaybackTime.Stop();
                 if (playbackFileStream != null)
                     playbackFileStream.Close();
+                this.Text = Title;
             }
         }
         private void Help_Click(object sender, EventArgs e)
         {
-            AboutBox ab = new AboutBox();
+            var ab = new AboutBox();
             ab.Show();
         }
 
@@ -118,6 +124,7 @@ namespace Demo
         private void MainForm_Load(object sender, EventArgs e)
         {
             mf = this;
+            bShowRaw = true;
             PlaybackTime.Enabled = false;
             DataSaveBox.BackColor = Color.Red;
             ShowInfoRegion.Checked = bShowInfo;
@@ -152,7 +159,7 @@ namespace Demo
         {
             float persentage = offset * 100 / fi.Length;
             //playpercent.Value = (int)persentage;
-            this.Text = "XTF回放" + " - " + filename + "(" + persentage.ToString("F01") + "%)";
+            this.Text = Title + "-回放" + " - " + filename + "(" + persentage.ToString("F01") + "%)";
             GetOnePingData();
         }
 
@@ -169,15 +176,11 @@ namespace Demo
                 playbackFileStream.Close();
                 PlaybackTime.Enabled = false;
                 float persentage = offset * 100 / fi.Length;
-                this.Text = "XTF回放" + " - " + filename + "(" + persentage.ToString("F01") + "%)";
-                //playpercent.Value = (int)persentage;
-                tick = 512;
+                this.Text = Title + "-回放" + " - " + filename + "(" + persentage.ToString("F01") + "%)";
+                bView1Playing = false;
+                bView2Playing = false;
                 offset = 0;
-                //回放ToolStripMenuItem.Enabled = true;
-                //暂停ToolStripMenuItem.Enabled = false;
-                //重置ToolStripMenuItem.Enabled = false;
-                //加速ToolStripMenuItem.Enabled = false;
-                //减速ToolStripMenuItem.Enabled = false;
+
                 return;
             }
             var magic = playbackFileStream.ReadUInt16();
@@ -210,8 +213,18 @@ namespace Demo
                         uint DataNeedToRead = Header.ChanInfo[PingchanHeader.ChannelNumber].bytesPerSample * PingchanHeader.NumSamples;
                         byte[] buf = playbackFileStream.ReadBytes((int)DataNeedToRead);
                         offset = playbackFileStream.BaseStream.Position;
-                        //display
 
+                        //display
+                        if (BssView1 != null && bView1Playing)
+                        {
+
+                            BssView1.DisplayChart((int)PingchanHeader.ChannelNumber, (int) DataNeedToRead, buf);
+                        }
+                        if (BssView2 != null && bView2Playing)
+                        {
+
+                            BssView2.DisplayChart((int)PingchanHeader.ChannelNumber, (int)DataNeedToRead, buf);
+                        }
                         if (offset >= fi.Length)
                             goto ReadMagic;//file end 
                     }
@@ -489,13 +502,12 @@ namespace Demo
             towFishToolStripMenuItem.Checked = true;
             Configuration.DiskMode = false;
             OpenBtn.Enabled = Configuration.DiskMode;
-            SpeedBtn.Enabled = Configuration.DiskMode;
-            SlowBtn.Enabled = Configuration.DiskMode;
-            ResetBtn.Enabled = Configuration.DiskMode;
+            StartBtn.Enabled = true;
+            Start2Btn.Enabled = true;
+            StopBtn.Enabled = false;
+            Stop2Btn.Enabled = false;
             Open2Btn.Enabled = Configuration.DiskMode;
-            Speed2Btn.Enabled = Configuration.DiskMode;
-            Slow2Btn.Enabled = Configuration.DiskMode;
-            Reset2Btn.Enabled = Configuration.DiskMode;
+            
         }
 
         private void hardDiskToolStripMenuItem_Click(object sender, EventArgs e)
@@ -504,13 +516,12 @@ namespace Demo
             towFishToolStripMenuItem.Checked = false;
             Configuration.DiskMode = true;
             OpenBtn.Enabled = Configuration.DiskMode;
-            SpeedBtn.Enabled = Configuration.DiskMode;
-            SlowBtn.Enabled = Configuration.DiskMode;
-            ResetBtn.Enabled = Configuration.DiskMode;
+            StartBtn.Enabled = false;
+            Start2Btn.Enabled = false;
+            StopBtn.Enabled = false;
+            Stop2Btn.Enabled = false;
             Open2Btn.Enabled = Configuration.DiskMode;
-            Speed2Btn.Enabled = Configuration.DiskMode;
-            Slow2Btn.Enabled = Configuration.DiskMode;
-            Reset2Btn.Enabled = Configuration.DiskMode;
+            
         }
         private void ShowBss_Click(object sender, EventArgs e)
         {
@@ -520,9 +531,11 @@ namespace Demo
                 //BssView1.TopLevel = false;
                 BssView1.MdiParent =this ;
                 BssView1.Parent = Bss1Panel;
-                
                 BssView1.WindowState = FormWindowState.Normal;
+                BssView1.Location = new Point((Bss1Panel.Width - BssView1.Width) / 2, 0);
+                BssView1.ShowRaw(bShowRaw);
                 BssView1.Show();
+                if(bView2Playing)
                 InitMenu1();
                 if (BssView2 == null)//没有view2
                     ShowView1Max();
@@ -537,6 +550,8 @@ namespace Demo
                 BssView2.Parent = Bss2Panel;
                 
                 BssView2.WindowState = FormWindowState.Normal;
+                BssView2.Location = new Point((Bss2Panel.Width - BssView2.Width) / 2, 0);
+                BssView2.ShowRaw(bShowRaw);
                 BssView2.Show();
                 InitMenu2();
                 //BssView2.Update();
@@ -610,7 +625,22 @@ namespace Demo
 
         private void ShowRaw_Click(object sender, EventArgs e)
         {
-
+            if (bShowRaw == true)
+            {
+                bShowRaw = false;
+            }
+            else
+            {
+                bShowRaw = true;
+            }
+            if (BssView1 != null)
+            {
+                BssView1.ShowRaw(bShowRaw);
+            }
+            if (BssView2 != null)
+            {
+                BssView2.ShowRaw(bShowRaw);
+            }
         }
         private void ShowInfoRegion_Click(object sender, EventArgs e)
         {
@@ -718,9 +748,7 @@ namespace Demo
             Chart1Title.Text = "----------";
             RangeSelectBox.Text = "150";
             OpenBtn.Enabled = Configuration.DiskMode;
-            SpeedBtn.Enabled = Configuration.DiskMode;
-            SlowBtn.Enabled = Configuration.DiskMode;
-            ResetBtn.Enabled = Configuration.DiskMode;
+            
             CableOutInput.Value = 5;
             StartInput.Value = 1;
             EndInput.Value = 70;
@@ -730,9 +758,7 @@ namespace Demo
             Chart2Title.Text = "----------";
             Range2SelectBox.Text = "150";
             Open2Btn.Enabled = Configuration.DiskMode;
-            Speed2Btn.Enabled = Configuration.DiskMode;
-            Slow2Btn.Enabled = Configuration.DiskMode;
-            Reset2Btn.Enabled = Configuration.DiskMode;
+
             CableOutInput2.Value = 5;
             StartInput2.Value = 1;
             EndInput2.Value = 70;
@@ -781,6 +807,7 @@ namespace Demo
             bPanel1triger = true;
             if (!bPanel2triger&&BssView2!=null)
             {
+
                 if(e.ScrollOrientation == ScrollOrientation.VerticalScroll)
                     Bss2Panel.VerticalScroll.Value = e.NewValue;
                 if (e.ScrollOrientation == ScrollOrientation.HorizontalScroll)
@@ -795,6 +822,7 @@ namespace Demo
             bPanel2triger = true;
             if (!bPanel1triger&&BssView1!=null)
             {
+                
                 if (e.ScrollOrientation == ScrollOrientation.VerticalScroll)
                     Bss1Panel.VerticalScroll.Value = e.NewValue;
                 if (e.ScrollOrientation == ScrollOrientation.HorizontalScroll)
@@ -863,19 +891,30 @@ namespace Demo
         {
             if (openXtfFileDialog.ShowDialog() == DialogResult.OK)
             {
-                MainForm.mf.filename = openXtfFileDialog.SafeFileName;
-                MainForm.mf.fi = new FileInfo(openXtfFileDialog.FileName);
-                if (MainForm.mf.playbackFileStream != null)
-                    MainForm.mf.playbackFileStream.Close();
-                MainForm.mf.playbackFileStream = new BinaryReader(openXtfFileDialog.OpenFile());
-                this.Text += "-回放" + " - " + filename;
+                filename = openXtfFileDialog.SafeFileName;
+                fi = new FileInfo(openXtfFileDialog.FileName);
+                if (playbackFileStream != null)
+                    playbackFileStream.Close();
+                playbackFileStream = new BinaryReader(openXtfFileDialog.OpenFile());
+                offset = 0;
+                this.Text = Title + "-回放" + " - " + filename + "(" + offset.ToString("F01") + "%)";
 
-                MainForm.mf.PlaybackTime.Enabled = true;
-                MainForm.mf.PlaybackTime.Interval = MainForm.mf.tick;
-                MainForm.mf.PlaybackTime.Start();
-                MainForm.mf.offset = 0;
-                BssView1.Initial();
+                PlaybackTime.Enabled = true;
+                PlaybackTime.Interval = tick;
+                PlaybackTime.Start();
 
+                OpenBtn.Enabled = false;
+                Open2Btn.Enabled = false;
+                bView1Playing = true;
+                bView2Playing = true;
+                SpeedBtn.Enabled = true;
+                Speed2Btn.Enabled = true;
+                SlowBtn.Enabled = true;
+                Slow2Btn.Enabled = true;
+                ResetBtn.Enabled = true;
+                Reset2Btn.Enabled = true;
+                StartBtn.Enabled = false;
+                Start2Btn.Enabled = false;
             }
         }
         private void Open2Btn_Click(object sender, EventArgs e)
@@ -887,17 +926,259 @@ namespace Demo
                 if (playbackFileStream != null)
                     playbackFileStream.Close();
                 playbackFileStream = new BinaryReader(openXtfFileDialog.OpenFile());
-                this.Text += "-回放" + " - " + filename;
+                offset = 0;
+                this.Text = Title + "-回放" + " - " + filename + "(" + offset.ToString("F01") + "%)";
 
                 PlaybackTime.Enabled = true;
-                PlaybackTime.Interval = MainForm.mf.tick;
+                PlaybackTime.Interval = tick;
                 PlaybackTime.Start();
-                offset = 0;
-                BssView2.Initial();
-
+                OpenBtn.Enabled = false;
+                Open2Btn.Enabled = false;
+                bView1Playing = true;
+                bView2Playing = true;
+                SpeedBtn.Enabled = true;
+                Speed2Btn.Enabled = true;
+                SlowBtn.Enabled = true;
+                Slow2Btn.Enabled = true;
+                ResetBtn.Enabled = true;
+                Reset2Btn.Enabled = true;
+                StartBtn.Enabled = false;
+                Start2Btn.Enabled = false;
             }
         }
+        private void StopBtn_Click(object sender, EventArgs e)
+        {
+
+            StartBtn.Enabled = true;
+            bView1Playing = false;
+            StopBtn.Enabled = false;
+            if (Configuration.DiskMode == true)
+            {
+                SpeedBtn.Enabled = false;
+
+                SlowBtn.Enabled = false;
+
+                ResetBtn.Enabled = false;
+            }
+        }
+        private void Stop2Btn_Click(object sender, EventArgs e)
+        {
+            Start2Btn.Enabled = true;
+            bView2Playing = false;
+            Stop2Btn.Enabled = false;
+            if (Configuration.DiskMode == true)
+            {
+
+                Speed2Btn.Enabled = false;
+                Slow2Btn.Enabled = false;
+                Reset2Btn.Enabled = false;
+            }
+        }
+        
+
+        private void SpeedBtn_Click(object sender, EventArgs e)
+        {
+            PlaybackTime.Interval /= 2;
+            if (PlaybackTime.Interval == 2)
+            {
+                SpeedBtn.Enabled = false;
+            }
+
+        }
+        private void Speed2Btn_Click(object sender, EventArgs e)
+        {
+            PlaybackTime.Interval /= 2;
+            if (PlaybackTime.Interval == 2)
+            {
+                Speed2Btn.Enabled = false;
+            }
+        }
+        private void StartBtn_Click(object sender, EventArgs e)
+        {
+
+            if (Configuration.DiskMode == true)
+            {
+                SpeedBtn.Enabled = true;
+                
+                SlowBtn.Enabled = true;
+                
+                ResetBtn.Enabled = true;
+                
+                StartBtn.Enabled = false;
+                StopBtn.Enabled = true;
+                bView1Playing = true;
+                PlaybackTime.Start();
+            }
+            else
+            {
+                //do command
+                this.Text = Title;
+                StartBtn.Enabled = false;
+                StopBtn.Enabled = true;
+                bView1Playing = true;
+                
+            }
+        }
+        private void Start2Btn_Click(object sender, EventArgs e)
+        {
+  
+            if (Configuration.DiskMode == true)
+            {
+                
+                Speed2Btn.Enabled = true;
+                
+                Slow2Btn.Enabled = true;
+                
+                Reset2Btn.Enabled = true;
+                Start2Btn.Enabled = false;
+                Stop2Btn.Enabled = true;
+                bView2Playing = true;
+                PlaybackTime.Start();
+            }
+            else
+            {
+                //do command
+                this.Text = Title;
+                Start2Btn.Enabled = false;
+                Stop2Btn.Enabled = true;
+                bView2Playing = true;
+            }
+        }
+
+        private void SlowBtn_Click(object sender, EventArgs e)
+        {
+            PlaybackTime.Interval *= 2;
+            if (PlaybackTime.Interval == 256)
+            {
+                SlowBtn.Enabled = false;
+            }
+        }
+
+        private void Slow2Btn_Click(object sender, EventArgs e)
+        {
+            PlaybackTime.Interval *= 2;
+            if (PlaybackTime.Interval == 256)
+            {
+                Slow2Btn.Enabled = false;
+            }
+        }
+
+        private void ResetBtn_Click(object sender, EventArgs e)
+        {
+            PlaybackTime.Interval = tick;
+            PlaybackTime.Stop();
+            
+            offset = 0;
+            if (BssView1 != null)
+                BssView1.Initial();
+            if (BssView2 != null)
+                BssView2.Initial();
+            if (playbackFileStream != null)
+                playbackFileStream.Close();
+            playbackFileStream = new BinaryReader(new FileStream(fi.FullName, FileMode.Open));
+            playbackFileStream.BaseStream.Seek(offset, SeekOrigin.Begin);
+            this.Text = Title + "-回放" + " - " + filename + "(" + offset.ToString("F01") + "%)";
+            StartBtn.Enabled = true;
+            Start2Btn.Enabled = true;
+            SpeedBtn.Enabled = true;
+            Speed2Btn.Enabled = true;
+            SlowBtn.Enabled = true;
+            Slow2Btn.Enabled = true;
+            ResetBtn.Enabled = false;
+            StopBtn.Enabled = false;
+            Stop2Btn.Enabled = false;
+        }
+
+        private void Reset2Btn_Click(object sender, EventArgs e)
+        {
+            PlaybackTime.Interval = tick;
+            PlaybackTime.Stop();
+            offset = 0;
+            if (BssView1 != null)
+                BssView1.Initial();
+            if (BssView2 != null)
+                BssView2.Initial();
+            if (playbackFileStream != null)
+                playbackFileStream.Close();
+            playbackFileStream = new BinaryReader(new FileStream(fi.FullName,FileMode.Open));
+            playbackFileStream.BaseStream.Seek(offset, SeekOrigin.Begin);
+            this.Text = Title + "-回放" + " - " + filename + "(" + offset.ToString("F01") + "%)";
+            StartBtn.Enabled = true;
+            Start2Btn.Enabled = true;
+            SpeedBtn.Enabled = true;
+            Speed2Btn.Enabled = true;
+            SlowBtn.Enabled = true;
+            Slow2Btn.Enabled = true;
+            Reset2Btn.Enabled = false;
+            StopBtn.Enabled = false;
+            Stop2Btn.Enabled = false;
+        }
+
+        
+
+        
+
+        private void TVGSetBtn_Click(object sender, EventArgs e)
+        {
+            if (BssView1 != null)
+            {
+                BssView1.PopUpOption(1);
+            }
+        }
+
+        private void TVGSet2Btn_Click(object sender, EventArgs e)
+        {
+            if (BssView2 != null)
+            {
+                BssView2.PopUpOption(1);
+            }
+        }
+
+        private void ColorBtn_Click(object sender, EventArgs e)
+        {
+            if (BssView1 != null)
+            {
+                BssView1.PopUpOption(2);
+            }
+        }
+
+        private void Color2Btn_Click(object sender, EventArgs e)
+        {
+            if (BssView2 != null)
+            {
+                BssView2.PopUpOption(2);
+            }
+        }
+
+        private void OptionBtn_Click(object sender, EventArgs e)
+        {
+            if (BssView1 != null)
+            {
+                BssView1.PopUpOption();
+            }
+        }
+
+        private void Option2Btn_Click(object sender, EventArgs e)
+        {
+            if (BssView2 != null)
+            {
+                BssView2.PopUpOption(1);
+            }
+        }
+
+        private void ApplyBtn_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Apply2Btn_Click(object sender, EventArgs e)
+        {
+
+        }
+
         #endregion
+
+
 
 
     }

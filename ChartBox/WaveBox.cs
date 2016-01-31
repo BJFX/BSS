@@ -75,5 +75,13 @@ namespace ChartBox
             }
 
         }
+
+        private void WaveSection_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                base.OnMouseClick(e);
+            }
+        }
     }
 }
