@@ -360,6 +360,8 @@ namespace Demo
                 PingHeader.WaterTemperature = playbackFileStream.ReadSingle();
                 Templabel.Text = PingHeader.WaterTemperature.ToString("F01") + "°C";
                 PingHeader.Pressure = playbackFileStream.ReadSingle();
+                if (show)
+                    PressLabel.Text = PingHeader.Pressure.ToString("F2")+"Pa";
                 PingHeader.ComputedSoundVelocity = playbackFileStream.ReadSingle();
                 PingHeader.MagX = playbackFileStream.ReadSingle();
                 PingHeader.MagY = playbackFileStream.ReadSingle();
@@ -373,9 +375,10 @@ namespace Demo
                 PingHeader.SpeedLog = playbackFileStream.ReadSingle();
                 PingHeader.Turbidity = playbackFileStream.ReadSingle();
                 PingHeader.ShipSpeed = playbackFileStream.ReadSingle();
-                if (show)
-                    SpeedLabel.Text = PingHeader.ShipSpeed.ToString("f2") + "节";
+                
                 PingHeader.ShipGyro = playbackFileStream.ReadSingle();
+                Courselabel.Text = PingHeader.ShipGyro.ToString("F2") + "°";
+
                 PingHeader.ShipYcoordinate = playbackFileStream.ReadDouble();
                 if (show)
                 {
@@ -404,6 +407,8 @@ namespace Demo
                 PingHeader.FixTimeSecond = playbackFileStream.ReadByte();
                 PingHeader.FixTimeHSecond = playbackFileStream.ReadByte();
                 PingHeader.SensorSpeed = playbackFileStream.ReadSingle();
+                if (show)
+                    SpeedLabel.Text = PingHeader.SensorSpeed.ToString("f2") + "knot";
                 PingHeader.KP = playbackFileStream.ReadSingle();
                 PingHeader.SensorYcoordinate = playbackFileStream.ReadDouble();
                 PingHeader.SensorXcoordinate = playbackFileStream.ReadDouble();
@@ -416,7 +421,8 @@ namespace Demo
                 PingHeader.SensorDepth = playbackFileStream.ReadSingle();
                 Depthlabel.Text = PingHeader.SensorDepth.ToString("F03") + "m";
                 PingHeader.SensorPrimaryAltitude = playbackFileStream.ReadSingle();
-                SonarHeightBox.Text = PingHeader.SensorPrimaryAltitude.ToString("F01");
+                if (show)
+                    SonarHeightBox.Text = PingHeader.SensorPrimaryAltitude.ToString("F01");
                 PingHeader.SensorAuxAltitude = playbackFileStream.ReadSingle();
                 PingHeader.SensorPitch = playbackFileStream.ReadSingle();
                 if (show)
@@ -428,8 +434,7 @@ namespace Demo
                 if (show)
                     HeadLabel.Text = PingHeader.SensorHeading.ToString("F2");
                 PingHeader.Heave = playbackFileStream.ReadSingle();
-                if (show)
-                    PressLabel.Text = PingHeader.Heave.ToString("F2");
+                
                 PingHeader.Yaw = playbackFileStream.ReadSingle();
 
                 PingHeader.AttitudeTimeTag = playbackFileStream.ReadUInt32();
@@ -443,6 +448,17 @@ namespace Demo
                 PingHeader.FishPositionDeltaY = playbackFileStream.ReadInt16();
                 PingHeader.FishPositionErrorCode = playbackFileStream.ReadByte();
                 Buffer.BlockCopy(playbackFileStream.ReadChars(11), 0, PingHeader.ReservedSpace2, 0, 11);
+                if (SensorView != null&&show)
+                {
+                    SensorView.Display(DataType.Altitude, PingHeader.SensorPrimaryAltitude);
+                    SensorView.Display(DataType.Depth, PingHeader.SensorDepth);
+                    SensorView.Display(DataType.Heading, PingHeader.SensorHeading);
+                    SensorView.Display(DataType.Pitch, PingHeader.SensorPitch);
+                    SensorView.Display(DataType.Pressure, PingHeader.Pressure);
+                    SensorView.Display(DataType.Roll, PingHeader.SensorRoll);
+                    SensorView.Display(DataType.Speed, PingHeader.SensorSpeed);
+                    SensorView.Display(DataType.Temperature, PingHeader.WaterTemperature);
+                }
                 return (int)playbackFileStream.BaseStream.Position;
             }
             catch (Exception e)

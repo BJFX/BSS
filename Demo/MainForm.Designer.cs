@@ -52,7 +52,6 @@
             this.label9 = new System.Windows.Forms.Label();
             this.Templabel = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
-            this.Errorlabel = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
             this.SonarHeightBox = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
@@ -207,6 +206,7 @@
             this.Sensorpanel = new System.Windows.Forms.Panel();
             this.Navipanel = new System.Windows.Forms.Panel();
             this.openXtfFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.ErrtextBox = new System.Windows.Forms.TextBox();
             this.DataPanel.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -271,7 +271,6 @@
             // 
             this.StatusLabel.BorderSide = DevComponents.DotNetBar.eBorderSide.Left;
             this.StatusLabel.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine;
-            this.StatusLabel.DividerStyle = true;
             this.StatusLabel.Name = "StatusLabel";
             this.StatusLabel.Text = "...";
             this.StatusLabel.Width = 300;
@@ -285,7 +284,7 @@
             // LongLabel
             // 
             this.LongLabel.Name = "LongLabel";
-            this.LongLabel.Text = "Long";
+            this.LongLabel.Text = "...";
             this.LongLabel.Width = 200;
             // 
             // dockContainerItem1
@@ -346,9 +345,9 @@
             this.tableLayoutPanel3.Controls.Add(this.label9, 2, 1);
             this.tableLayoutPanel3.Controls.Add(this.Templabel, 3, 1);
             this.tableLayoutPanel3.Controls.Add(this.label15, 2, 2);
-            this.tableLayoutPanel3.Controls.Add(this.Errorlabel, 3, 2);
             this.tableLayoutPanel3.Controls.Add(this.label16, 4, 0);
             this.tableLayoutPanel3.Controls.Add(this.SonarHeightBox, 5, 0);
+            this.tableLayoutPanel3.Controls.Add(this.ErrtextBox, 3, 2);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel3.Location = new System.Drawing.Point(668, 4);
             this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(4);
@@ -440,7 +439,7 @@
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(40, 16);
             this.label8.TabIndex = 3;
-            this.label8.Text = "压力";
+            this.label8.Text = "压强";
             this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // PressLabel
@@ -490,18 +489,6 @@
             this.label15.TabIndex = 11;
             this.label15.Text = "错误";
             this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // Errorlabel
-            // 
-            this.Errorlabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.Errorlabel.AutoSize = true;
-            this.Errorlabel.Location = new System.Drawing.Point(302, 74);
-            this.Errorlabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.Errorlabel.Name = "Errorlabel";
-            this.Errorlabel.Size = new System.Drawing.Size(16, 16);
-            this.Errorlabel.TabIndex = 12;
-            this.Errorlabel.Text = "-";
-            this.Errorlabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // label16
             // 
@@ -1828,6 +1815,18 @@
             // 
             this.openXtfFileDialog.FileName = "openFileDialog1";
             // 
+            // ErrtextBox
+            // 
+            this.ErrtextBox.BackColor = System.Drawing.Color.Green;
+            this.ErrtextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.ErrtextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ErrtextBox.Location = new System.Drawing.Point(301, 69);
+            this.ErrtextBox.Multiline = true;
+            this.ErrtextBox.Name = "ErrtextBox";
+            this.ErrtextBox.Size = new System.Drawing.Size(130, 27);
+            this.ErrtextBox.TabIndex = 15;
+            this.ErrtextBox.Text = "...";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -1906,7 +1905,6 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label Templabel;
         private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.Label Errorlabel;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.Label Courselabel;
@@ -2061,5 +2059,6 @@
         private System.Windows.Forms.Panel Navipanel;
         private System.Windows.Forms.ToolStripButton OpenSensorView;
         private System.Windows.Forms.OpenFileDialog openXtfFileDialog;
+        private System.Windows.Forms.TextBox ErrtextBox;
     }
 }

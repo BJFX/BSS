@@ -38,7 +38,8 @@
             this.WaveSection.Dock = System.Windows.Forms.DockStyle.Fill;
             this.WaveSection.Location = new System.Drawing.Point(0, 0);
             this.WaveSection.Name = "WaveSection";
-            this.WaveSection.Size = new System.Drawing.Size(120, 450);
+            this.WaveSection.Size = new System.Drawing.Size(210, 450);
+            this.WaveSection.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.WaveSection.TabIndex = 0;
             this.WaveSection.TabStop = false;
             // 
@@ -48,7 +49,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.WaveSection);
             this.Name = "WaveBoxV";
-            this.Size = new System.Drawing.Size(120, 450);
+            this.Size = new System.Drawing.Size(210, 450);
             ((System.ComponentModel.ISupportInitialize)(this.WaveSection)).EndInit();
             this.ResumeLayout(false);
 

@@ -9,7 +9,7 @@ using DevComponents.DotNetBar;
 
 namespace Demo
 {
-    public partial class NavigationView : Office2007Form
+    public partial class NavigationView : Form
     {
         private MainForm mf;
         public NavigationView(MainForm mainForm)

@@ -64,6 +64,7 @@
       <DependentUpon>WaveBoxV.cs</DependentUpon>
     </Compile>
     <Compile Include="WaveFrame.cs" />
+    <Compile Include="WaveFrameV.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ChartG.resx">
