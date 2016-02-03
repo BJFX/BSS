@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
 using DevComponents.DotNetBar;
 
-namespace Demo
+namespace Demo.Forms
 {
     public partial class ChartOptionForm : Office2007Form
     {
@@ -33,6 +28,7 @@ namespace Demo
             OwnedOption.StartColor = ChunkStartBtn.SelectedColor;
             OwnedOption.EndColor = ChunkEndBtn.SelectedColor;
             OwnedOption.Gamma = ((float) GammaSlider.Value)/100.0f;
+            OwnedOption.Fq = HighRd.Checked ? Frequence.High : Frequence.Low;
         }
 
         private void checkAutoTVG_CheckedChanged(object sender, EventArgs e)

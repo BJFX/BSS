@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
+using System.IO;
 using System.Text;
 using System.Windows.Forms;
 using DevComponents.DotNetBar;
-using System.IO;
 
-namespace Demo
+namespace Demo.Forms
 {
     public partial class WizardForm : Office2007Form
     {

@@ -1,15 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Net.NetworkInformation;
-using System.Text;
 using System.Windows.Forms;
-using System.IO;
-using ChartBox;
-using DevComponents.DotNetBar;
-namespace Demo
+
+namespace Demo.Forms
 {
     public partial class ChartForm : Form
     {
@@ -25,12 +17,17 @@ namespace Demo
 
         public void Initial()
         {
+            Clear();
+            BinitailChart1 = false;
+            BinitailChart2 = false;
+        }
+
+        public void Clear()
+        {
             waveLeft.Clear();
             waveRight.Clear();
             chartLeft.Clear();
             chartRight.Clear();
-            BinitailChart1 = false;
-            BinitailChart2 = false;
         }
         private void chartRight_MouseClick(object sender, MouseEventArgs e)
         {
@@ -133,7 +130,7 @@ namespace Demo
         }
         public void DisplayChart(int ChannelNumber, int DataNeedToRead, byte[] buf)
         {
-            if (ChannelNumber == 0)
+            if ((option.Fq == Frequence.High && ChannelNumber == 2)||(option.Fq == Frequence.Low && ChannelNumber == 0))
             {
                 if (!BinitailChart1)
                 {
@@ -149,7 +146,7 @@ namespace Demo
                 }
                 
             }
-            if (ChannelNumber == 1)
+            if ((option.Fq == Frequence.High && ChannelNumber == 3) || (option.Fq == Frequence.Low && ChannelNumber == 1))
             {
                 if (!BinitailChart2)
                 {

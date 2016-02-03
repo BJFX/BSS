@@ -20,5 +20,6 @@ namespace Demo
         public static bool UsePress;
         public static float ScaleFactor;
         public static float PressOffset;
+        public static int PanelMinWidth;
     }
 }

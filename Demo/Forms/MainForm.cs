@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.IO;
-using System.Text;
 using System.Windows.Forms;
 using DevComponents.DotNetBar;
-using DevComponents.DotNetBar.Metro;
 
-namespace Demo
+namespace Demo.Forms
 {
     public partial class MainForm : OfficeForm
     {
@@ -39,7 +34,6 @@ namespace Demo
         private bool bPanel2triger;
         private bool bView1Playing = false;
         private bool bView2Playing = false;
-        private int rightpanelminwidth = 400;
         public static MainForm mf;
         public MainForm()
         {
@@ -50,9 +44,10 @@ namespace Demo
         {
             if (NaviView == child)
             {
-                NaviView = null;
+                NaviView.Hide();
+                //NaviView = null;
                 bShowNavi = false;
-                if (SensorView != null)
+                if (SensorView!=null&&SensorView.Visible)
                     ShowSensorOnly();
                 else
                     NoneNaviAndSensor();
@@ -60,9 +55,9 @@ namespace Demo
             }
             else if (SensorView == child)
             {
-                SensorView = null;
+                SensorView.Hide();
                 bShowSensor = false;
-                if (NaviView != null)
+                if (NaviView != null && NaviView.Visible)
                     ShowNaviOnly();
                 else
                     NoneNaviAndSensor();
@@ -130,10 +125,20 @@ namespace Demo
             ShowInfoRegion.Checked = bShowInfo;
             splitViewer.SplitterDistance = splitViewer.Width;
             NoneBssView();
+            NoneNaviAndSensor();
             towFishToolStripMenuItem_Click(sender, e);
             StatusLabel.Text = "就绪";
+            StatusLabel.ForeColor = Color.White;
+            LongLabel.ForeColor = Color.White;
+            LatLabel.ForeColor = Color.White;
+            InitConfigure();
+
         }
 
+        private void InitConfigure()
+        {
+            Configuration.PanelMinWidth = 400;
+        }
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             string message = "是否退出程序？";
@@ -388,15 +393,21 @@ namespace Demo
                     {
                         Lat.Text = PingHeader.ShipYcoordinate.ToString("F06") + "°" + "S";
                     }
+                    LatLabel.Text = Lat.Text;
                 }
 
                 PingHeader.ShipXcoordinate = playbackFileStream.ReadDouble();
                 if (show)
                 {
                     if (PingHeader.ShipXcoordinate > 0)
+                    {
                         Long.Text = PingHeader.ShipXcoordinate.ToString("F06") + "°" + "E";
+                    }
                     else
+                    {
                         Long.Text = PingHeader.ShipXcoordinate.ToString("F06") + "°" + "W";
+                    }
+                    LongLabel.Text = Long.Text;
                 }
 
                 PingHeader.ShipAltitude = playbackFileStream.ReadUInt16();
@@ -523,7 +534,7 @@ namespace Demo
             StopBtn.Enabled = false;
             Stop2Btn.Enabled = false;
             Open2Btn.Enabled = Configuration.DiskMode;
-            
+            StatusLabel.Text = "就绪";
         }
 
         private void hardDiskToolStripMenuItem_Click(object sender, EventArgs e)
@@ -537,7 +548,8 @@ namespace Demo
             StopBtn.Enabled = false;
             Stop2Btn.Enabled = false;
             Open2Btn.Enabled = Configuration.DiskMode;
-            
+            StatusLabel.Text = "回放";
+
         }
         private void ShowBss_Click(object sender, EventArgs e)
         {
@@ -591,21 +603,21 @@ namespace Demo
                 NaviView.Dock = DockStyle.Fill;
                 NaviView.Show();
                 bShowNavi = true;
-                if(SensorView==null)
-                    ShowNaviOnly();
-                else
+                if (SensorView!=null&&SensorView.Visible)
                     ShowNaviAndSensor();
+                else
+                    ShowNaviOnly();
             }
             else
             {
                 if (NaviView != null)
                 {
-                    NaviView.Close();
+                    NaviView.Hide();
                 }
-                if (SensorView == null)
-                    NoneNaviAndSensor();
-                else
+                if (SensorView != null && SensorView.Visible)
                     ShowSensorOnly();
+                else
+                    NoneNaviAndSensor();
                 bShowNavi = false;
             }
         }
@@ -622,20 +634,20 @@ namespace Demo
                 SensorView.Dock = DockStyle.Fill;
                 SensorView.Show();
                 bShowSensor = true;
-                if(NaviView==null)
-                    ShowSensorOnly();
-                else
+                if (NaviView!=null&&NaviView.Visible)
                     ShowNaviAndSensor();
+                else
+                    ShowSensorOnly();
             }
             else
             {
                 if(SensorView!=null)
-                    SensorView.Close();
+                    SensorView.Hide();
                 bShowSensor = false;
-                if (NaviView == null)
-                    NoneNaviAndSensor();
-                else
+                if (NaviView != null && NaviView.Visible)
                     ShowNaviOnly();
+                else
+                    NoneNaviAndSensor();
             }
         }
 
@@ -727,9 +739,12 @@ namespace Demo
 
         private void ShowNaviOnly()
         {
-            if (splitViewer.SplitterDistance + rightpanelminwidth > splitViewer.Width)
-                splitViewer.SplitterDistance = splitViewer.Width - rightpanelminwidth - 7;
-            splitViewer.Panel2MinSize = 400;
+            if (splitViewer.Panel2.Width < Configuration.PanelMinWidth) //未创建右边窗口
+            {
+                splitViewer.Panel2MinSize = Configuration.PanelMinWidth;
+                splitViewer.SplitterDistance = splitViewer.Width - splitViewer.Panel2MinSize - 7;
+            }
+
             RightTable.RowStyles[0].SizeType = SizeType.Percent;
             RightTable.RowStyles[0].Height = 100;
             RightTable.RowStyles[1].SizeType = SizeType.Percent;
@@ -737,9 +752,11 @@ namespace Demo
         }
         private void ShowSensorOnly()
         {
-            if (splitViewer.SplitterDistance + rightpanelminwidth > splitViewer.Width)
-                splitViewer.SplitterDistance = splitViewer.Width - rightpanelminwidth - 7;
-            splitViewer.Panel2MinSize = 400;
+            if (splitViewer.Panel2.Width < Configuration.PanelMinWidth) //未创建右边窗口
+            {
+                splitViewer.Panel2MinSize = Configuration.PanelMinWidth;
+                splitViewer.SplitterDistance = splitViewer.Width - splitViewer.Panel2MinSize - 7;
+            }
             RightTable.RowStyles[0].Height = 0;
             RightTable.RowStyles[0].SizeType = SizeType.Percent;
 
@@ -998,6 +1015,7 @@ namespace Demo
             if (PlaybackTime.Interval == 2)
             {
                 SpeedBtn.Enabled = false;
+                Speed2Btn.Enabled = false;
             }
 
         }
@@ -1006,6 +1024,7 @@ namespace Demo
             PlaybackTime.Interval /= 2;
             if (PlaybackTime.Interval == 2)
             {
+                SpeedBtn.Enabled = false;
                 Speed2Btn.Enabled = false;
             }
         }
@@ -1064,17 +1083,23 @@ namespace Demo
         private void SlowBtn_Click(object sender, EventArgs e)
         {
             PlaybackTime.Interval *= 2;
-            if (PlaybackTime.Interval == 256)
+            SpeedBtn.Enabled = true;
+            Speed2Btn.Enabled = true;
+            if (PlaybackTime.Interval == 1024)
             {
                 SlowBtn.Enabled = false;
+                Slow2Btn.Enabled = false;
             }
         }
 
         private void Slow2Btn_Click(object sender, EventArgs e)
         {
             PlaybackTime.Interval *= 2;
-            if (PlaybackTime.Interval == 256)
+            SpeedBtn.Enabled = true;
+            Speed2Btn.Enabled = true;
+            if (PlaybackTime.Interval == 1024)
             {
+                SlowBtn.Enabled = false;
                 Slow2Btn.Enabled = false;
             }
         }
@@ -1083,12 +1108,11 @@ namespace Demo
         {
             PlaybackTime.Interval = tick;
             PlaybackTime.Stop();
-            
             offset = 0;
             if (BssView1 != null)
-                BssView1.Initial();
+                BssView1.Clear();
             if (BssView2 != null)
-                BssView2.Initial();
+                BssView2.Clear();
             if (playbackFileStream != null)
                 playbackFileStream.Close();
             playbackFileStream = new BinaryReader(new FileStream(fi.FullName, FileMode.Open));

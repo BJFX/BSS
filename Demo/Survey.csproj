@@ -36,110 +36,97 @@
     <StartupObject>Demo.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DevComponents.DotNetBar.Design">
-      <HintPath>..\..\..\..\ioa\参考开源软件\DotNetBar\DevComponents.DotNetBar.Design.dll</HintPath>
-    </Reference>
-    <Reference Include="DevComponents.DotNetBar.Keyboard">
-      <HintPath>..\..\..\..\ioa\参考开源软件\DotNetBar\DevComponents.DotNetBar.Keyboard.dll</HintPath>
-    </Reference>
-    <Reference Include="DevComponents.DotNetBar.Schedule">
-      <HintPath>..\..\..\..\ioa\参考开源软件\DotNetBar\DevComponents.DotNetBar.Schedule.dll</HintPath>
-    </Reference>
-    <Reference Include="DevComponents.DotNetBar.SuperGrid">
-      <HintPath>..\..\..\..\ioa\参考开源软件\DotNetBar\DevComponents.DotNetBar.SuperGrid.dll</HintPath>
-    </Reference>
     <Reference Include="DevComponents.DotNetBar2">
       <HintPath>..\..\..\..\ioa\参考开源软件\DotNetBar\DevComponents.DotNetBar2.dll</HintPath>
     </Reference>
-    <Reference Include="DevComponents.Instrumentation">
-      <HintPath>..\..\..\..\ioa\参考开源软件\DotNetBar\DevComponents.Instrumentation.dll</HintPath>
+    <Reference Include="GMap.NET.Core">
+      <HintPath>..\..\..\..\ioa\水声通信网\吊放调试程序\ACN运行程序\GMap.NET.Core.dll</HintPath>
     </Reference>
-    <Reference Include="DevComponents.Instrumentation.Design">
-      <HintPath>..\..\..\..\ioa\参考开源软件\DotNetBar\DevComponents.Instrumentation.Design.dll</HintPath>
-    </Reference>
-    <Reference Include="DevComponents.SuperGrid.Design">
-      <HintPath>..\..\..\..\ioa\参考开源软件\DotNetBar\DevComponents.SuperGrid.Design.dll</HintPath>
-    </Reference>
-    <Reference Include="DevComponents.TreeGX">
-      <HintPath>..\..\..\..\ioa\参考开源软件\DotNetBar\DevComponents.TreeGX.dll</HintPath>
+    <Reference Include="GMap.NET.WindowsForms">
+      <HintPath>..\..\..\..\ioa\水声通信网\吊放调试程序\ACN运行程序\GMap.NET.WindowsForms.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Deployment" />
+    <Reference Include="System.Data.SQLite">
+      <HintPath>..\..\..\..\ioa\水声通信网\吊放调试程序\ACN运行程序\System.Data.SQLite.DLL</HintPath>
+    </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AboutBox.cs">
+    <Compile Include="Forms\AboutBox.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AboutBox.Designer.cs">
+    <Compile Include="Forms\AboutBox.Designer.cs">
       <DependentUpon>AboutBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="ChartForm.cs">
+    <Compile Include="Forms\ChartForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ChartForm.Designer.cs">
+    <Compile Include="Forms\ChartForm.Designer.cs">
       <DependentUpon>ChartForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ChartOptionForm.cs">
+    <Compile Include="Forms\ChartOptionForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ChartOptionForm.Designer.cs">
+    <Compile Include="Forms\ChartOptionForm.Designer.cs">
       <DependentUpon>ChartOptionForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Configuration.cs" />
-    <Compile Include="ConnectForm.cs">
+    <Compile Include="Forms\ConnectForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ConnectForm.Designer.cs">
+    <Compile Include="Forms\ConnectForm.Designer.cs">
       <DependentUpon>ConnectForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainForm.cs">
+    <Compile Include="MapCustmize\CustomMap.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MapCustmize\GMapMarkerRect.cs" />
+    <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainForm.Designer.cs">
+    <Compile Include="Forms\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="NavigationView.cs">
+    <Compile Include="Forms\NavigationView.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="NavigationView.Designer.cs">
+    <Compile Include="Forms\NavigationView.Designer.cs">
       <DependentUpon>NavigationView.cs</DependentUpon>
     </Compile>
+    <Compile Include="MapCustmize\MapToolTip.cs" />
     <Compile Include="Option.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SensorForm.cs">
+    <Compile Include="Forms\SensorForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SensorForm.Designer.cs">
+    <Compile Include="Forms\SensorForm.Designer.cs">
       <DependentUpon>SensorForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="WizardForm.cs">
+    <Compile Include="Forms\WizardForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WizardForm.Designer.cs">
+    <Compile Include="Forms\WizardForm.Designer.cs">
       <DependentUpon>WizardForm.cs</DependentUpon>
     </Compile>
     <Compile Include="XtfParserHeader.cs" />
-    <EmbeddedResource Include="AboutBox.resx">
+    <EmbeddedResource Include="Forms\AboutBox.resx">
       <DependentUpon>AboutBox.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ChartForm.resx">
+    <EmbeddedResource Include="Forms\ChartForm.resx">
       <DependentUpon>ChartForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ChartOptionForm.resx">
+    <EmbeddedResource Include="Forms\ChartOptionForm.resx">
       <DependentUpon>ChartOptionForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ConnectForm.resx">
+    <EmbeddedResource Include="Forms\ConnectForm.resx">
       <DependentUpon>ConnectForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainForm.resx">
+    <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="NavigationView.resx">
+    <EmbeddedResource Include="Forms\NavigationView.resx">
       <DependentUpon>NavigationView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -152,10 +139,10 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="SensorForm.resx">
+    <EmbeddedResource Include="Forms\SensorForm.resx">
       <DependentUpon>SensorForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WizardForm.resx">
+    <EmbeddedResource Include="Forms\WizardForm.resx">
       <DependentUpon>WizardForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />

@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
+﻿using System.Collections.Generic;
 using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
-using DevComponents.DotNetBar;
 
-namespace Demo
+namespace Demo.Forms
 {
     public enum DataType
     {
@@ -36,8 +31,8 @@ namespace Demo
             _lineName.Add((int)DataType.Pressure, "托体压强");
             _lineName.Add((int)DataType.Temperature, "艏向角"); 
             _lineName.Add((int)DataType.Speed, "航速");
-            _lineName.Add((int)DataType.Depth, "托体深度");
-            _lineName.Add((int)DataType.Altitude, "拖地底深");
+            _lineName.Add((int)DataType.Depth, "拖体深度");
+            _lineName.Add((int)DataType.Altitude, "拖体底深");
             waveBoxV.AddLine(_lineName[(int)DataType.Pitch], Color.Teal);
             waveBoxV.AddLine(_lineName[(int)DataType.Roll], Color.Tomato);
         }
@@ -79,6 +74,7 @@ namespace Demo
         }
         private void SensorForm_FormClosing(object sender, FormClosingEventArgs e)
         {
+            e.Cancel = true;
             _mf.ChildFormClose(this);
         }
     }

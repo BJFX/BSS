@@ -1,4 +1,4 @@
-﻿namespace Demo
+﻿namespace Demo.Forms
 {
     partial class WizardForm
     {

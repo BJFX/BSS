@@ -1,4 +1,4 @@
-﻿namespace Demo
+﻿namespace Demo.Forms
 {
     partial class MainForm
     {
@@ -54,6 +54,7 @@
             this.label15 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
             this.SonarHeightBox = new System.Windows.Forms.TextBox();
+            this.ErrtextBox = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.Courselabel = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
@@ -206,7 +207,6 @@
             this.Sensorpanel = new System.Windows.Forms.Panel();
             this.Navipanel = new System.Windows.Forms.Panel();
             this.openXtfFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.ErrtextBox = new System.Windows.Forms.TextBox();
             this.DataPanel.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -516,6 +516,18 @@
             this.SonarHeightBox.TabIndex = 14;
             this.SonarHeightBox.Text = "3.3";
             this.SonarHeightBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // ErrtextBox
+            // 
+            this.ErrtextBox.BackColor = System.Drawing.Color.Green;
+            this.ErrtextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.ErrtextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ErrtextBox.Location = new System.Drawing.Point(301, 69);
+            this.ErrtextBox.Multiline = true;
+            this.ErrtextBox.Name = "ErrtextBox";
+            this.ErrtextBox.Size = new System.Drawing.Size(130, 27);
+            this.ErrtextBox.TabIndex = 15;
+            this.ErrtextBox.Text = "...";
             // 
             // tableLayoutPanel2
             // 
@@ -1814,18 +1826,6 @@
             // openXtfFileDialog
             // 
             this.openXtfFileDialog.FileName = "openFileDialog1";
-            // 
-            // ErrtextBox
-            // 
-            this.ErrtextBox.BackColor = System.Drawing.Color.Green;
-            this.ErrtextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.ErrtextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ErrtextBox.Location = new System.Drawing.Point(301, 69);
-            this.ErrtextBox.Multiline = true;
-            this.ErrtextBox.Name = "ErrtextBox";
-            this.ErrtextBox.Size = new System.Drawing.Size(130, 27);
-            this.ErrtextBox.TabIndex = 15;
-            this.ErrtextBox.Text = "...";
             // 
             // MainForm
             // 

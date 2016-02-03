@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
 using System.Reflection;
 using System.Windows.Forms;
 
-namespace Demo
+namespace Demo.Forms
 {
     partial class AboutBox : Form
     {
