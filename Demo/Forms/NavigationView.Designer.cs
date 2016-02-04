@@ -38,7 +38,7 @@ namespace Demo.Forms
             this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton5 = new System.Windows.Forms.ToolStripButton();
-            this.MainMap = new CustomMap();
+            this.MainMap = new Demo.MapCustmize.CustomMap();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -131,6 +131,7 @@ namespace Demo.Forms
             this.MainMap.Size = new System.Drawing.Size(499, 463);
             this.MainMap.TabIndex = 1;
             this.MainMap.Zoom = 17D;
+            
             // 
             // NavigationView
             // 

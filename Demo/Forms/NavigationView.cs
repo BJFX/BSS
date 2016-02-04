@@ -105,6 +105,7 @@ namespace Demo.Forms
             MainMap.MaxZoom = 18;
             MainMap.Zoom = 16;
             MainMap.MapName = "Survey";
+            
         }
     }
 }
