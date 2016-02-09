@@ -31,6 +31,7 @@ namespace Demo.MapCustmize
             PointLatLng lat2 = FromLocalToLatLng(0, this.Height*2 / 3);
             PointLatLng long1 = FromLocalToLatLng(this.Width/3, 0);
             PointLatLng long2 = FromLocalToLatLng(this.Width*2/3, 0);
+            
             string latstr,longstr;
             if(lat1.Lat>0)
                 latstr  = lat1.Lat.ToString("F06")+" N";

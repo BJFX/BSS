@@ -2,4 +2,5 @@
 	<s:String x:Key="/Default/Environment/AssemblyExplorer/XmlDocument/@EntryValue">&lt;AssemblyExplorer&gt;&#xD;
   &lt;Assembly Path="D:\work\coops\测扫\Demo\Demo\Tools\DevComponents.DotNetBar2.dll" /&gt;&#xD;
   &lt;Assembly Path="C:\Windows\Microsoft.NET\Framework\v2.0.50727\System.dll" /&gt;&#xD;
+  &lt;Assembly Path="D:\work\ioa\水声通信网\吊放调试程序\ACN运行程序\GMap.NET.WindowsForms.dll" /&gt;&#xD;
 &lt;/AssemblyExplorer&gt;</s:String></wpf:ResourceDictionary>

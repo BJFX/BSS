@@ -36,6 +36,12 @@
     <StartupObject>Demo.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DevComponents.DotNetBar.Design">
+      <HintPath>..\..\..\..\ioa\参考开源软件\DotNetBar\DevComponents.DotNetBar.Design.dll</HintPath>
+    </Reference>
+    <Reference Include="DevComponents.DotNetBar.Schedule">
+      <HintPath>..\..\..\..\ioa\参考开源软件\DotNetBar\DevComponents.DotNetBar.Schedule.dll</HintPath>
+    </Reference>
     <Reference Include="DevComponents.DotNetBar2">
       <HintPath>..\..\..\..\ioa\参考开源软件\DotNetBar\DevComponents.DotNetBar2.dll</HintPath>
     </Reference>
