@@ -80,7 +80,6 @@
             this.RightToolStripPanel = new System.Windows.Forms.ToolStripPanel();
             this.LeftToolStripPanel = new System.Windows.Forms.ToolStripPanel();
             this.ContentPanel = new System.Windows.Forms.ToolStripContentPanel();
-            this.miniToolStrip = new System.Windows.Forms.ToolStrip();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.TaskWizard = new System.Windows.Forms.ToolStripButton();
             this.OpenBssView = new System.Windows.Forms.ToolStripButton();
@@ -824,17 +823,6 @@
             this.ContentPanel.AutoScroll = true;
             this.ContentPanel.Size = new System.Drawing.Size(1350, 563);
             // 
-            // miniToolStrip
-            // 
-            this.miniToolStrip.AutoSize = false;
-            this.miniToolStrip.CanOverflow = false;
-            this.miniToolStrip.Dock = System.Windows.Forms.DockStyle.None;
-            this.miniToolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.miniToolStrip.Location = new System.Drawing.Point(272, 3);
-            this.miniToolStrip.Name = "miniToolStrip";
-            this.miniToolStrip.Size = new System.Drawing.Size(275, 25);
-            this.miniToolStrip.TabIndex = 13;
-            // 
             // toolStrip1
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -1178,7 +1166,7 @@
             this.splitViewer.Panel2MinSize = 0;
             this.splitViewer.Size = new System.Drawing.Size(1325, 543);
             this.splitViewer.SplitterDistance = 1299;
-            this.splitViewer.SplitterWidth = 1;
+            this.splitViewer.SplitterWidth = 3;
             this.splitViewer.TabIndex = 10003;
             // 
             // LeftTable
@@ -1802,7 +1790,7 @@
             this.RightTable.RowCount = 2;
             this.RightTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.RightTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.RightTable.Size = new System.Drawing.Size(25, 543);
+            this.RightTable.Size = new System.Drawing.Size(23, 543);
             this.RightTable.TabIndex = 0;
             // 
             // Sensorpanel
@@ -1811,7 +1799,7 @@
             this.Sensorpanel.Location = new System.Drawing.Point(0, 271);
             this.Sensorpanel.Margin = new System.Windows.Forms.Padding(0);
             this.Sensorpanel.Name = "Sensorpanel";
-            this.Sensorpanel.Size = new System.Drawing.Size(25, 272);
+            this.Sensorpanel.Size = new System.Drawing.Size(23, 272);
             this.Sensorpanel.TabIndex = 1;
             // 
             // Navipanel
@@ -1820,7 +1808,7 @@
             this.Navipanel.Location = new System.Drawing.Point(0, 0);
             this.Navipanel.Margin = new System.Windows.Forms.Padding(0);
             this.Navipanel.Name = "Navipanel";
-            this.Navipanel.Size = new System.Drawing.Size(25, 271);
+            this.Navipanel.Size = new System.Drawing.Size(23, 271);
             this.Navipanel.TabIndex = 0;
             // 
             // openXtfFileDialog
@@ -1939,7 +1927,6 @@
         private System.Windows.Forms.ToolStripPanel RightToolStripPanel;
         private System.Windows.Forms.ToolStripPanel LeftToolStripPanel;
         private System.Windows.Forms.ToolStripContentPanel ContentPanel;
-        private System.Windows.Forms.ToolStrip miniToolStrip;
         private DevComponents.DotNetBar.DockContainerItem dockContainerItem2;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem sessionToolStripMenuItem;

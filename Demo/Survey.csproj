@@ -135,6 +135,9 @@
     <EmbeddedResource Include="Forms\NavigationView.resx">
       <DependentUpon>NavigationView.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="MapCustmize\CustomMap.resx">
+      <DependentUpon>CustomMap.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -170,6 +173,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Img\logo.png" />
+    <None Include="Resources\552738.png" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

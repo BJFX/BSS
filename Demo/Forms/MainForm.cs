@@ -470,6 +470,10 @@ namespace Demo.Forms
                     SensorView.Display(DataType.Speed, PingHeader.SensorSpeed);
                     SensorView.Display(DataType.Temperature, PingHeader.WaterTemperature);
                 }
+                if (NaviView != null && show)
+                {
+                    NaviView.AddLocation(PingHeader.ShipYcoordinate, PingHeader.ShipXcoordinate, PingHeader.SensorHeading);
+                }
                 return (int)playbackFileStream.BaseStream.Position;
             }
             catch (Exception e)

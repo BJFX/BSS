@@ -7,6 +7,7 @@ using Demo.MapCustmize;
 using GMap.NET;
 using GMap.NET.WindowsForms;
 using GMap.NET.WindowsForms.Markers;
+using Demo.Properties;
 
 namespace Demo.Forms
 {
@@ -149,9 +150,10 @@ namespace Demo.Forms
                     track.Routes.Add(gr);
                 }
             }
-
             NodeMarker.Position = pt;
             NodeMarker.Bearing = bearing;
+            if (AutoTrack.Checked)
+                MainMap.Position = pt;
             CultureInfo ci = new CultureInfo("en-us");
             string lngstr, latstr;
             if (pt.Lng > 0)
@@ -163,6 +165,155 @@ namespace Demo.Forms
             else
                 latstr = (-pt.Lat).ToString("F06") + " S";
             NodeMarker.ToolTipText = "GPS\r\n经度=" + lngstr + "\r\n纬度=" + latstr;
+        }
+
+        private void ZoomOut_Click(object sender, EventArgs e)
+        {
+            ZoomIn.Enabled = true;
+            if (MainMap.Zoom < MainMap.MaxZoom)
+                MainMap.Zoom++;
+            if (MainMap.Zoom == MainMap.MaxZoom)
+                ZoomOut.Enabled = false;
+            MainMap.Update();
+        }
+
+        private void ZoomIn_Click(object sender, EventArgs e)
+        {
+            ZoomOut.Enabled = true;
+            if (MainMap.Zoom > MainMap.MinZoom)
+                MainMap.Zoom--;
+            if (MainMap.Zoom == MainMap.MinZoom)
+                ZoomIn.Enabled = false;
+            MainMap.Update();
+        }
+
+        private void TrackSet_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ShowTrack_Click(object sender, EventArgs e)
+        {
+            if (ShowTrack.Checked)
+            {
+                isTrackShow = true;
+                track.IsVisibile = true;
+            }
+            else
+            {
+                isTrackShow = false;
+                track.IsVisibile = false;
+            }
+        }
+
+        private void Ranging_Click(object sender, EventArgs e)
+        {
+            if (!isRulerDown)
+                isRulerDown = true;
+            else
+            {
+                isRulerDown = false;
+                isStartDown = false;
+                MainMap.Refresh();
+            }
+        }
+
+        private void ReturnNode_Click(object sender, EventArgs e)
+        {
+            MainMap.Position = NodeMarker.Position;
+        }
+
+        private void MainMap_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (MainMap.Focused)
+            {
+                if (e.KeyCode == Keys.Escape && isRulerDown)
+                {
+                    isRulerDown = false;
+                    isStartDown = false;
+                    MainMap.Refresh();
+                }
+
+            }
+        }
+
+        private void MainMap_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                isMouseDown = false;
+            }
+        }
+
+        private void MainMap_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                isMouseDown = true;
+                if (isRulerDown)
+                {
+                    if (isStartDown)
+                    {
+                        end = MainMap.FromLocalToLatLng(e.X, e.Y);
+                        double d = CalcDistance(start, end);
+                        isStartDown = false;
+
+                        //String drawString = "距离 = " + d.ToString("00", CultureInfo.InvariantCulture) + "m";
+                        //PointLatLng middle = new PointLatLng();
+                        //middle.Lat = start.Lat + (end.Lat - start.Lat)/2;
+                        //middle.Lng = start.Lng + (end.Lng - start.Lng)/2;
+                        //DistanceMarker = new GMapInfoBoard(middle, drawString);
+                        //DistanceMarker.DisableRegionCheck = false;
+                        //DistanceInfo.Markers.Add(DistanceMarker);
+                        //List<PointLatLng> track = new List<PointLatLng>();
+                        //track.Add(start);
+                        //track.Add(end);
+                        //GMapRoute Ruler = new GMapRoute(track, drawString);
+                        //rulers.Routes.Add(Ruler);
+                        //DistanceMarker.ToolTipMode = MarkerTooltipMode.Never;
+
+                    }
+                    else
+                    {
+                        start = MainMap.FromLocalToLatLng(e.X, e.Y);
+                        isStartDown = true;
+
+                    }
+                }
+            }
+        }
+
+        private void MainMap_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (isRulerDown)
+            {
+                g = MainMap.CreateGraphics();
+                MainMap.Refresh();
+                g.DrawImageUnscaled(Resources.ruler, e.X, e.Y);
+                if (isStartDown)
+                {
+                    using (Pen myPen = new Pen(Brushes.Black))
+                    {
+
+                        GPoint p = MainMap.FromLatLngToLocal(start);
+                        end = MainMap.FromLocalToLatLng(e.X, e.Y);
+                        Point pp = new Point(p.X, p.Y);
+                        g.DrawLine(myPen, pp, e.Location);
+                        double d = CalcDistance(start, end);
+                        if (d > 1)
+                        {
+                            String drawString = "距离 = " + d.ToString("00", CultureInfo.InvariantCulture) + "米";
+
+                            // Create font and brush.
+                            Font drawFont = new Font("Arial", 16);
+                            SolidBrush drawBrush = new SolidBrush(Color.Black);
+                            PointF drawPoint = new PointF(e.X, e.Y);
+                            g.DrawString(drawString, drawFont, drawBrush, drawPoint);
+                        }
+                    }
+                }
+
+            }
         }
     }
 }

@@ -38,7 +38,10 @@ namespace Demo.Forms
             this.TrackSet = new System.Windows.Forms.ToolStripButton();
             this.ShowTrack = new System.Windows.Forms.ToolStripButton();
             this.Ranging = new System.Windows.Forms.ToolStripButton();
+            this.AutoTrack = new System.Windows.Forms.ToolStripButton();
+            this.ReturnNode = new System.Windows.Forms.ToolStripButton();
             this.MainMap = new Demo.MapCustmize.CustomMap();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -52,7 +55,10 @@ namespace Demo.Forms
             this.toolStripSeparator1,
             this.TrackSet,
             this.ShowTrack,
-            this.Ranging});
+            this.Ranging,
+            this.AutoTrack,
+            this.ReturnNode,
+            this.toolStripSeparator2});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(499, 25);
@@ -67,6 +73,7 @@ namespace Demo.Forms
             this.ZoomOut.Size = new System.Drawing.Size(52, 22);
             this.ZoomOut.Text = "放大";
             this.ZoomOut.ToolTipText = "导航图放大";
+            this.ZoomOut.Click += new System.EventHandler(this.ZoomOut_Click);
             // 
             // ZoomIn
             // 
@@ -76,6 +83,7 @@ namespace Demo.Forms
             this.ZoomIn.Size = new System.Drawing.Size(52, 22);
             this.ZoomIn.Text = "缩小";
             this.ZoomIn.ToolTipText = "导航图缩小";
+            this.ZoomIn.Click += new System.EventHandler(this.ZoomIn_Click);
             // 
             // toolStripSeparator1
             // 
@@ -89,6 +97,7 @@ namespace Demo.Forms
             this.TrackSet.Name = "TrackSet";
             this.TrackSet.Size = new System.Drawing.Size(76, 22);
             this.TrackSet.Text = "航迹设置";
+            this.TrackSet.Click += new System.EventHandler(this.TrackSet_Click);
             // 
             // ShowTrack
             // 
@@ -99,6 +108,7 @@ namespace Demo.Forms
             this.ShowTrack.Size = new System.Drawing.Size(76, 22);
             this.ShowTrack.Text = "显示航迹";
             this.ShowTrack.ToolTipText = "将航迹显示在导航图上";
+            this.ShowTrack.Click += new System.EventHandler(this.ShowTrack_Click);
             // 
             // Ranging
             // 
@@ -107,7 +117,28 @@ namespace Demo.Forms
             this.Ranging.Name = "Ranging";
             this.Ranging.Size = new System.Drawing.Size(52, 22);
             this.Ranging.Text = "测距";
-            this.Ranging.ToolTipText = "测量导航图上两点间距";
+            this.Ranging.ToolTipText = "测量导航图上两点间距,按Esc退出";
+            this.Ranging.Click += new System.EventHandler(this.Ranging_Click);
+            // 
+            // AutoTrack
+            // 
+            this.AutoTrack.CheckOnClick = true;
+            this.AutoTrack.Image = ((System.Drawing.Image)(resources.GetObject("AutoTrack.Image")));
+            this.AutoTrack.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.AutoTrack.Name = "AutoTrack";
+            this.AutoTrack.Size = new System.Drawing.Size(76, 22);
+            this.AutoTrack.Text = "自动跟踪";
+            this.AutoTrack.ToolTipText = "自动将目标置于地图中心";
+            // 
+            // ReturnNode
+            // 
+            this.ReturnNode.Image = ((System.Drawing.Image)(resources.GetObject("ReturnNode.Image")));
+            this.ReturnNode.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.ReturnNode.Name = "ReturnNode";
+            this.ReturnNode.Size = new System.Drawing.Size(88, 22);
+            this.ReturnNode.Text = "回到目标点";
+            this.ReturnNode.ToolTipText = "地图中心点回到目标点";
+            this.ReturnNode.Click += new System.EventHandler(this.ReturnNode_Click);
             // 
             // MainMap
             // 
@@ -131,6 +162,15 @@ namespace Demo.Forms
             this.MainMap.Size = new System.Drawing.Size(499, 463);
             this.MainMap.TabIndex = 1;
             this.MainMap.Zoom = 17D;
+            this.MainMap.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainMap_KeyDown);
+            this.MainMap.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MainMap_MouseDown);
+            this.MainMap.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MainMap_MouseMove);
+            this.MainMap.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MainMap_MouseUp);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
             // 
             // NavigationView
             // 
@@ -143,6 +183,7 @@ namespace Demo.Forms
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "NavigationView";
             this.ShowInTaskbar = false;
@@ -167,5 +208,9 @@ namespace Demo.Forms
         private System.Windows.Forms.ToolStripButton ShowTrack;
         private System.Windows.Forms.ToolStripButton Ranging;
         private CustomMap MainMap;
+        private System.Windows.Forms.ToolStripButton AutoTrack;
+        private System.Windows.Forms.ToolStripButton ReturnNode;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        
     }
 }
