@@ -31,11 +31,11 @@
             this.openXtfFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.controlContainerItem1 = new DevComponents.DotNetBar.ControlContainerItem();
             this.SideTable = new System.Windows.Forms.TableLayoutPanel();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.panel2 = new System.Windows.Forms.Panel();
             this.waveRight = new ChartBox.WaveBox();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.chartLeft = new ChartBox.ChartG();
             this.waveLeft = new ChartBox.WaveBox();
+            this.panel2 = new System.Windows.Forms.Panel();
             this.chartRight = new ChartBox.ChartG();
             this.SideTable.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -75,24 +75,6 @@
             this.SideTable.TabIndex = 13;
             this.SideTable.MouseClick += new System.Windows.Forms.MouseEventHandler(this.SideTable_MouseClick);
             // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.chartLeft);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(3, 103);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(644, 416);
-            this.panel1.TabIndex = 2;
-            // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.chartRight);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(653, 103);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(644, 416);
-            this.panel2.TabIndex = 5;
-            // 
             // waveRight
             // 
             this.waveRight.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
@@ -109,6 +91,15 @@
             this.waveRight.Size = new System.Drawing.Size(649, 100);
             this.waveRight.TabIndex = 4;
             this.waveRight.MouseClick += new System.Windows.Forms.MouseEventHandler(this.waveRight_MouseClick);
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.chartLeft);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(3, 103);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(644, 416);
+            this.panel1.TabIndex = 2;
             // 
             // chartLeft
             // 
@@ -141,6 +132,15 @@
             this.waveLeft.Size = new System.Drawing.Size(649, 100);
             this.waveLeft.TabIndex = 3;
             this.waveLeft.MouseClick += new System.Windows.Forms.MouseEventHandler(this.waveLeft_MouseClick);
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.chartRight);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel2.Location = new System.Drawing.Point(653, 103);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(644, 416);
+            this.panel2.TabIndex = 5;
             // 
             // chartRight
             // 

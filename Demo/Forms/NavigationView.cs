@@ -47,6 +47,7 @@ namespace Demo.Forms
         public float bearing = 0.0F;
         public int TrackTrip = 5000;
         public int TrackGap = 10;
+        public string MapTitle = "Survey";
         private double R = 6378137; // WGS-84;
         public NavigationView(MainForm mainForm)
         {
@@ -116,8 +117,10 @@ namespace Demo.Forms
             MainMap.MapType = MapType.None;
             MainMap.MinZoom = 1;
             MainMap.MaxZoom = 18;
-            MainMap.Zoom = 16;
-            MainMap.MapName = "Survey";
+            MainMap.Zoom = 15;
+            MainMap.MapName = MapTitle;
+            ShowTrack.PerformClick();
+            AutoTrack.PerformClick();
             
         }
         public  double CalcDistance(PointLatLng start, PointLatLng end)
