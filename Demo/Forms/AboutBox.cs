@@ -2,7 +2,7 @@
 using System.Reflection;
 using System.Windows.Forms;
 
-namespace Demo.Forms
+namespace Survey.Forms
 {
     partial class AboutBox : Form
     {

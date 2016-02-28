@@ -2,7 +2,7 @@
 using System.Drawing;
 using DevComponents.DotNetBar;
 
-namespace Demo.Forms
+namespace Survey.Forms
 {
     public partial class ChartOptionForm : Office2007Form
     {

@@ -3,7 +3,7 @@ using GMap.NET;
 using GMap.NET.WindowsForms;
 using GMap.NET.WindowsForms.Markers;
 
-namespace Demo.MapCustmize
+namespace Survey.MapCustmize
 {
     class GMapMarkerRect : GMapMarker
     {

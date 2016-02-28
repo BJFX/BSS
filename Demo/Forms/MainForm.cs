@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
+using System.Net.NetworkInformation;
 using System.Windows.Forms;
 using DevComponents.DotNetBar;
 
-namespace Demo.Forms
+namespace Survey.Forms
 {
     public partial class MainForm : OfficeForm
     {
@@ -35,11 +36,65 @@ namespace Demo.Forms
         private bool bView1Playing = false;
         private bool bView2Playing = false;
         public static MainForm mf;
+        private NetEngine netcore;
         public MainForm()
         {
             InitializeComponent();
-        }
+            netcore = new NetEngine();
+            NetworkAvailabilityChangedEventHandler e =new NetworkAvailabilityChangedEventHandler(AvailabilityChangedCallback);
+            Command.Version = 0x02;
+            Command.Ans.Add(0x0000, "命令成功接受");
+            Command.Ans.Add(0x0001, "数据头版本不正确");
+            Command.Ans.Add(0x0002, "无效命令");
+            Command.Ans.Add(0x0004, "无效的工作参数配置");
+            Command.Ans.Add(0x0008, "非法Duty Cycle");
+            Command.Ans.Add(0x0010, "检查和错误");
+            Command.Ans.Add(0x0020, "非法脉冲时间");
+            Command.Ans.Add(0x0040, "非法测量间隔");
+            Command.Ans.Add(0x0080, "null");
+            Command.Ans.Add(0x0100, "系统正处于工作状态");
+            Command.Ans.Add(0x0200, "没有设置工作参数");
 
+        }
+        private void AvailabilityChangedCallback(object sender, EventArgs e)
+        {
+            NetworkAvailabilityEventArgs myEg = (NetworkAvailabilityEventArgs)e;
+            if (!myEg.IsAvailable)
+            {
+
+                if (netcore.Tclient == null || netcore.Dclient == null)
+                    return;
+                if (netcore.Tclient.Client != null)
+                {
+                    if (netcore.Tclient.Connected)
+                    {
+                        netcore.Tstream.Close();
+                        netcore.Tclient.Close();
+                    }
+                }
+                else
+                {
+                    netcore.Tclient.Close();
+                }
+                if (netcore.Dclient.Client != null)
+                {
+                    if (netcore.Dclient.Connected)
+                    {
+                        netcore.Dstream.Close();
+                        netcore.Dclient.Close();
+                    }
+                }
+                else
+                {
+                    netcore.Dclient.Close();
+                }
+
+                MessageBox.Show("网络出错，请检查！");
+
+                NetEngine.bConnect = false;
+            }
+
+        }
         public void ChildFormClose(Form child)
         {
             if (NaviView == child)
@@ -222,13 +277,15 @@ namespace Demo.Forms
                         //display
                         if (BssView1 != null && bView1Playing)
                         {
-
                             BssView1.DisplayChart((int)PingchanHeader.ChannelNumber, (int) DataNeedToRead, buf);
+                            Chart1Title.Text = "拖鱼, " + ((BssView1.option.Fq == Frequence.High) ? "高频, " : "低频, ") +
+                                          PingchanHeader.BandWidth.ToString();
                         }
                         if (BssView2 != null && bView2Playing)
                         {
-
                             BssView2.DisplayChart((int)PingchanHeader.ChannelNumber, (int)DataNeedToRead, buf);
+                            Chart2Title.Text = "拖鱼, " + ((BssView2.option.Fq == Frequence.High) ? "高频, " : "低频, ") +
+                                          PingchanHeader.BandWidth.ToString();
                         }
                         if (offset >= fi.Length)
                             goto ReadMagic;//file end 

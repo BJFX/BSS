@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace Demo.Forms
+namespace Survey.Forms
 {
     public enum DataType
     {

@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.Windows.Forms;
-using Demo.MapCustmize;
 using GMap.NET;
 using GMap.NET.WindowsForms;
 using GMap.NET.WindowsForms.Markers;
-using Demo.Properties;
+using Survey.Properties;
+using Survey.MapCustmize;
 
-namespace Demo.Forms
+namespace Survey.Forms
 {
     public partial class NavigationView : Form
     {

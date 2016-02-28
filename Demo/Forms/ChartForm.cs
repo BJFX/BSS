@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace Demo.Forms
+namespace Survey.Forms
 {
     public partial class ChartForm : Form
     {

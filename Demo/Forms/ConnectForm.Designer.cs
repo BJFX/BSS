@@ -1,4 +1,4 @@
-﻿namespace Demo.Forms
+﻿namespace Survey.Forms
 {
     partial class ConnectForm
     {

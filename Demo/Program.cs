@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using Demo.Forms;
+using Survey.Forms;
 
-namespace Demo
+namespace Survey
 {
     static class Program
     {

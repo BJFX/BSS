@@ -5,7 +5,7 @@ using System.Text;
 using System.Windows.Forms;
 using DevComponents.DotNetBar;
 
-namespace Demo.Forms
+namespace Survey.Forms
 {
     public partial class WizardForm : Office2007Form
     {

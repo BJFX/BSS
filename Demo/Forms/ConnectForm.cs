@@ -1,7 +1,7 @@
 ﻿using System;
 using DevComponents.DotNetBar;
 
-namespace Demo.Forms
+namespace Survey.Forms
 {
     public partial class ConnectForm : Office2007Form
     {

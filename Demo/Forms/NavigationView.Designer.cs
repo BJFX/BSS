@@ -1,6 +1,6 @@
-﻿using Demo.MapCustmize;
+﻿using Survey.MapCustmize;
 
-namespace Demo.Forms
+namespace Survey.Forms
 {
     partial class NavigationView
     {
@@ -40,7 +40,7 @@ namespace Demo.Forms
             this.Ranging = new System.Windows.Forms.ToolStripButton();
             this.AutoTrack = new System.Windows.Forms.ToolStripButton();
             this.ReturnNode = new System.Windows.Forms.ToolStripButton();
-            this.MainMap = new Demo.MapCustmize.CustomMap();
+            this.MainMap = new CustomMap();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();

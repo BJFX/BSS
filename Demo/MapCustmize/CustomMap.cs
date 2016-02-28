@@ -2,7 +2,7 @@
 using GMap.NET;
 using GMap.NET.WindowsForms;
 
-namespace Demo.MapCustmize
+namespace Survey.MapCustmize
 {
     public class CustomMap:GMapControl
     {
