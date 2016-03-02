@@ -206,6 +206,13 @@
             this.Sensorpanel = new System.Windows.Forms.Panel();
             this.Navipanel = new System.Windows.Forms.Panel();
             this.openXtfFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.testToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.开始工作ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.停止工作ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.设置高频工作参数ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.设置低频工作参数ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.读取高频参数ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.读取低频参数ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.DataPanel.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -923,7 +930,8 @@
             this.sourceToolStripMenuItem,
             this.printToolStripMenuItem,
             this.windowToolStripMenuItem,
-            this.helpToolStripMenuItem});
+            this.helpToolStripMenuItem,
+            this.testToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1328, 25);
@@ -1815,6 +1823,55 @@
             // 
             this.openXtfFileDialog.FileName = "openFileDialog1";
             // 
+            // testToolStripMenuItem
+            // 
+            this.testToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.开始工作ToolStripMenuItem,
+            this.停止工作ToolStripMenuItem,
+            this.设置高频工作参数ToolStripMenuItem,
+            this.设置低频工作参数ToolStripMenuItem,
+            this.读取高频参数ToolStripMenuItem,
+            this.读取低频参数ToolStripMenuItem});
+            this.testToolStripMenuItem.Name = "testToolStripMenuItem";
+            this.testToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
+            this.testToolStripMenuItem.Text = "Test";
+            // 
+            // 开始工作ToolStripMenuItem
+            // 
+            this.开始工作ToolStripMenuItem.Name = "开始工作ToolStripMenuItem";
+            this.开始工作ToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
+            this.开始工作ToolStripMenuItem.Text = "开始工作";
+            // 
+            // 停止工作ToolStripMenuItem
+            // 
+            this.停止工作ToolStripMenuItem.Name = "停止工作ToolStripMenuItem";
+            this.停止工作ToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
+            this.停止工作ToolStripMenuItem.Text = "停止工作";
+            // 
+            // 设置高频工作参数ToolStripMenuItem
+            // 
+            this.设置高频工作参数ToolStripMenuItem.Name = "设置高频工作参数ToolStripMenuItem";
+            this.设置高频工作参数ToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
+            this.设置高频工作参数ToolStripMenuItem.Text = "设置高频工作参数";
+            // 
+            // 设置低频工作参数ToolStripMenuItem
+            // 
+            this.设置低频工作参数ToolStripMenuItem.Name = "设置低频工作参数ToolStripMenuItem";
+            this.设置低频工作参数ToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
+            this.设置低频工作参数ToolStripMenuItem.Text = "设置低频工作参数";
+            // 
+            // 读取高频参数ToolStripMenuItem
+            // 
+            this.读取高频参数ToolStripMenuItem.Name = "读取高频参数ToolStripMenuItem";
+            this.读取高频参数ToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
+            this.读取高频参数ToolStripMenuItem.Text = "读取高频参数";
+            // 
+            // 读取低频参数ToolStripMenuItem
+            // 
+            this.读取低频参数ToolStripMenuItem.Name = "读取低频参数ToolStripMenuItem";
+            this.读取低频参数ToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
+            this.读取低频参数ToolStripMenuItem.Text = "读取低频参数";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -2047,5 +2104,12 @@
         private System.Windows.Forms.ToolStripButton OpenSensorView;
         private System.Windows.Forms.OpenFileDialog openXtfFileDialog;
         private System.Windows.Forms.TextBox ErrtextBox;
+        private System.Windows.Forms.ToolStripMenuItem testToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 开始工作ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 停止工作ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 设置高频工作参数ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 设置低频工作参数ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 读取高频参数ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 读取低频参数ToolStripMenuItem;
     }
 }

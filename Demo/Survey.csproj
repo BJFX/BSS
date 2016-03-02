@@ -53,11 +53,13 @@
       <HintPath>..\..\..\..\ioa\水声通信网\吊放调试程序\ACN运行程序\GMap.NET.WindowsForms.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Data.SQLite">
       <HintPath>..\..\..\..\ioa\水声通信网\吊放调试程序\ACN运行程序\System.Data.SQLite.DLL</HintPath>
     </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Command.cs" />
@@ -86,6 +88,12 @@
     </Compile>
     <Compile Include="Forms\ConnectForm.Designer.cs">
       <DependentUpon>ConnectForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\SensorOptionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SensorOptionForm.Designer.cs">
+      <DependentUpon>SensorOptionForm.cs</DependentUpon>
     </Compile>
     <Compile Include="MapCustmize\CustomMap.cs">
       <SubType>UserControl</SubType>
@@ -138,6 +146,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\NavigationView.resx">
       <DependentUpon>NavigationView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SensorOptionForm.resx">
+      <DependentUpon>SensorOptionForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MapCustmize\CustomMap.resx">
       <DependentUpon>CustomMap.cs</DependentUpon>

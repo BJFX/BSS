@@ -20,9 +20,9 @@ namespace Survey
         string MyExecPath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetModules()[0].FullyQualifiedName);
 
         public EventWaitHandle ACPacketHandle;//AC响应包同步事件句柄
-        private BackgroundWorker NodeReceiver;
-        private BackgroundWorker NodeLinker;
-        private BackgroundWorker CommAnsReceiver;
+        private BackgroundWorker NodeReceiver = new BackgroundWorker();
+        private BackgroundWorker NodeLinker = new BackgroundWorker();
+        private BackgroundWorker CommAnsReceiver = new BackgroundWorker();
         public string Status;
         public UInt32 Ans;//应答包内容
         public NetEngine()

@@ -42,18 +42,7 @@ namespace Survey.Forms
             InitializeComponent();
             netcore = new NetEngine();
             NetworkAvailabilityChangedEventHandler e =new NetworkAvailabilityChangedEventHandler(AvailabilityChangedCallback);
-            Command.Version = 0x02;
-            Command.Ans.Add(0x0000, "命令成功接受");
-            Command.Ans.Add(0x0001, "数据头版本不正确");
-            Command.Ans.Add(0x0002, "无效命令");
-            Command.Ans.Add(0x0004, "无效的工作参数配置");
-            Command.Ans.Add(0x0008, "非法Duty Cycle");
-            Command.Ans.Add(0x0010, "检查和错误");
-            Command.Ans.Add(0x0020, "非法脉冲时间");
-            Command.Ans.Add(0x0040, "非法测量间隔");
-            Command.Ans.Add(0x0080, "null");
-            Command.Ans.Add(0x0100, "系统正处于工作状态");
-            Command.Ans.Add(0x0200, "没有设置工作参数");
+            
 
         }
         private void AvailabilityChangedCallback(object sender, EventArgs e)

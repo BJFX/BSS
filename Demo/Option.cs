@@ -53,6 +53,29 @@ namespace Survey
         }
     }
 
+    public class SensorOption
+    {
+        public bool bShowHeading;
+        public bool bShowPitch;
+        public bool bShowRoll;
+        public bool bShowPressure;
+        public bool bShowTemperature;
+        public bool bShowSpeed;
+        public bool bShowDepth;
+        public bool bShowAltitude;
+
+        public SensorOption()
+        {
+            bShowHeading = true;
+            bShowPitch = true;
+            bShowRoll = true;
+            bShowPressure = false;
+            bShowTemperature = false;
+            bShowSpeed = false;
+            bShowDepth = false;
+            bShowAltitude = false;
+        }
+    }
     public class NaviOption
     {
         
