@@ -37,19 +37,22 @@
             this.WaveSection.BackColor = System.Drawing.Color.Black;
             this.WaveSection.Dock = System.Windows.Forms.DockStyle.Fill;
             this.WaveSection.Location = new System.Drawing.Point(0, 0);
+            this.WaveSection.Margin = new System.Windows.Forms.Padding(0);
             this.WaveSection.Name = "WaveSection";
-            this.WaveSection.Size = new System.Drawing.Size(210, 450);
+            this.WaveSection.Size = new System.Drawing.Size(240, 460);
             this.WaveSection.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.WaveSection.TabIndex = 0;
             this.WaveSection.TabStop = false;
+            this.WaveSection.MouseClick += new System.Windows.Forms.MouseEventHandler(this.WaveSection_MouseClick);
             // 
             // WaveBoxV
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.WaveSection);
+            this.Margin = new System.Windows.Forms.Padding(0);
             this.Name = "WaveBoxV";
-            this.Size = new System.Drawing.Size(210, 450);
+            this.Size = new System.Drawing.Size(240, 460);
             ((System.ComponentModel.ISupportInitialize)(this.WaveSection)).EndInit();
             this.ResumeLayout(false);
 

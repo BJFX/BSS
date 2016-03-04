@@ -66,9 +66,9 @@ namespace Survey
 
         public SensorOption()
         {
-            bShowHeading = true;
-            bShowPitch = true;
-            bShowRoll = true;
+            bShowHeading = false;
+            bShowPitch = false;
+            bShowRoll = false;
             bShowPressure = false;
             bShowTemperature = false;
             bShowSpeed = false;

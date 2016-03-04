@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.Headinglabel = new System.Windows.Forms.Label();
-            this.waveBoxV = new ChartBox.WaveBoxV();
             this.Pitchlabel = new System.Windows.Forms.Label();
             this.Rolllabel = new System.Windows.Forms.Label();
             this.Speedlabel = new System.Windows.Forms.Label();
@@ -38,6 +37,7 @@
             this.Pressurelabel = new System.Windows.Forms.Label();
             this.Depthlabel = new System.Windows.Forms.Label();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.waveBoxV = new ChartBox.WaveBoxV();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -51,17 +51,6 @@
             this.Headinglabel.Size = new System.Drawing.Size(31, 21);
             this.Headinglabel.TabIndex = 1;
             this.Headinglabel.Text = "---";
-            // 
-            // waveBoxV
-            // 
-            this.waveBoxV.DisplayAmpMax = 180D;
-            this.waveBoxV.DisplayCount = 10;
-            this.waveBoxV.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.waveBoxV.Location = new System.Drawing.Point(3, 3);
-            this.waveBoxV.Name = "waveBoxV";
-            this.tableLayoutPanel1.SetRowSpan(this.waveBoxV, 8);
-            this.waveBoxV.Size = new System.Drawing.Size(214, 449);
-            this.waveBoxV.TabIndex = 0;
             // 
             // Pitchlabel
             // 
@@ -168,6 +157,18 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(369, 455);
             this.tableLayoutPanel1.TabIndex = 0;
+            // 
+            // waveBoxV
+            // 
+            this.waveBoxV.DisplayAmpMax = 180D;
+            this.waveBoxV.DisplayCount = 10;
+            this.waveBoxV.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.waveBoxV.Location = new System.Drawing.Point(3, 3);
+            this.waveBoxV.Name = "waveBoxV";
+            this.tableLayoutPanel1.SetRowSpan(this.waveBoxV, 8);
+            this.waveBoxV.Size = new System.Drawing.Size(214, 449);
+            this.waveBoxV.TabIndex = 0;
+            this.waveBoxV.MouseClick += new System.Windows.Forms.MouseEventHandler(this.waveBoxV_MouseClick);
             // 
             // SensorForm
             // 

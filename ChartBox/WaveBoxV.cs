@@ -67,6 +67,11 @@ namespace ChartBox
             return false;
         }
 
+        public void ReSetRange()
+        {
+            waveFrame.Max = _displayAmpMax;
+            waveFrame.Min = _displayAmpMin;
+        }
         public void DeleteLine(string catalog)
         {
             if (waveFrame != null)
@@ -91,6 +96,14 @@ namespace ChartBox
                 waveFrame.Paint(ref WaveSection);
             }
 
+        }
+
+        private void WaveSection_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                base.OnMouseClick(e);
+            }
         }
     }
 }

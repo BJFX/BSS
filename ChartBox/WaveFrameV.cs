@@ -52,7 +52,7 @@ namespace ChartBox
             Count = len;
             Max = max;
             Min = min;
-            canvas = new Bitmap(210, 450);
+            canvas = new Bitmap(240, 460);
             Graphics g = Graphics.FromImage(canvas);
             g.Clear(Color.Black);
             g.Dispose();
@@ -128,8 +128,8 @@ namespace ChartBox
             if (LineTable.Count == 0)
                 return;
 
-            int width = 200;
-            int height = 380;
+            int width = 230;
+            int height = 360;
             Graphics offScreenDC = Graphics.FromImage(canvas);
             var et = LineTable.GetEnumerator();
             while (et.MoveNext())
@@ -144,7 +144,7 @@ namespace ChartBox
                     for (int i = 0; i < line.Points.Count; i++)
                     {
                         int x = 5 + (int)((line.Points[i] -Min)*distance);
-                        int y = 50 + (int)step*i;
+                        int y = 80 + (int)step*i;
                         p[i] = new Point(x, y);
 
                     }
@@ -165,20 +165,26 @@ namespace ChartBox
             Graphics offScreenDC = Graphics.FromImage(canvas);
             var et = LineTable.GetEnumerator();
             int i = -1;
+            int offset = 0;
             while (et.MoveNext())
             {
                 i++;
                 Line line = et.Value as Line;
+                if (i == 4)
+                {
+                    i = 0;
+                    offset = 110;
+                }
                 if (line != null)
                 {
-                    Pen p1 = new Pen(line.LineColor, 5);
+                    Pen p1 = new Pen(line.LineColor, 4);
                     string strdata = "0";
                     if (line.Points.Count>0)
                         strdata = line.Points[line.Points.Count - 1].ToString("F1");
                     string str = line.Name + ": " + strdata;
                     SolidBrush sb = new SolidBrush(Color.White);
-                    offScreenDC.DrawString(str, new Font("Arial Regular", 9), sb, 35, 6+i*15);
-                    offScreenDC.DrawLine(p1,100,10+i*15,140,10+i*15);
+                    offScreenDC.DrawString(str, new Font("Arial Regular", 8), sb, 5 + offset, 6 + i * 15);
+                    offScreenDC.DrawLine(p1, 85 + offset, 10 + i * 15, 110 + offset, 10 + i * 15);
                 }
             }
 
@@ -192,19 +198,19 @@ namespace ChartBox
             p2.DashStyle = DashStyle.Dash;
             SolidBrush sb = new SolidBrush(Color.White);
             Graphics g = Graphics.FromImage(canvas);
-            g.DrawLine(p1, 5, 50, 205, 50);
-            g.DrawLine(p1, 5, 430, 205, 430);
-            g.DrawLine(p1, 5, 50, 5, 430);
-            g.DrawLine(p1, 205, 50, 205, 430);
-            g.DrawLine(p1,105,50,105,430);
-            g.DrawLine(p2, 55, 50, 55, 430);
-            g.DrawLine(p2, 160, 50, 160, 430);
+            g.DrawLine(p1, 5, 80, 235, 80);
+            g.DrawLine(p1, 5, 440, 235, 440);
+            g.DrawLine(p1, 5, 80, 5, 440);
+            g.DrawLine(p1, 235, 80, 235, 440);
+            g.DrawLine(p1,120,80,120,440);
+            g.DrawLine(p2, 63, 80, 63, 440);
+            g.DrawLine(p2, 177, 80, 177, 440);
             string axr = Max.ToString("F1");
-            g.DrawString(axr, new Font("Arial Regular", 8), sb, 185, 35);
+            g.DrawString(axr, new Font("Arial Regular", 8), sb, 210, 65);
             axr = Min.ToString("F1");
-            g.DrawString(axr, new Font("Arial Regular", 8), sb, 0, 35);
+            g.DrawString(axr, new Font("Arial Regular", 8), sb, 0, 65);
             axr = ((Max+Min)/2).ToString("F1");
-            g.DrawString(axr, new Font("Arial Regular", 8), sb, 95, 35);
+            g.DrawString(axr, new Font("Arial Regular", 8), sb, 110, 65);
             g.Dispose();
         }
     }
