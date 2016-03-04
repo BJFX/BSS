@@ -25,33 +25,52 @@ namespace Survey
     public class BSSParameter
     {
         public UInt16 DeviceID;
+        public UInt32 PortStartFq;
+        public UInt32 StarBoardStartFq;
         public UInt16 Ls;
+        public UInt32 PortFqRate;
+        public UInt32 StarBoardFqRate;
+        public UInt16 RcvDelay;
         public UInt16 Ts;
         public UInt16 Tt;
+        public Int16 ReltG;
         public UInt16 Flag;
+        public UInt16 TVGDelay;
+        public UInt16 TVGReRate;
         public UInt16 TVGCtl;
         public UInt16 TvgBeta;
         public UInt16 TvgAlpha;
         public Int16 TvgG;
         public Int32 Com;
         public BitArray ComArray;
+        public UInt16 RetID;
         public UInt32 FixedTVG;
+        public UInt32 ADSamples;
 
         public BSSParameter()
         {
             DeviceID = 0x02;
+            PortStartFq = 71250;
+            StarBoardStartFq = 78750;
             Ls = 600;
+            PortFqRate = 26045;
+            StarBoardFqRate = 26045;
+            RcvDelay = 1000;
             Ts = 36573;
-            Tt = 9569; 
+            Tt = 9569;
+            ReltG = 0;
             Flag = 0x0093;
+            TVGDelay = 0;
+            TVGReRate = 4369;
             TVGCtl = 0;
             TvgBeta = 300;
             TvgAlpha = 4400;
             TvgG = -400;
             Com = 0x00FB0084;
             ComArray = new BitArray(BitConverter.GetBytes(Com));
-
+            RetID = 0x003F;
             FixedTVG = 0;
+            ADSamples = 163840;
         }
 
         public bool Parse(byte[] dataBytes)
@@ -61,17 +80,27 @@ namespace Survey
             try
             {
                 DeviceID = BitConverter.ToUInt16(dataBytes, 0);
+                PortStartFq = BitConverter.ToUInt32(dataBytes, 2);
+                StarBoardStartFq = BitConverter.ToUInt32(dataBytes, 6);
                 Ls = BitConverter.ToUInt16(dataBytes, 10);
+                PortFqRate = BitConverter.ToUInt32(dataBytes, 12);
+                StarBoardFqRate = BitConverter.ToUInt32(dataBytes, 16);
+                RcvDelay = BitConverter.ToUInt16(dataBytes, 20);
                 Ts = BitConverter.ToUInt16(dataBytes, 22);
                 Tt = BitConverter.ToUInt16(dataBytes, 24);
+                ReltG = BitConverter.ToInt16(dataBytes, 26);
                 Flag = BitConverter.ToUInt16(dataBytes, 28);
+                TVGDelay = BitConverter.ToUInt16(dataBytes, 30);
+                TVGReRate = BitConverter.ToUInt16(dataBytes, 32);
                 TVGCtl = BitConverter.ToUInt16(dataBytes, 34);
                 TvgBeta = BitConverter.ToUInt16(dataBytes, 36);
                 TvgAlpha = BitConverter.ToUInt16(dataBytes, 38);
                 TvgG = BitConverter.ToInt16(dataBytes, 40);
                 Com = BitConverter.ToInt32(dataBytes, 42);
                 ComArray = new BitArray(BitConverter.GetBytes(Com));
+                RetID = BitConverter.ToUInt16(dataBytes, 46);
                 FixedTVG = BitConverter.ToUInt32(dataBytes, 48);
+                ADSamples = BitConverter.ToUInt32(dataBytes, 52);
             }
             catch (Exception)
             {
@@ -85,16 +114,26 @@ namespace Survey
         {
             byte[] pkg = new byte[56];
             Buffer.BlockCopy(BitConverter.GetBytes(DeviceID), 0, pkg, 0, 2);
+            Buffer.BlockCopy(BitConverter.GetBytes(PortStartFq), 0, pkg, 2, 4);
+            Buffer.BlockCopy(BitConverter.GetBytes(StarBoardStartFq), 0, pkg, 6, 4);
             Buffer.BlockCopy(BitConverter.GetBytes(Ls), 0, pkg, 10, 2);
+            Buffer.BlockCopy(BitConverter.GetBytes(PortFqRate), 0, pkg, 12, 4);
+            Buffer.BlockCopy(BitConverter.GetBytes(StarBoardFqRate), 0, pkg, 16, 4);
+            Buffer.BlockCopy(BitConverter.GetBytes(RcvDelay), 0, pkg, 20, 2);
             Buffer.BlockCopy(BitConverter.GetBytes(Ts), 0, pkg, 22, 2);
             Buffer.BlockCopy(BitConverter.GetBytes(Tt), 0, pkg, 24, 2);
+            Buffer.BlockCopy(BitConverter.GetBytes(ReltG), 0, pkg, 26, 2);
             Buffer.BlockCopy(BitConverter.GetBytes(Flag), 0, pkg, 28, 2);
+            Buffer.BlockCopy(BitConverter.GetBytes(TVGDelay), 0, pkg, 30, 2);
+            Buffer.BlockCopy(BitConverter.GetBytes(TVGReRate), 0, pkg, 32, 2);
             Buffer.BlockCopy(BitConverter.GetBytes(TVGCtl), 0, pkg, 34, 2);
             Buffer.BlockCopy(BitConverter.GetBytes(TvgBeta), 0, pkg, 36, 2);
             Buffer.BlockCopy(BitConverter.GetBytes(TvgAlpha), 0, pkg, 38, 2);
             Buffer.BlockCopy(BitConverter.GetBytes(TvgG), 0, pkg, 40, 2);
             Buffer.BlockCopy(BitConverter.GetBytes(Com), 0, pkg, 42, 4);
+            Buffer.BlockCopy(BitConverter.GetBytes(RetID), 0, pkg, 46, 2);
             Buffer.BlockCopy(BitConverter.GetBytes(FixedTVG), 0, pkg, 48, 4);
+            Buffer.BlockCopy(BitConverter.GetBytes(ADSamples), 0, pkg, 52, 4);
             return pkg;
         }
     }

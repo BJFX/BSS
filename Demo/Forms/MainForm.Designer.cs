@@ -1115,36 +1115,42 @@
             this.开始工作ToolStripMenuItem.Name = "开始工作ToolStripMenuItem";
             this.开始工作ToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
             this.开始工作ToolStripMenuItem.Text = "开始工作";
+            this.开始工作ToolStripMenuItem.Click += new System.EventHandler(this.开始工作ToolStripMenuItem_Click);
             // 
             // 停止工作ToolStripMenuItem
             // 
             this.停止工作ToolStripMenuItem.Name = "停止工作ToolStripMenuItem";
             this.停止工作ToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
             this.停止工作ToolStripMenuItem.Text = "停止工作";
+            this.停止工作ToolStripMenuItem.Click += new System.EventHandler(this.停止工作ToolStripMenuItem_Click);
             // 
             // 设置高频工作参数ToolStripMenuItem
             // 
             this.设置高频工作参数ToolStripMenuItem.Name = "设置高频工作参数ToolStripMenuItem";
             this.设置高频工作参数ToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
             this.设置高频工作参数ToolStripMenuItem.Text = "设置高频工作参数";
+            this.设置高频工作参数ToolStripMenuItem.Click += new System.EventHandler(this.设置高频工作参数ToolStripMenuItem_Click);
             // 
             // 设置低频工作参数ToolStripMenuItem
             // 
             this.设置低频工作参数ToolStripMenuItem.Name = "设置低频工作参数ToolStripMenuItem";
             this.设置低频工作参数ToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
             this.设置低频工作参数ToolStripMenuItem.Text = "设置低频工作参数";
+            this.设置低频工作参数ToolStripMenuItem.Click += new System.EventHandler(this.设置低频工作参数ToolStripMenuItem_Click);
             // 
             // 读取高频参数ToolStripMenuItem
             // 
             this.读取高频参数ToolStripMenuItem.Name = "读取高频参数ToolStripMenuItem";
             this.读取高频参数ToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
             this.读取高频参数ToolStripMenuItem.Text = "读取高频参数";
+            this.读取高频参数ToolStripMenuItem.Click += new System.EventHandler(this.读取高频参数ToolStripMenuItem_Click);
             // 
             // 读取低频参数ToolStripMenuItem
             // 
             this.读取低频参数ToolStripMenuItem.Name = "读取低频参数ToolStripMenuItem";
             this.读取低频参数ToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
             this.读取低频参数ToolStripMenuItem.Text = "读取低频参数";
+            this.读取低频参数ToolStripMenuItem.Click += new System.EventHandler(this.读取低频参数ToolStripMenuItem_Click);
             // 
             // dockContainerItem13
             // 

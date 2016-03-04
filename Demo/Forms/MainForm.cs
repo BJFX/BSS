@@ -31,6 +31,7 @@ namespace Survey.Forms
         private SensorForm SensorView = null;
         private ChartForm BssView1 = null;
         private ChartForm BssView2 = null;
+        private CommandLineForm CmdWindow = new CommandLineForm();
         private bool bPanel1triger;
         private bool bPanel2triger;
         private bool bView1Playing = false;
@@ -176,6 +177,7 @@ namespace Survey.Forms
             LongLabel.ForeColor = Color.White;
             LatLabel.ForeColor = Color.White;
             InitConfigure();
+            CmdWindow.Visible = false;
 
         }
 
@@ -1267,6 +1269,119 @@ namespace Survey.Forms
         }
 
         #endregion
+
+        private void 开始工作ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            
+            if (NetEngine.bConnect)
+            {
+                CmdWindow.Show();
+                CmdWindow.DisplayCommand("下发命令：开始工作");
+                if (netcore.SendCommand(Command.StartCMD()) == false)
+                {
+                    CmdWindow.DisplayAns("下发命令不成功："+netcore.Status);
+                }
+
+            }
+            else
+            {
+                MessageBox.Show("网络未连接，请检查网络");
+            }
+        }
+
+        private void 停止工作ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (NetEngine.bConnect)
+            {
+                CmdWindow.Show();
+                CmdWindow.DisplayCommand("下发命令：停止工作");
+                if (netcore.SendCommand(Command.StopCMD()) == false)
+                {
+                    CmdWindow.DisplayAns("下发命令不成功：" + netcore.Status);
+                }
+
+            }
+            else
+            {
+                MessageBox.Show("网络未连接，请检查网络");
+            }
+        }
+
+        private void 设置高频工作参数ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (NetEngine.bConnect)
+            {
+                CmdWindow.Show();
+                CmdWindow.DisplayCommand("下发命令：设置高频声纳工作参数");
+                BSSParameter para = new BSSParameter();
+                if (netcore.SendCommand(Command.SetupHighBSS(para)) == false)
+                {
+                    CmdWindow.DisplayAns("下发命令不成功：" + netcore.Status);
+                }
+
+            }
+            else
+            {
+                MessageBox.Show("网络未连接，请检查网络");
+            }
+        }
+
+        private void 设置低频工作参数ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (NetEngine.bConnect)
+            {
+                CmdWindow.Show();
+                CmdWindow.DisplayCommand("下发命令：设置低频声纳工作参数");
+                BSSParameter para = new BSSParameter();
+                if (netcore.SendCommand(Command.SetupLowBSS(para)) == false)
+                {
+                    CmdWindow.DisplayAns("下发命令不成功：" + netcore.Status);
+                }
+
+            }
+            else
+            {
+                MessageBox.Show("网络未连接，请检查网络");
+            }
+        }
+
+        private void 读取高频参数ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (NetEngine.bConnect)
+            {
+                CmdWindow.Show();
+                CmdWindow.DisplayCommand("下发命令：读取高频声纳工作参数");
+                //BSSParameter para = new BSSParameter();
+                if (netcore.SendCommand(Command.GetHighParaCMD()) == false)
+                {
+                    CmdWindow.DisplayAns("下发命令不成功：" + netcore.Status);
+                }
+
+            }
+            else
+            {
+                MessageBox.Show("网络未连接，请检查网络");
+            }
+        }
+
+        private void 读取低频参数ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (NetEngine.bConnect)
+            {
+                CmdWindow.Show();
+                CmdWindow.DisplayCommand("下发命令：读取低频声纳工作参数");
+                //BSSParameter para = new BSSParameter();
+                if (netcore.SendCommand(Command.GetLowParaCMD()) == false)
+                {
+                    CmdWindow.DisplayAns("下发命令不成功：" + netcore.Status);
+                }
+
+            }
+            else
+            {
+                MessageBox.Show("网络未连接，请检查网络");
+            }
+        }
 
 
 

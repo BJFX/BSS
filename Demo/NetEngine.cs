@@ -59,7 +59,7 @@ namespace Survey
                         if(ACPacketHandle==null)
                             ACPacketHandle = new EventWaitHandle(false, EventResetMode.AutoReset);
                         Tstream.Write(dataBytes, 0, dataBytes.Length);
-                        if (!ACPacketHandle.WaitOne(200))//等待信号超时
+                        if (!ACPacketHandle.WaitOne(2000))//等待信号超时
                         {
                             Exception MyEx = new Exception("接收应答超时！");
                             throw MyEx;
@@ -68,6 +68,7 @@ namespace Survey
                     }
 
                 }
+                Status = "网络连接故障";
                 return false;
 
             }
