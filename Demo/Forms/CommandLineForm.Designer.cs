@@ -64,7 +64,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(372, 280);
+            this.ClientSize = new System.Drawing.Size(386, 287);
             this.Controls.Add(this.AnsBox);
             this.Controls.Add(this.CommandBox);
             this.DoubleBuffered = true;
@@ -73,8 +73,9 @@
             this.MinimizeBox = false;
             this.Name = "CommandLineForm";
             this.ShowInTaskbar = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "命令";
+            this.TopMost = true;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.CommandLineForm_FormClosing);
             this.ResumeLayout(false);
 

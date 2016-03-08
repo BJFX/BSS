@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
+using System.Net;
 using System.Net.NetworkInformation;
+using System.Threading;
 using System.Windows.Forms;
 using DevComponents.DotNetBar;
+using DevComponents.DotNetBar.Controls;
 
 namespace Survey.Forms
 {
@@ -37,7 +40,7 @@ namespace Survey.Forms
         private bool bView1Playing = false;
         private bool bView2Playing = false;
         public static MainForm mf;
-        private NetEngine netcore;
+        public NetEngine netcore;
         public MainForm()
         {
             InitializeComponent();
@@ -934,10 +937,55 @@ namespace Survey.Forms
         #endregion
 
         #region tool button
-        private void TaskWizard_Click(object sender, EventArgs e)
+        private  void TaskWizard_Click(object sender, EventArgs e)
         {
-            ConnectForm cf  =new ConnectForm();
-            cf.ShowDialog();
+            if (!NetEngine.bConnect)
+            {
+                ConnectForm cf  =new ConnectForm();
+                if (cf.ShowDialog() == DialogResult.OK)
+                {
+                    int t = 0;
+                    netcore.ConnectNode(IPAddress.Parse(cf.TPUAddress.Value));
+                    
+                    do
+                    {
+                        Thread.Sleep(50);
+                        t++;
+                    } while (NetEngine.bConnect==false&&t<=200);
+                    string message = netcore.Status;
+                    string caption = NetEngine.bConnect ? "网络连接成功" : "网络连接失败";
+                    MessageBoxButtons buttons = MessageBoxButtons.OK;
+                    MessageBoxIcon icon = MessageBoxIcon.Question;
+                    MessageBoxDefaultButton defaultResult = MessageBoxDefaultButton.Button2;
+                    // Show message box
+                    MessageBox.Show(message, caption, buttons, icon, defaultResult);
+                }
+                if (NetEngine.bConnect)
+                    TaskWizard.Text = "断开连接";
+                else
+                {
+                    netcore.Tclient.Close();
+                    netcore.Dclient.Close();
+                }
+            }
+            else
+            {
+                string message = "是否断开与DSP连接？";
+                string caption = "提示";
+                MessageBoxButtons buttons = MessageBoxButtons.YesNo;
+                MessageBoxIcon icon = MessageBoxIcon.Question;
+                MessageBoxDefaultButton defaultResult = MessageBoxDefaultButton.Button2;
+                // Show message box
+                DialogResult result = MessageBox.Show(message, caption, buttons, icon, defaultResult);
+                if (result == DialogResult.Yes)
+                {
+                    NetEngine.bConnect = false;
+                    netcore.Tclient.Close();
+                    netcore.Dclient.Close();
+                    TaskWizard.Text = "任务向导";
+                }
+                
+            }
         }
 
         private void OpenBssView_Click(object sender, EventArgs e)

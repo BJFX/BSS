@@ -61,6 +61,7 @@ namespace Survey
                         Tstream.Write(dataBytes, 0, dataBytes.Length);
                         if (!ACPacketHandle.WaitOne(2000))//等待信号超时
                         {
+                            ACPacketHandle.Reset();
                             Exception MyEx = new Exception("接收应答超时！");
                             throw MyEx;
                         }

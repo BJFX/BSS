@@ -28,18 +28,19 @@ namespace Survey.Forms
             else
             {
                 CommandBox.Text = command;
+                AnsBox.Text = "";
             }
         }
         public void DisplayAns(string ans)
         {
-            if (CommandBox.InvokeRequired)
+            if (AnsBox.InvokeRequired)
             {
                 AnsDelegate d = new AnsDelegate(DisplayAns);
                 this.Invoke(d, new object[] { ans });
             }
             else
             {
-                CommandBox.Text = ans;
+                AnsBox.Text = ans;
             }
         }
         private void CommandLineForm_FormClosing(object sender, FormClosingEventArgs e)

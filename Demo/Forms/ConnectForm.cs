@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Net;
+using System.Windows.Forms;
 using DevComponents.DotNetBar;
 
 namespace Survey.Forms
@@ -17,6 +19,16 @@ namespace Survey.Forms
 
         private void ConfirmBtn_Click(object sender, EventArgs e)
         {
+            IPAddress ip = IPAddress.Any;
+            if (TPUAddress.Value!=null&&IPAddress.TryParse(TPUAddress.Value, out ip))
+            {
+                this.DialogResult = DialogResult.OK;
+            }
+            else
+            {
+                MessageBox.Show("无法解析网络地址");
+                DialogResult = DialogResult.None;
+            }
 
         }
 

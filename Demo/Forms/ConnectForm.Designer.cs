@@ -29,20 +29,20 @@
         private void InitializeComponent()
         {
             this.groupPanel1 = new DevComponents.DotNetBar.Controls.GroupPanel();
-            this.groupPanel2 = new DevComponents.DotNetBar.Controls.GroupPanel();
-            this.TPUAddress = new DevComponents.Editors.IpAddressInput();
             this.label1 = new System.Windows.Forms.Label();
-            this.MasterRad = new System.Windows.Forms.RadioButton();
+            this.TPUAddress = new DevComponents.Editors.IpAddressInput();
+            this.groupPanel2 = new DevComponents.DotNetBar.Controls.GroupPanel();
             this.SlaveRad = new System.Windows.Forms.RadioButton();
+            this.MasterRad = new System.Windows.Forms.RadioButton();
             this.ConfirmBtn = new DevComponents.DotNetBar.ButtonX();
             this.CancelBtn = new DevComponents.DotNetBar.ButtonX();
             this.ModifySonarSetup = new DevComponents.DotNetBar.ButtonX();
             this.groupPanel3 = new DevComponents.DotNetBar.Controls.GroupPanel();
-            this.label2 = new System.Windows.Forms.Label();
             this.StartWizard = new DevComponents.DotNetBar.ButtonX();
+            this.label2 = new System.Windows.Forms.Label();
             this.groupPanel1.SuspendLayout();
-            this.groupPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TPUAddress)).BeginInit();
+            this.groupPanel2.SuspendLayout();
             this.groupPanel3.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -55,7 +55,7 @@
             this.groupPanel1.DrawTitleBox = false;
             this.groupPanel1.Location = new System.Drawing.Point(12, 12);
             this.groupPanel1.Name = "groupPanel1";
-            this.groupPanel1.Size = new System.Drawing.Size(272, 100);
+            this.groupPanel1.Size = new System.Drawing.Size(314, 100);
             // 
             // 
             // 
@@ -87,6 +87,34 @@
             this.groupPanel1.TabIndex = 0;
             this.groupPanel1.Text = "网络地址设置";
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label1.Location = new System.Drawing.Point(3, 23);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(105, 21);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "TPU连接地址";
+            // 
+            // TPUAddress
+            // 
+            this.TPUAddress.AutoOverwrite = true;
+            // 
+            // 
+            // 
+            this.TPUAddress.BackgroundStyle.Class = "DateTimeInputBackground";
+            this.TPUAddress.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.TPUAddress.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
+            this.TPUAddress.ButtonFreeText.Visible = true;
+            this.TPUAddress.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.TPUAddress.Location = new System.Drawing.Point(112, 19);
+            this.TPUAddress.Name = "TPUAddress";
+            this.TPUAddress.Size = new System.Drawing.Size(173, 29);
+            this.TPUAddress.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.TPUAddress.TabIndex = 0;
+            this.TPUAddress.Value = "192.168.1.103";
+            // 
             // groupPanel2
             // 
             this.groupPanel2.CanvasColor = System.Drawing.SystemColors.Control;
@@ -94,9 +122,9 @@
             this.groupPanel2.Controls.Add(this.SlaveRad);
             this.groupPanel2.Controls.Add(this.MasterRad);
             this.groupPanel2.DrawTitleBox = false;
-            this.groupPanel2.Location = new System.Drawing.Point(290, 12);
+            this.groupPanel2.Location = new System.Drawing.Point(332, 12);
             this.groupPanel2.Name = "groupPanel2";
-            this.groupPanel2.Size = new System.Drawing.Size(135, 100);
+            this.groupPanel2.Size = new System.Drawing.Size(93, 100);
             // 
             // 
             // 
@@ -128,32 +156,16 @@
             this.groupPanel2.TabIndex = 1;
             this.groupPanel2.Text = "连接模式";
             // 
-            // TPUAddress
+            // SlaveRad
             // 
-            this.TPUAddress.AutoOverwrite = true;
-            // 
-            // 
-            // 
-            this.TPUAddress.BackgroundStyle.Class = "DateTimeInputBackground";
-            this.TPUAddress.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.TPUAddress.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
-            this.TPUAddress.ButtonFreeText.Visible = true;
-            this.TPUAddress.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.TPUAddress.Location = new System.Drawing.Point(122, 19);
-            this.TPUAddress.Name = "TPUAddress";
-            this.TPUAddress.Size = new System.Drawing.Size(141, 29);
-            this.TPUAddress.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.TPUAddress.TabIndex = 0;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label1.Location = new System.Drawing.Point(11, 23);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(105, 21);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "TPU连接地址";
+            this.SlaveRad.AutoSize = true;
+            this.SlaveRad.Location = new System.Drawing.Point(16, 32);
+            this.SlaveRad.Name = "SlaveRad";
+            this.SlaveRad.Size = new System.Drawing.Size(47, 16);
+            this.SlaveRad.TabIndex = 1;
+            this.SlaveRad.TabStop = true;
+            this.SlaveRad.Text = "从机";
+            this.SlaveRad.UseVisualStyleBackColor = true;
             // 
             // MasterRad
             // 
@@ -166,21 +178,11 @@
             this.MasterRad.Text = "主机";
             this.MasterRad.UseVisualStyleBackColor = true;
             // 
-            // SlaveRad
-            // 
-            this.SlaveRad.AutoSize = true;
-            this.SlaveRad.Location = new System.Drawing.Point(16, 32);
-            this.SlaveRad.Name = "SlaveRad";
-            this.SlaveRad.Size = new System.Drawing.Size(47, 16);
-            this.SlaveRad.TabIndex = 1;
-            this.SlaveRad.TabStop = true;
-            this.SlaveRad.Text = "从机";
-            this.SlaveRad.UseVisualStyleBackColor = true;
-            // 
             // ConfirmBtn
             // 
             this.ConfirmBtn.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.ConfirmBtn.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.ConfirmBtn.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.ConfirmBtn.Location = new System.Drawing.Point(268, 226);
             this.ConfirmBtn.Name = "ConfirmBtn";
             this.ConfirmBtn.Size = new System.Drawing.Size(75, 23);
@@ -254,15 +256,6 @@
             this.groupPanel3.TabIndex = 5;
             this.groupPanel3.Text = "设置向导";
             // 
-            // label2
-            // 
-            this.label2.Location = new System.Drawing.Point(3, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(389, 32);
-            this.label2.TabIndex = 0;
-            this.label2.Text = "sonard wizard is an optional procedure which can be used to setup the sonar surve" +
-    "y parameters";
-            // 
             // StartWizard
             // 
             this.StartWizard.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
@@ -274,6 +267,15 @@
             this.StartWizard.TabIndex = 1;
             this.StartWizard.Text = "运行向导";
             this.StartWizard.Click += new System.EventHandler(this.StartWizard_Click);
+            // 
+            // label2
+            // 
+            this.label2.Location = new System.Drawing.Point(3, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(389, 32);
+            this.label2.TabIndex = 0;
+            this.label2.Text = "sonard wizard is an optional procedure which can be used to setup the sonar surve" +
+    "y parameters";
             // 
             // ConnectForm
             // 
@@ -297,9 +299,9 @@
             this.Text = "TPU Connection";
             this.groupPanel1.ResumeLayout(false);
             this.groupPanel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.TPUAddress)).EndInit();
             this.groupPanel2.ResumeLayout(false);
             this.groupPanel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.TPUAddress)).EndInit();
             this.groupPanel3.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -309,7 +311,6 @@
 
         private DevComponents.DotNetBar.Controls.GroupPanel groupPanel1;
         private System.Windows.Forms.Label label1;
-        private DevComponents.Editors.IpAddressInput TPUAddress;
         private DevComponents.DotNetBar.Controls.GroupPanel groupPanel2;
         private System.Windows.Forms.RadioButton SlaveRad;
         private System.Windows.Forms.RadioButton MasterRad;
@@ -319,5 +320,6 @@
         private DevComponents.DotNetBar.Controls.GroupPanel groupPanel3;
         private DevComponents.DotNetBar.ButtonX StartWizard;
         private System.Windows.Forms.Label label2;
+        public DevComponents.Editors.IpAddressInput TPUAddress;
     }
 }
