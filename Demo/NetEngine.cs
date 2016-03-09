@@ -8,6 +8,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
+using Survey.Forms;
 
 namespace Survey
 {
@@ -20,11 +21,11 @@ namespace Survey
         string MyExecPath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetModules()[0].FullyQualifiedName);
 
         public EventWaitHandle ACPacketHandle;//AC响应包同步事件句柄
-        private BackgroundWorker NodeReceiver = new BackgroundWorker();
-        private BackgroundWorker NodeLinker = new BackgroundWorker();
-        private BackgroundWorker CommAnsReceiver = new BackgroundWorker();
+        public BackgroundWorker NodeReceiver = new BackgroundWorker();
+        public BackgroundWorker NodeLinker = new BackgroundWorker();
+        public BackgroundWorker CommAnsReceiver = new BackgroundWorker();
         public string Status;
-        public UInt32 Ans;//应答包内容
+        public int Ans;//应答包内容
         public NetEngine()
         {
             // 
@@ -252,44 +253,56 @@ namespace Survey
         {
             BackgroundWorker worker = sender as BackgroundWorker;
 
-            try
-            {
+            
                 while ((Tclient.Connected) && (!worker.CancellationPending))
                 {
-                    byte[] myReadBuffer = new byte[13];
-                    int numberOfBytesRead = 0;
-                    Tstream.Read(myReadBuffer, 0, 2);
-                    if(BitConverter.ToUInt16(myReadBuffer,0)==(int)ComID.Ans)
-                        continue;
-                    numberOfBytesRead = 2;
-                    do
+                    try
                     {
+                        byte[] myReadBuffer = new byte[1024];
+                        int numberOfBytesRead = 0;
+                        Tstream.Read(myReadBuffer, 0, 8);
                         
-                        int n = Tstream.Read(myReadBuffer, numberOfBytesRead, 13 - numberOfBytesRead);
-                        numberOfBytesRead += n;
-                    }
-                    while (numberOfBytesRead!=13);
-                    ParseNetworkPacket(myReadBuffer,13);
+                        numberOfBytesRead = 8;
+                        int length = BitConverter.ToInt32(myReadBuffer, 4);
+                        do
+                        {
 
+                            int n = Tstream.Read(myReadBuffer, numberOfBytesRead, length - numberOfBytesRead);
+                            numberOfBytesRead += n;
+                        } while (numberOfBytesRead < length);
+                        if (numberOfBytesRead == length)
+                            ParseNetworkPacket(myReadBuffer, length);
+                        else
+                        {
+                            Tstream.Flush();
+                            continue;
+                        }
+                            
+                    }
+                    catch (SocketException MyEx)
+                    {
+                        if (bConnect)
+                        {
+                            e.Result = MyEx.ErrorCode;
+                            Status = "接收应答包错误，错误码=" + e.Result.ToString();
+                            bConnect = false;
+                            return;
+                        }
+
+                    }
+                    catch (IOException IOEx)
+                    {
+                        bConnect = false;
+                        return;
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message + ":" + ex.StackTrace);
+                    }
                 }
                 if (worker.CancellationPending)
                     e.Cancel = true;
-            }
-            catch (SocketException MyEx)
-            {
-                if (bConnect)
-                {
-                    e.Result = MyEx.ErrorCode;
-                    Status = "接收应答包错误，错误码=" + e.Result.ToString();
-                    bConnect = false;
-                    return;
-                }
-
-            }
-            catch (IOException IOEx)
-            {
-                bConnect = false;
-            }
+            
             
         }
 
@@ -299,11 +312,13 @@ namespace Survey
             if (e.Cancelled)
             {
                 bConnect = false;
+                MessageBox.Show("网络连接被取消");
             }
             else if (!bConnect)
             {
                 Tclient.Close();
                 Dclient.Close();
+                MessageBox.Show("网络已关闭");
             }
         }
         #endregion
@@ -389,11 +404,72 @@ namespace Survey
             switch (BitConverter.ToUInt16(myReadBuffer,0))
             {
                 case (int)ComID.Ans:
-                    ACPacketHandle.Set();
-                    Ans = BitConverter.ToUInt32(myReadBuffer, 8);
+                    if (ACPacketHandle!=null)
+                        ACPacketHandle.Set();
+                    Ans = BitConverter.ToInt32(myReadBuffer, 8);
+                    if (Command.Ans.ContainsKey(Ans))
+                        MainForm.mf.CmdWindow.DisplayAns(Command.Ans[Ans].ToString());
+                    else
+                    {
+                        MainForm.mf.CmdWindow.DisplayAns("返回未知ID错误码");
+                    }
+                    break;
+                case (int)ComID.HighParaAns:
+                    if (ACPacketHandle != null)
+                        ACPacketHandle.Set();
+                    string str = ParsePara(myReadBuffer);
+                    MainForm.mf.CmdWindow.DisplayAns(str);
+                    break;
+                case (int)ComID.LowParaAns:
+                    if (ACPacketHandle != null)
+                        ACPacketHandle.Set();
+                    break;
+                case (int)ComID.BSSdata:
+                    
+                    break;
+                case (int)ComID.SensorData:
+
                     break;
                 default:
                     break;
+            }
+        }
+
+        private string ParsePara(byte[] myReadBuffer)
+        {
+            BSSParameter p =new BSSParameter();
+            byte[] b = new byte[56];
+            Buffer.BlockCopy(myReadBuffer,8,b,0,56);
+            if (p.Parse(b))
+            {
+                
+                StringBuilder sb = new StringBuilder();
+                sb.AppendLine("设备序列号:"+p.DeviceID);
+                sb.AppendLine("左舷发射起始频率:" + p.PortStartFq);
+                sb.AppendLine("右舷发射起始频率:" + p.StarBoardStartFq);
+                sb.AppendLine("脉冲长度:" + p.Ls);
+                sb.AppendLine("左舷发射扫频速率:" + p.PortFqRate);
+                sb.AppendLine("右舷发射扫频速率:" + p.StarBoardFqRate);
+                sb.AppendLine("接收延时:" + p.RcvDelay);
+                sb.AppendLine("采样时间:" + p.Ts);
+                sb.AppendLine("发射间隔时间:" + p.Tt);
+                sb.AppendLine("相对增益选择:" + p.ReltG);
+                sb.AppendLine("收发状态标识:" + p.Flag);
+                sb.AppendLine("TVG延时:" + p.TVGDelay);
+                sb.AppendLine("TVG更新速率:" + p.TVGReRate);
+                sb.AppendLine("TVG控制:" + p.TVGCtl);
+                sb.AppendLine("TVG比例因子:" + p.TvgBeta);
+                sb.AppendLine("TVG吸收衰减:" + p.TvgAlpha);
+                sb.AppendLine("TVG起始增益:" + p.TvgG);
+                sb.AppendLine("命令标识:" + p.Com);
+                sb.AppendLine("返回数据类型标识:" + p.RetID);
+                sb.AppendLine("固定TVG:" + p.FixedTVG);
+                sb.AppendLine("AD数据采样率:" + p.ADSamples);
+                return sb.ToString();
+            }
+            else
+            {
+                return @"参数解析不正确";
             }
         }
     }

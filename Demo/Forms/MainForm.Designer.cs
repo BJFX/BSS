@@ -213,6 +213,7 @@
             this.Sensorpanel = new System.Windows.Forms.Panel();
             this.Navipanel = new System.Windows.Forms.Panel();
             this.openXtfFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.NetWorkTimer = new System.Windows.Forms.Timer(this.components);
             this.DataPanel.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -1878,6 +1879,10 @@
             // 
             this.openXtfFileDialog.FileName = "openFileDialog1";
             // 
+            // NetWorkTimer
+            // 
+            this.NetWorkTimer.Tick += new System.EventHandler(this.NetWorkTimer_Tick);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -1978,7 +1983,6 @@
         private System.Windows.Forms.Label DateLabel;
         public System.Windows.Forms.Timer PlaybackTime;
         private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.ToolStripButton TaskWizard;
         private System.Windows.Forms.ToolStripButton OpenBssView;
         private System.Windows.Forms.ToolStripButton OpenNaviView;
         private System.Windows.Forms.ToolStripButton NaviTrackSet;
@@ -2117,5 +2121,7 @@
         private System.Windows.Forms.ToolStripMenuItem 设置低频工作参数ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 读取高频参数ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 读取低频参数ToolStripMenuItem;
+        public System.Windows.Forms.ToolStripButton TaskWizard;
+        private System.Windows.Forms.Timer NetWorkTimer;
     }
 }

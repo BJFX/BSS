@@ -34,7 +34,7 @@ namespace Survey.Forms
         private SensorForm SensorView = null;
         private ChartForm BssView1 = null;
         private ChartForm BssView2 = null;
-        private CommandLineForm CmdWindow = new CommandLineForm();
+        public CommandLineForm CmdWindow = new CommandLineForm();
         private bool bPanel1triger;
         private bool bPanel2triger;
         private bool bView1Playing = false;
@@ -46,7 +46,7 @@ namespace Survey.Forms
             InitializeComponent();
             netcore = new NetEngine();
             NetworkAvailabilityChangedEventHandler e =new NetworkAvailabilityChangedEventHandler(AvailabilityChangedCallback);
-            
+            Command.Init();
 
         }
         private void AvailabilityChangedCallback(object sender, EventArgs e)
@@ -63,6 +63,7 @@ namespace Survey.Forms
                     {
                         netcore.Tstream.Close();
                         netcore.Tclient.Close();
+                        
                     }
                 }
                 else
@@ -81,7 +82,7 @@ namespace Survey.Forms
                 {
                     netcore.Dclient.Close();
                 }
-
+                TaskWizard.Text = "任务向导";
                 MessageBox.Show("网络出错，请检查！");
 
                 NetEngine.bConnect = false;
@@ -964,6 +965,9 @@ namespace Survey.Forms
                     TaskWizard.Text = "断开连接";
                 else
                 {
+                    netcore.NodeLinker.CancelAsync();
+                    netcore.NodeReceiver.CancelAsync();
+                    netcore.CommAnsReceiver.CancelAsync();
                     netcore.Tclient.Close();
                     netcore.Dclient.Close();
                 }
@@ -980,6 +984,9 @@ namespace Survey.Forms
                 if (result == DialogResult.Yes)
                 {
                     NetEngine.bConnect = false;
+                    netcore.NodeLinker.CancelAsync();
+                    netcore.NodeReceiver.CancelAsync();
+                    netcore.CommAnsReceiver.CancelAsync();
                     netcore.Tclient.Close();
                     netcore.Dclient.Close();
                     TaskWizard.Text = "任务向导";
@@ -1428,6 +1435,18 @@ namespace Survey.Forms
             else
             {
                 MessageBox.Show("网络未连接，请检查网络");
+            }
+        }
+
+        private void NetWorkTimer_Tick(object sender, EventArgs e)
+        {
+            if (NetEngine.bConnect)
+            {
+                TaskWizard.Text = "断开连接";
+            }
+            else
+            {
+                TaskWizard.Text = "任务向导";
             }
         }
 

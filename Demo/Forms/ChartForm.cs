@@ -8,7 +8,7 @@ namespace Survey.Forms
         
         private bool BinitailChart1 = false;
         private bool BinitailChart2 = false;
-
+        private delegate void DisplayDelegate(int ChannelNumber, int DataNeedToRead, byte[] buf);
         public ChartOption option = new ChartOption();
         public ChartForm()
         {
@@ -130,39 +130,48 @@ namespace Survey.Forms
         }
         public void DisplayChart(int ChannelNumber, int DataNeedToRead, byte[] buf)
         {
-            if ((option.Fq == Frequence.High && ChannelNumber == 2)||(option.Fq == Frequence.Low && ChannelNumber == 0))
+            if (SideTable.InvokeRequired)
             {
-                if (!BinitailChart1)
-                {
-                    chartLeft.Initialize(2, (int)DataNeedToRead / 2, 4096, 100);
-                    waveLeft.Initialize(2, (int)DataNeedToRead / 2, 4096, 100);
-                }
-                BinitailChart1 = true;
-                if (option.Side != ShowSide.Starboard)
-                {
-                    chartLeft.Display(buf, false);
-                    if(MainForm.mf.bShowRaw)
-                        waveLeft.Display(buf,false);
-                }
-                
+                DisplayDelegate d = new DisplayDelegate(DisplayChart);
+                this.Invoke(d, new object[] { ChannelNumber, DataNeedToRead, buf });
             }
-            if ((option.Fq == Frequence.High && ChannelNumber == 3) || (option.Fq == Frequence.Low && ChannelNumber == 1))
+            else
             {
-                if (!BinitailChart2)
+                if ((option.Fq == Frequence.High && ChannelNumber == 2) || (option.Fq == Frequence.Low && ChannelNumber == 0))
                 {
-                    chartRight.Initialize(2, (int)DataNeedToRead / 2, 4096, 100);
-                    waveRight.Initialize(2, (int)DataNeedToRead / 2, 4096, 100);
-                }
-                BinitailChart2 = true;
+                    if (!BinitailChart1)
+                    {
+                        chartLeft.Initialize(2, (int)DataNeedToRead / 2, 4096, 100);
+                        waveLeft.Initialize(2, (int)DataNeedToRead / 2, 4096, 100);
+                    }
+                    BinitailChart1 = true;
+                    if (option.Side != ShowSide.Starboard)
+                    {
+                        chartLeft.Display(buf, false);
+                        if (MainForm.mf.bShowRaw)
+                            waveLeft.Display(buf, false);
+                    }
 
-                if (option.Side != ShowSide.Port)
-                {
-                    chartRight.Display(buf, false);
-                    if (MainForm.mf.bShowRaw)
-                        waveRight.Display(buf, false);
                 }
-                
+                if ((option.Fq == Frequence.High && ChannelNumber == 3) || (option.Fq == Frequence.Low && ChannelNumber == 1))
+                {
+                    if (!BinitailChart2)
+                    {
+                        chartRight.Initialize(2, (int)DataNeedToRead / 2, 4096, 100);
+                        waveRight.Initialize(2, (int)DataNeedToRead / 2, 4096, 100);
+                    }
+                    BinitailChart2 = true;
+
+                    if (option.Side != ShowSide.Port)
+                    {
+                        chartRight.Display(buf, false);
+                        if (MainForm.mf.bShowRaw)
+                            waveRight.Display(buf, false);
+                    }
+
+                }
             }
+            
         }
 
         private void ChartForm_SizeChanged(object sender, EventArgs e)
