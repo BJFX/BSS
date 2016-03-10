@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows.Forms;
 
 namespace Survey
 {
@@ -21,6 +22,17 @@ namespace Survey
         Ans=0x50,
         BSSdata = 0x62,
         SensorData = 0x70,
+    }
+    public enum ObjectID
+    {
+        AD = 0x01,
+        Reserved1 = 0x02,
+        Reserved2 = 0x03,
+        Reserved3 = 0x04,
+        PortHighBssData = 0x10,
+        StartboardHighBssData = 0x20,
+        PortLowBssData = 0x40,
+        StartboardLowBssData = 0x80,
     }
     public class BSSParameter
     {
@@ -137,7 +149,38 @@ namespace Survey
             return pkg;
         }
     }
-    
+
+    public class BSSResultData
+    {
+        public BSSParameter Parameter;
+        public DtObject Data = null;
+
+        public BSSResultData()
+        {
+            Parameter =new BSSParameter();
+            Data = new DtObject();
+        }
+
+        public bool Parse(byte[] dataBytes)
+        {
+            try
+            {
+                byte[] b = new byte[56];
+                byte[] d = new byte[dataBytes.Length-56];
+                Buffer.BlockCopy(dataBytes,0,b,0,56);
+                Buffer.BlockCopy(dataBytes, 56, d, 0, dataBytes.Length - 56);
+                if(Parameter.Parse(b)==false)
+                    return false;
+                if (Data.Parse(d)==false)
+                    return false;
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+    }
 
     public class Command
     {
@@ -247,6 +290,65 @@ namespace Survey
             Buffer.BlockCopy(para.Pack(), 0, pkg, 8, 56);
             pkg[64] = 0;//校验
             return pkg;
+        }
+    }
+
+    public class BSSObject
+    {
+        public uint ID;
+        public int DataBytes;
+        public uint FrameNo;
+        public byte[] BssBytes;
+        public BSSObject()
+        {
+            ID = (int) ObjectID.AD;
+            DataBytes = 0;
+            FrameNo = 0;
+            BssBytes = null;
+        }
+
+        public int Parse(byte[] dataBytes,int idx)
+        {
+            try
+            {
+                ID = BitConverter.ToUInt16(dataBytes, idx);
+                DataBytes = BitConverter.ToInt32(dataBytes, 2 + idx);
+                FrameNo = BitConverter.ToUInt32(dataBytes, 6 + idx);
+                BssBytes = new byte[DataBytes];
+                Buffer.BlockCopy(dataBytes, idx+10, BssBytes,0, DataBytes);
+                return DataBytes;
+            }
+            catch (Exception)
+            {
+                return 0;
+            }
+        }
+
+    }
+    public class DtObject
+    {
+        public Hashtable ALLData = null;
+        
+        public DtObject()
+        {
+            ALLData = new Hashtable();
+        }
+        public bool Parse(byte[] d)
+        {
+            
+            int readlength = 0;
+            do
+            {
+                BSSObject bssObject = new BSSObject();
+                int n = bssObject.Parse(d, 0);
+                if (n == 0)
+                    break;
+                readlength += n;
+                ALLData.Add(bssObject.ID, bssObject.BssBytes);
+            } while (readlength != d.Length);
+            if(readlength!=d.Length)
+                return false;
+            return true;
         }
     }
 }

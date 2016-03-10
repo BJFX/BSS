@@ -1453,5 +1453,53 @@ namespace Survey.Forms
 
 
 
+
+        internal void DisplayRTBSS(BSSResultData resultData)
+        {
+            int ChannelNumber = 0;//xtf顺序0，左低，1，右低，2，左高，3右高
+            byte[] buf = null;
+            if (resultData.Data.ALLData.Contains((uint) ObjectID.PortLowBssData))
+            {
+                ChannelNumber = 0;
+                buf = (byte[]) resultData.Data.ALLData[(uint) ObjectID.PortLowBssData];
+                DisplayChart(ChannelNumber, buf);
+            }
+            if (resultData.Data.ALLData.Contains((uint)ObjectID.PortHighBssData))
+            {
+                ChannelNumber = 2;
+                buf = (byte[])resultData.Data.ALLData[(uint)ObjectID.PortHighBssData];
+                DisplayChart(ChannelNumber, buf);
+            }
+            if (resultData.Data.ALLData.Contains((uint)ObjectID.StartboardHighBssData))
+            {
+                ChannelNumber = 3;
+                buf = (byte[])resultData.Data.ALLData[(uint)ObjectID.StartboardHighBssData];
+                DisplayChart(ChannelNumber, buf);
+            }
+            if (resultData.Data.ALLData.Contains((uint)ObjectID.StartboardLowBssData))
+            {
+                ChannelNumber = 1;
+                buf = (byte[])resultData.Data.ALLData[(uint)ObjectID.StartboardLowBssData];
+                DisplayChart(ChannelNumber, buf);
+            }
+            
+        }
+
+        private void DisplayChart(int ChannelNumber, byte[] buf)
+        {
+            //display
+            if (BssView1 != null && bView1Playing)
+            {
+                BssView1.DisplayChart(ChannelNumber, buf.Length, buf);
+                Chart1Title.Text = "拖鱼, " + ((BssView1.option.Fq == Frequence.High) ? "高频, " : "低频, ") +
+                                   "";
+            }
+            if (BssView2 != null && bView2Playing)
+            {
+                BssView2.DisplayChart(ChannelNumber, buf.Length, buf);
+                Chart2Title.Text = "拖鱼, " + ((BssView2.option.Fq == Frequence.High) ? "高频, " : "低频, ") +
+                                   "";
+            }
+        }
     }
 }

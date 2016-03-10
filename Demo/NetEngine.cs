@@ -423,15 +423,39 @@ namespace Survey
                 case (int)ComID.LowParaAns:
                     if (ACPacketHandle != null)
                         ACPacketHandle.Set();
+                    str = ParsePara(myReadBuffer);
+                    MainForm.mf.CmdWindow.DisplayAns(str);
                     break;
                 case (int)ComID.BSSdata:
-                    
+                    BSSResultData resultData = new BSSResultData();
+                    if (ParseBssData(myReadBuffer, out resultData))
+                    {
+                        MainForm.mf.DisplayRTBSS(resultData);
+                    }
                     break;
                 case (int)ComID.SensorData:
 
                     break;
                 default:
                     break;
+            }
+        }
+
+        private bool ParseBssData(byte[] myReadBuffer,out BSSResultData result)
+        {
+            int length = BitConverter.ToInt32(myReadBuffer, 4);
+            byte[] resultBytes = new byte[length-10];
+            Buffer.BlockCopy(myReadBuffer, 8, resultBytes, 0, length - 10);
+            BSSResultData resultData = new BSSResultData();
+            if (resultData.Parse(resultBytes))
+            {
+                result = resultData;
+                return true;
+            }
+            else
+            {
+                result = null;
+                return false;
             }
         }
 
