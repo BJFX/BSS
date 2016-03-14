@@ -28,7 +28,7 @@ namespace Survey.Forms
         public bool bShowRaw = false;
         public bool bShowInfo = true;
         private int block = 1024;
-        
+        public static bool Closeing = false;
         //windows collection
         private NavigationView NaviView = null;
         private SensorForm SensorView = null;
@@ -55,34 +55,8 @@ namespace Survey.Forms
             if (!myEg.IsAvailable)
             {
 
-                if (netcore.Tclient == null || netcore.Dclient == null)
-                    return;
-                if (netcore.Tclient.Client != null)
-                {
-                    if (netcore.Tclient.Connected)
-                    {
-                        netcore.Tstream.Close();
-                        netcore.Tclient.Close();
-                        
-                    }
-                }
-                else
-                {
-                    netcore.Tclient.Close();
-                }
-                if (netcore.Dclient.Client != null)
-                {
-                    if (netcore.Dclient.Connected)
-                    {
-                        netcore.Dstream.Close();
-                        netcore.Dclient.Close();
-                    }
-                }
-                else
-                {
-                    netcore.Dclient.Close();
-                }
-                TaskWizard.Text = "任务向导";
+                netcore.Stop();
+                
                 MessageBox.Show("网络出错，请检查！");
 
                 NetEngine.bConnect = false;
@@ -182,7 +156,10 @@ namespace Survey.Forms
             LatLabel.ForeColor = Color.White;
             InitConfigure();
             CmdWindow.Visible = false;
-
+            if (netcore.Initialed)
+            {
+                netcore.Start();
+            }
         }
 
         private void InitConfigure()
@@ -205,6 +182,10 @@ namespace Survey.Forms
                 if (playbackFileStream!=null)
                     playbackFileStream.Close();
                 e.Cancel = false;
+                Closeing = true;
+                if(netcore!=null)
+                    netcore.Stop();
+
             }
             
 
@@ -940,58 +921,10 @@ namespace Survey.Forms
         #region tool button
         private  void TaskWizard_Click(object sender, EventArgs e)
         {
-            if (!NetEngine.bConnect)
+            ConnectForm cf  =new ConnectForm();
+            if (cf.ShowDialog() == DialogResult.OK)
             {
-                ConnectForm cf  =new ConnectForm();
-                if (cf.ShowDialog() == DialogResult.OK)
-                {
-                    int t = 0;
-                    netcore.ConnectNode(IPAddress.Parse(cf.TPUAddress.Value));
-                    
-                    do
-                    {
-                        Thread.Sleep(50);
-                        t++;
-                    } while (NetEngine.bConnect==false&&t<=200);
-                    string message = netcore.Status;
-                    string caption = NetEngine.bConnect ? "网络连接成功" : "网络连接失败";
-                    MessageBoxButtons buttons = MessageBoxButtons.OK;
-                    MessageBoxIcon icon = MessageBoxIcon.Question;
-                    MessageBoxDefaultButton defaultResult = MessageBoxDefaultButton.Button2;
-                    // Show message box
-                    MessageBox.Show(message, caption, buttons, icon, defaultResult);
-                }
-                if (NetEngine.bConnect)
-                    TaskWizard.Text = "断开连接";
-                else
-                {
-                    netcore.NodeLinker.CancelAsync();
-                    netcore.NodeReceiver.CancelAsync();
-                    netcore.CommAnsReceiver.CancelAsync();
-                    netcore.Tclient.Close();
-                    netcore.Dclient.Close();
-                }
-            }
-            else
-            {
-                string message = "是否断开与DSP连接？";
-                string caption = "提示";
-                MessageBoxButtons buttons = MessageBoxButtons.YesNo;
-                MessageBoxIcon icon = MessageBoxIcon.Question;
-                MessageBoxDefaultButton defaultResult = MessageBoxDefaultButton.Button2;
-                // Show message box
-                DialogResult result = MessageBox.Show(message, caption, buttons, icon, defaultResult);
-                if (result == DialogResult.Yes)
-                {
-                    NetEngine.bConnect = false;
-                    netcore.NodeLinker.CancelAsync();
-                    netcore.NodeReceiver.CancelAsync();
-                    netcore.CommAnsReceiver.CancelAsync();
-                    netcore.Tclient.Close();
-                    netcore.Dclient.Close();
-                    TaskWizard.Text = "任务向导";
-                }
-                
+                //do something
             }
         }
 
@@ -1440,13 +1373,24 @@ namespace Survey.Forms
 
         private void NetWorkTimer_Tick(object sender, EventArgs e)
         {
-            if (NetEngine.bConnect)
+            if (!netcore.Initialed)
+                LinkStatusLabel.Text = "";
+            if (netcore.CmdClient!=null&&netcore.DataClient!=null)
             {
-                TaskWizard.Text = "断开连接";
+                NetEngine.bConnect = true;
+                LinkStatusLabel.Text = "终端节点已连接";
+            }
+            else if (netcore.CmdClient != null)
+            {
+                LinkStatusLabel.Text = "命令端口已连接";
+            }
+            else if (netcore.DataClient != null)
+            {
+                LinkStatusLabel.Text = "数据端口已连接";
             }
             else
             {
-                TaskWizard.Text = "任务向导";
+                LinkStatusLabel.Text = "等待网络连接";
             }
         }
 

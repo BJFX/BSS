@@ -33,10 +33,11 @@
             this.qatCustomizeItem1 = new DevComponents.DotNetBar.QatCustomizeItem();
             this.ribbonTabItem2 = new DevComponents.DotNetBar.RibbonTabItem();
             this.ribbonTabItem1 = new DevComponents.DotNetBar.RibbonTabItem();
-            this.metroStatusBar1 = new DevComponents.DotNetBar.Metro.MetroStatusBar();
+            this.StatusBar = new DevComponents.DotNetBar.Metro.MetroStatusBar();
             this.StatusLabel = new DevComponents.DotNetBar.LabelItem();
             this.LatLabel = new DevComponents.DotNetBar.LabelItem();
             this.LongLabel = new DevComponents.DotNetBar.LabelItem();
+            this.LinkStatusLabel = new DevComponents.DotNetBar.LabelItem();
             this.dockContainerItem1 = new DevComponents.DotNetBar.DockContainerItem();
             this.DataPanel = new DevComponents.DotNetBar.PanelEx();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
@@ -252,27 +253,27 @@
             this.ribbonTabItem1.Name = "ribbonTabItem1";
             this.ribbonTabItem1.Text = "ribbonTabItem1";
             // 
-            // metroStatusBar1
+            // StatusBar
             // 
-            this.metroStatusBar1.BackColor = System.Drawing.Color.White;
+            this.StatusBar.BackColor = System.Drawing.Color.White;
             // 
             // 
             // 
-            this.metroStatusBar1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.metroStatusBar1.ContainerControlProcessDialogKey = true;
-            this.metroStatusBar1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.metroStatusBar1.Font = new System.Drawing.Font("Segoe UI", 10.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.metroStatusBar1.ForeColor = System.Drawing.Color.Black;
-            this.metroStatusBar1.Items.AddRange(new DevComponents.DotNetBar.BaseItem[] {
+            this.StatusBar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.StatusBar.ContainerControlProcessDialogKey = true;
+            this.StatusBar.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.StatusBar.Font = new System.Drawing.Font("Segoe UI", 10.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.StatusBar.ForeColor = System.Drawing.Color.Black;
+            this.StatusBar.Items.AddRange(new DevComponents.DotNetBar.BaseItem[] {
             this.StatusLabel,
             this.LatLabel,
-            this.LongLabel});
-            this.metroStatusBar1.Location = new System.Drawing.Point(0, 700);
-            this.metroStatusBar1.Margin = new System.Windows.Forms.Padding(4);
-            this.metroStatusBar1.Name = "metroStatusBar1";
-            this.metroStatusBar1.Size = new System.Drawing.Size(1328, 29);
-            this.metroStatusBar1.TabIndex = 0;
-            this.metroStatusBar1.Text = "metroStatusBar1";
+            this.LongLabel,
+            this.LinkStatusLabel});
+            this.StatusBar.Location = new System.Drawing.Point(0, 700);
+            this.StatusBar.Margin = new System.Windows.Forms.Padding(4);
+            this.StatusBar.Name = "StatusBar";
+            this.StatusBar.Size = new System.Drawing.Size(1328, 29);
+            this.StatusBar.TabIndex = 0;
             // 
             // StatusLabel
             // 
@@ -293,6 +294,12 @@
             this.LongLabel.Name = "LongLabel";
             this.LongLabel.Text = "...";
             this.LongLabel.Width = 200;
+            // 
+            // LinkStatusLabel
+            // 
+            this.LinkStatusLabel.Name = "LinkStatusLabel";
+            this.LinkStatusLabel.Text = "等待网络连接";
+            this.LinkStatusLabel.Width = 200;
             // 
             // dockContainerItem1
             // 
@@ -1881,6 +1888,7 @@
             // 
             // NetWorkTimer
             // 
+            this.NetWorkTimer.Enabled = true;
             this.NetWorkTimer.Tick += new System.EventHandler(this.NetWorkTimer_Tick);
             // 
             // MainForm
@@ -1895,7 +1903,7 @@
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.DataPanel);
-            this.Controls.Add(this.metroStatusBar1);
+            this.Controls.Add(this.StatusBar);
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("宋体", 12F);
             this.IsMdiContainer = true;
@@ -1942,7 +1950,7 @@
         private DevComponents.DotNetBar.QatCustomizeItem qatCustomizeItem1;
         private DevComponents.DotNetBar.RibbonTabItem ribbonTabItem2;
         private DevComponents.DotNetBar.RibbonTabItem ribbonTabItem1;
-        private DevComponents.DotNetBar.Metro.MetroStatusBar metroStatusBar1;
+        private DevComponents.DotNetBar.Metro.MetroStatusBar StatusBar;
         private DevComponents.DotNetBar.LabelItem StatusLabel;
         private DevComponents.DotNetBar.LabelItem LatLabel;
         private DevComponents.DotNetBar.LabelItem LongLabel;
@@ -2123,5 +2131,6 @@
         private System.Windows.Forms.ToolStripMenuItem 读取低频参数ToolStripMenuItem;
         public System.Windows.Forms.ToolStripButton TaskWizard;
         private System.Windows.Forms.Timer NetWorkTimer;
+        private DevComponents.DotNetBar.LabelItem LinkStatusLabel;
     }
 }

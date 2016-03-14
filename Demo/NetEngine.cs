@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
@@ -14,53 +15,38 @@ namespace Survey
 {
     public class NetEngine
     {
-        public TcpClient Tclient, Dclient;
-        public NetworkStream Tstream, Dstream;
+        public TcpListener _dataListener;
+        public TcpListener _cmdListenert;
+        protected Thread CmdThread;
+        protected Thread DataThread;
         public static bool bConnect;
-        public bool hasRecv = false;
+        public bool Initialed = false;
         string MyExecPath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetModules()[0].FullyQualifiedName);
 
         public EventWaitHandle ACPacketHandle;//AC响应包同步事件句柄
-        public BackgroundWorker NodeReceiver = new BackgroundWorker();
-        public BackgroundWorker NodeLinker = new BackgroundWorker();
-        public BackgroundWorker CommAnsReceiver = new BackgroundWorker();
+        
         public string Status;
         public int Ans;//应答包内容
+        public TcpClient CmdClient { get; set; }
+        public TcpClient DataClient { get; set; }
         public NetEngine()
         {
-            // 
-            // NodeLinker
-            // 
-            NodeLinker.WorkerSupportsCancellation = true;
-            NodeLinker.DoWork += new System.ComponentModel.DoWorkEventHandler(NodeLinker_DoWork);
-            NodeLinker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(NodeLinker_RunWorkerCompleted);
-            // 
-            // NodeReceiver
-            // 
-            NodeReceiver.WorkerSupportsCancellation = true;
-            NodeReceiver.DoWork += new System.ComponentModel.DoWorkEventHandler(NodeReceiver_DoWork);
-            NodeReceiver.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(NodeReceiver_RunWorkerCompleted);
-            // 
-            // CommAnsReceiver
-            // 
-            CommAnsReceiver.WorkerSupportsCancellation = true;
-            CommAnsReceiver.DoWork += new System.ComponentModel.DoWorkEventHandler(CommAnsReceiver_DoWork);
-            CommAnsReceiver.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(CommAnsReceiver_RunWorkerCompleted);
+            Initialed = Init(5556, 5555);
         }
         //发送命令，false表示超时，true表示有返回值
         public bool SendCommand(byte[] dataBytes)
         {
             try
             {
-                if (Tstream != null)
+                if (CmdClient != null && CmdClient.GetStream()!=null)
                 {
-                    
-                    if (Tstream.CanWrite)
+
+                    if (CmdClient.GetStream().CanWrite)
                     {
                         if(ACPacketHandle==null)
                             ACPacketHandle = new EventWaitHandle(false, EventResetMode.AutoReset);
-                        Tstream.Write(dataBytes, 0, dataBytes.Length);
-                        if (!ACPacketHandle.WaitOne(2000))//等待信号超时
+                        CmdClient.GetStream().Write(dataBytes, 0, dataBytes.Length);
+                        if (!ACPacketHandle.WaitOne(1000))//等待信号超时
                         {
                             ACPacketHandle.Reset();
                             Exception MyEx = new Exception("接收应答超时！");
@@ -81,323 +67,164 @@ namespace Survey
             }
 
         }
-
-        #region 连接节点操作
-        /// <summary>
-        /// 连接节点，使用nodelinker在后台连接
-        /// </summary>
-
-        public void ConnectNode(IPAddress Nodeip)
-        {
-           
-                try
-                {
-
-                    Tclient = new TcpClient();//每次close后都要重写new一个新的对象，因为close后源对象已释放
-
-                    Tclient.SendTimeout = 2000;
-                    Dclient = new TcpClient();//每次close后都要重写new一个新的对象，因为close后源对象已释放
-
-                    Dclient.SendTimeout = 2000;
-                    if (NodeLinker.IsBusy)
-                    {
-                       
-                        NodeLinker.CancelAsync();
-                        Thread.Sleep(300);
-                            
-                    }
-                    
-                    NodeLinker.RunWorkerAsync(Nodeip);
-                    Status = "连接节点中……";
-                    
-                }
-
-                catch (Exception MyEx)
-                {
-                    Status ="连接失败！-" +MyEx.Message;
-                }
-
-
-        }
-        private static void ConnnectCallBack(IAsyncResult ar)
+        public bool Init(int cmdport,int dataport)
         {
             try
             {
-                TcpClient t = (TcpClient)ar.AsyncState;
-                t.EndConnect(ar);
+                var end = new IPEndPoint(IPAddress.Any, cmdport);
+                _cmdListenert = new TcpListener(end);
+                end = new IPEndPoint(IPAddress.Any, dataport);
+                _dataListener = new TcpListener(end);
+                return true;
             }
-            catch(Exception ex)
+            catch (Exception exception)
             {
-                bConnect = false;
+                MessageBox.Show("网络端口绑定失败：" + exception.Message);
+                return false;
+            }
+        }
+
+        public bool Start()
+        {
+            _cmdListenert.Start();
+            CmdThread = new Thread(RecvAnsThread);
+            CmdThread.Start(this);
+            _dataListener.Start();
+            DataThread = new Thread(RecvDataThread);
+            DataThread.Start(this);
+            return true;
+        }
+        public void Stop()
+        {
+            if (CmdClient != null)
+                CmdClient.Close();
+            if (_cmdListenert != null)
+                _cmdListenert.Stop();
+            if (CmdThread != null)
+            {
+                if (CmdThread.IsAlive)
+                {
+                    CmdThread.Abort();
+                }
+            }
+            if (DataClient != null)
+                DataClient.Close();
+            if (_dataListener != null)
+                _dataListener.Stop();
+            if (DataThread != null)
+            {
+                if (DataThread.IsAlive)
+                {
+                    DataThread.Abort();
+                }
             }
 
         }
-        private void connect(IPAddress ipaddr, BackgroundWorker MyWorker, DoWorkEventArgs e)
+        public void RecvAnsThread(object obj)
         {
-            if (MyWorker.CancellationPending)
+            NetEngine server = null;
+            server = obj as NetEngine;
+            if (server != null)
             {
-                e.Cancel = true;
-            }
-            try
-            {
-                Status="连接命令端口……";
-                Tclient.BeginConnect(ipaddr, 8080,new AsyncCallback(ConnnectCallBack), Tclient);
+                var myReadBuffer = new byte[1024];
                 while (true)
-                {
-                    Thread.Sleep(50);
-                    if (MyWorker.CancellationPending == false)
-                    {
-                        if ((Tclient.Client != null) && (Tclient.Connected == true))
-                        {
-                            Tstream = Tclient.GetStream();
-                            Status =  "命令端口已连接";
-                            break;
-                        }
-                    }
-                    else
-                    {
-                        e.Cancel = true;
-                        return;
-                    }
-                }
-                
-            }
-            catch (SocketException myEx)
-            {
-                e.Result = myEx.ErrorCode;
-                bConnect = false;
-                Status = "命令端口连接失败。错误码=" + e.Result.ToString();
-                return;
-
-            }
-            Thread.Sleep(200);
-            try
-            {
-                Status =  "连接数据命令端口……";
-                Dclient.BeginConnect(ipaddr, 8081, new AsyncCallback(ConnnectCallBack), Dclient);
-                while (true)
-                {
-                    Thread.Sleep(50);
-                    if (MyWorker.CancellationPending == false)
-                    {
-                        if ((Dclient.Client != null) && (Dclient.Connected == true))
-                        {
-                            Dstream = Dclient.GetStream();
-                            Status="数据端口已连接";
-                            break;
-                        }
-                    }
-                    else
-                    {
-                        e.Cancel = true;
-                        return;
-                    }
-                }  
-                bConnect = true;
-
-            }
-            catch (SocketException myEx)
-            {
-                e.Result = myEx.ErrorCode;
-                bConnect = false;
-                Status = "数据端口连接失败。错误码=" + e.Result.ToString();
-                return;
-            }
-
-        }
-        private void NodeLinker_DoWork(object sender, DoWorkEventArgs e)
-        {
-            BackgroundWorker worker = sender as BackgroundWorker;
-            connect((IPAddress)e.Argument, worker, e);
-        }
-
-        private void NodeLinker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            BackgroundWorker worker = sender as BackgroundWorker;
-            if (e.Cancelled)
-            {
-                Status = "连接已被取消！";
-                
-                bConnect = false;
-                Tclient.Close();
-                Dclient.Close();
-            }
-            else if (e.Result != null)
-            {
-                bConnect = false;
-                Tclient.Close();
-                Dclient.Close();
-
-            }
-            else
-            {
-                bConnect = true;
-
-                Status= "已连接节点";
-                if (Tclient.Connected)
-                {
-                    CommAnsReceiver.RunWorkerAsync();
-                }
-                if (Dclient.Connected)
-                {
-                    NodeReceiver.RunWorkerAsync();
-                }
-
-
-            }
-        }
-        #endregion
-
-        #region 接收应答
-        private void CommAnsReceiver_DoWork(object sender, DoWorkEventArgs e)
-        {
-            BackgroundWorker worker = sender as BackgroundWorker;
-
-            
-                while ((Tclient.Connected) && (!worker.CancellationPending))
                 {
                     try
                     {
-                        byte[] myReadBuffer = new byte[1024];
-                        int numberOfBytesRead = 0;
-                        Tstream.Read(myReadBuffer, 0, 8);
-                        
-                        numberOfBytesRead = 8;
-                        int length = BitConverter.ToInt32(myReadBuffer, 4);
-                        do
+                        server.CmdClient = server._cmdListenert.AcceptTcpClient();
+                        NetworkStream stream = server.CmdClient.GetStream();
+                        while (stream.CanRead)
                         {
+                            Array.Clear(myReadBuffer, 0, 1024);//置零
+                            int numberOfBytesRead = 0;
+                            stream.Read(myReadBuffer, 0, 8);//先读包头
+                            Int32 PacketLength = BitConverter.ToInt32(myReadBuffer, 4) - 8;//减去包头，不减校验和
+                            // Incoming message may be larger than the buffer size.
+                            do
+                            {
+                                int n = stream.Read(myReadBuffer, 8 + numberOfBytesRead, PacketLength - numberOfBytesRead);
+                                numberOfBytesRead += n;
 
-                            int n = Tstream.Read(myReadBuffer, numberOfBytesRead, length - numberOfBytesRead);
-                            numberOfBytesRead += n;
-                        } while (numberOfBytesRead < length);
-                        if (numberOfBytesRead == length)
-                            ParseNetworkPacket(myReadBuffer, length);
-                        else
-                        {
-                            Tstream.Flush();
-                            continue;
+                            }
+                            while (PacketLength>0&&numberOfBytesRead < PacketLength);
+                            if (numberOfBytesRead == PacketLength)
+                                ParseNetworkPacket(myReadBuffer, PacketLength);
+                            else
+                            {
+                                stream.Flush();
+                                continue;
+                            }
                         }
-                            
                     }
-                    catch (SocketException MyEx)
+                    catch (Exception exception)
                     {
-                        if (bConnect)
-                        {
-                            e.Result = MyEx.ErrorCode;
-                            Status = "接收应答包错误，错误码=" + e.Result.ToString();
-                            bConnect = false;
-                            return;
-                        }
-
+                        if (MainForm.Closeing == false)
+                            MessageBox.Show(exception.Message);
                     }
-                    catch (IOException IOEx)
+                    finally
                     {
-                        bConnect = false;
-                        return;
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.Message + ":" + ex.StackTrace);
+                        if (server.CmdClient != null)
+                            server.CmdClient.Close();
+                        server.CmdClient = null;
                     }
                 }
-                if (worker.CancellationPending)
-                    e.Cancel = true;
-            
-            
-        }
 
-        private void CommAnsReceiver_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            BackgroundWorker worker = sender as BackgroundWorker;
-            if (e.Cancelled)
-            {
-                bConnect = false;
-                MessageBox.Show("网络连接被取消");
             }
-            else if (!bConnect)
-            {
-                Tclient.Close();
-                Dclient.Close();
-                MessageBox.Show("网络已关闭");
-            }
-        }
-        #endregion
 
-        #region 接收数据线程
-        private void NodeReceiver_DoWork(object sender, DoWorkEventArgs e)
+        }
+        public void RecvDataThread(object obj)
         {
-            
-            BackgroundWorker worker = sender as BackgroundWorker;
-            try
+            NetEngine server = null;
+            server = obj as NetEngine;
+            if (server != null)
             {
-                if (Dclient.Connected)
+                var myReadBuffer = new byte[1024000];
+                while (true)
                 {
-                    byte[] myReadBuffer = new byte[8100];
-                    while ((Dstream.CanRead) && (!worker.CancellationPending))
+                    try
                     {
-                        Array.Clear(myReadBuffer, 0, 8100);//置零
-                        int numberOfBytesRead = 0;
-                        Dstream.Read(myReadBuffer, 0, 8);//先读包头
-                        Int32 PacketLength = BitConverter.ToInt32(myReadBuffer, 4)-8;//减去包头，不减校验和
-                        // Incoming message may be larger than the buffer size.
-                        do
+                        server.DataClient = server._dataListener.AcceptTcpClient();
+                        NetworkStream stream = server.DataClient.GetStream();
+                        while (stream.CanRead)
                         {
-                            int n = Dstream.Read(myReadBuffer, 8 + numberOfBytesRead, PacketLength - numberOfBytesRead);
-                            numberOfBytesRead += n;
+                            Array.Clear(myReadBuffer, 0, 1024000);//置零
+                            int numberOfBytesRead = 0;
+                            stream.Read(myReadBuffer, 0, 8);//先读包头
+                            Int32 PacketLength = BitConverter.ToInt32(myReadBuffer, 4) - 8;//减去包头，不减校验和
+                            // Incoming message may be larger than the buffer size.
+                            do
+                            {
+                                int n = stream.Read(myReadBuffer, 8 + numberOfBytesRead, PacketLength - numberOfBytesRead);
+                                numberOfBytesRead += n;
 
+                            }
+                            while (PacketLength>0&&numberOfBytesRead < PacketLength);
+                            if (numberOfBytesRead == PacketLength)
+                                ParseNetworkPacket(myReadBuffer, PacketLength);
+                            else
+                            {
+                                stream.Flush();
+                                continue;
+                            }
                         }
-                        while (numberOfBytesRead != PacketLength);
-                        ParseNetworkPacket(myReadBuffer, PacketLength);
                     }
-                    if (worker.CancellationPending)
-                        e.Cancel = true;
-                }
-            }
-            catch (SocketException MyEx)
-            {
-                if (bConnect)
-                {
-                    e.Result = MyEx.ErrorCode;
-                    
-                    
-                    bConnect = false;
+                    catch (Exception exception)
+                    {
+                        if(MainForm.Closeing==false)
+                            MessageBox.Show(exception.Message);
+                    }
+                    finally
+                    {
+                        if (server.DataClient != null)
+                            server.DataClient.Close();
+                        server.DataClient = null;
+                    }
                 }
 
-            }
-            catch (IOException IOEx)
-            {
-                bConnect = false;
-                //AddtoBox(Color.Black,"IO错误!\r\n/>");
-                //SendStatusLabel("IO错误！网络连接关闭");
             }
 
         }
-
-        private void NodeReceiver_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            BackgroundWorker worker = sender as BackgroundWorker;
-            if (e.Cancelled)
-            {
-                bConnect = false;
-                Tclient.Close();
-                Dclient.Close();
-                Status = "数据接收取消!";
-            }
-            else if (e.Error != null)
-            {
-                Status = "数据接收中断!"+"错误码=" + e.Result.ToString();
-                Dclient.Close();
-                Tclient.Close();
-                
-            }
-            else
-            {
-                Status = "停止接收数据!";
-                Dclient.Close();
-                Tclient.Close();
-            }
-        }
-        #endregion
+        
 
         private void ParseNetworkPacket(byte[] myReadBuffer, int PacketLength)
         {
@@ -428,17 +255,37 @@ namespace Survey
                     break;
                 case (int)ComID.BSSdata:
                     BSSResultData resultData = new BSSResultData();
+
                     if (ParseBssData(myReadBuffer, out resultData))
                     {
+                        str = "收到侧扫数据，长度=" + myReadBuffer.Length+"字节\n";
+                        var et = resultData.Data.ALLData.Keys.GetEnumerator();
+                        while (et.MoveNext())
+                        {
+                            int key = (int) et.Current;
+                            str += "数据:" + Enum.GetName(typeof (ObjectID), key)+"\n";
+                        }
+                        MainForm.mf.CmdWindow.DisplayAns(str);
                         MainForm.mf.DisplayRTBSS(resultData);
                     }
                     break;
                 case (int)ComID.SensorData:
-
+                    BssSensorData sensorData = new BssSensorData();
+                    if (ParseSensorData(myReadBuffer, out sensorData))
+                    {
+                        str = "收到传感器数据，长度=" + myReadBuffer.Length + "字节";
+                        MainForm.mf.CmdWindow.DisplayAns(str);
+                        //MainForm.mf.DisplayRTBSS(resultData);
+                    }
                     break;
                 default:
                     break;
             }
+        }
+
+        private bool ParseSensorData(byte[] myReadBuffer, out BssSensorData sensorData)
+        {
+            throw new NotImplementedException();
         }
 
         private bool ParseBssData(byte[] myReadBuffer,out BSSResultData result)

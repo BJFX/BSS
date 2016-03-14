@@ -150,6 +150,10 @@ namespace Survey
         }
     }
 
+    public class BssSensorData
+    {
+        
+    }
     public class BSSResultData
     {
         public BSSParameter Parameter;
@@ -340,7 +344,7 @@ namespace Survey
             do
             {
                 BSSObject bssObject = new BSSObject();
-                int n = bssObject.Parse(d, 0);
+                int n = bssObject.Parse(d, readlength);
                 if (n == 0)
                     break;
                 readlength += n;
