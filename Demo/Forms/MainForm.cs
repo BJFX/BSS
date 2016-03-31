@@ -1248,12 +1248,79 @@ namespace Survey.Forms
 
         private void ApplyBtn_Click(object sender, EventArgs e)
         {
+            uint range = 50;
+            if (RangeSelectBox.Text == "" || uint.TryParse(RangeSelectBox.Text, out range) == false)
+                return;
+            
+                if (NetEngine.bConnect)
+                {
+                    CmdWindow.Show();
+                    BSSParameter para = new BSSParameter();
+                    para.Ts = (ushort)(range * 65121 / 750 + 1620);
+                    if (BssView1.option.Fq == Frequence.High)
+                    {
+                        
+                        CmdWindow.DisplayCommand("下发命令：设置高频声纳工作参数");
+                        
+                        if (netcore.SendCommand(Command.SetupHighBSS(para)) == false)
+                        {
+                            CmdWindow.DisplayAns("下发命令不成功：" + netcore.Status);
+                        }
+                    }
+                    else
+                    {
+                        
+                        CmdWindow.DisplayCommand("下发命令：设置低频声纳工作参数");
 
+                        if (netcore.SendCommand(Command.SetupLowBSS(para)) == false)
+                        {
+                            CmdWindow.DisplayAns("下发命令不成功：" + netcore.Status);
+                        }
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("网络未连接，请检查网络");
+                }
+           
         }
 
         private void Apply2Btn_Click(object sender, EventArgs e)
         {
+            uint range = 50;
+            if (Range2SelectBox.Text == "" || uint.TryParse(Range2SelectBox.Text, out range)==false)
+                return;
 
+            if (NetEngine.bConnect)
+            {
+                CmdWindow.Show();
+                BSSParameter para = new BSSParameter();
+                para.Ts = (ushort)(range * 65121 / 750 + 1620);
+                if (BssView1.option.Fq == Frequence.High)
+                {
+
+                    CmdWindow.DisplayCommand("下发命令：设置高频声纳工作参数");
+
+                    if (netcore.SendCommand(Command.SetupHighBSS(para)) == false)
+                    {
+                        CmdWindow.DisplayAns("下发命令不成功：" + netcore.Status);
+                    }
+                }
+                else
+                {
+
+                    CmdWindow.DisplayCommand("下发命令：设置低频声纳工作参数");
+
+                    if (netcore.SendCommand(Command.SetupLowBSS(para)) == false)
+                    {
+                        CmdWindow.DisplayAns("下发命令不成功：" + netcore.Status);
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("网络未连接，请检查网络");
+            }
         }
 
         #endregion

@@ -22,9 +22,9 @@ namespace Survey
         public static bool bConnect;
         public bool Initialed = false;
         string MyExecPath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetModules()[0].FullyQualifiedName);
-
+        public AdFile BssFile = new AdFile("BSS");
         public EventWaitHandle ACPacketHandle;//AC响应包同步事件句柄
-        
+        public bool hasRecv = false;
         public string Status;
         public int Ans;//应答包内容
         public TcpClient CmdClient { get; set; }
@@ -254,6 +254,17 @@ namespace Survey
                     MainForm.mf.CmdWindow.DisplayAns(str);
                     break;
                 case (int)ComID.BSSdata:
+                    if(!hasRecv)
+                        {
+                            BssFile.OpenFile(new DirectoryInfo(MyExecPath));
+                            hasRecv = true;
+                        }
+                    BssFile.BinaryWrite(myReadBuffer);
+                    if (BssFile.FileLen > 1024 * 1024 * 100)
+                        {
+                            BssFile.close();
+                            BssFile.OpenFile(new DirectoryInfo(MyExecPath));
+                        }
                     BSSResultData resultData = new BSSResultData();
 
                     if (ParseBssData(myReadBuffer, out resultData))
@@ -324,7 +335,7 @@ namespace Survey
                 sb.AppendLine("接收延时:" + p.RcvDelay);
                 sb.AppendLine("采样时间:" + p.Ts);
                 sb.AppendLine("发射间隔时间:" + p.Tt);
-                sb.AppendLine("相对增益选择:" + p.ReltG);
+                sb.AppendLine("AD数据采样率:" + p.ADSamples);
                 sb.AppendLine("收发状态标识:" + p.Flag);
                 sb.AppendLine("TVG延时:" + p.TVGDelay);
                 sb.AppendLine("TVG更新速率:" + p.TVGReRate);
@@ -335,7 +346,8 @@ namespace Survey
                 sb.AppendLine("命令标识:" + p.Com);
                 sb.AppendLine("返回数据类型标识:" + p.RetID);
                 sb.AppendLine("固定TVG:" + p.FixedTVG);
-                sb.AppendLine("AD数据采样率:" + p.ADSamples);
+                sb.AppendLine("TVG发送长度:" + p.TVGLength);
+                sb.AppendLine("TVG模式选择:" + p.TVGMode);
                 return sb.ToString();
             }
             else

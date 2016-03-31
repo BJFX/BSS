@@ -1361,6 +1361,7 @@
             // RangeSelectBox
             // 
             this.RangeSelectBox.DropDownHeight = 106;
+            this.RangeSelectBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDown;
             this.RangeSelectBox.ItemHeight = 17;
             this.RangeSelectBox.Items.AddRange(new object[] {
             this.Item15,
@@ -1376,6 +1377,7 @@
             this.Item175,
             this.Item200});
             this.RangeSelectBox.Name = "RangeSelectBox";
+            this.RangeSelectBox.Text = "50";
             // 
             // Item15
             // 
@@ -1655,6 +1657,7 @@
             // Range2SelectBox
             // 
             this.Range2SelectBox.DropDownHeight = 106;
+            this.Range2SelectBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDown;
             this.Range2SelectBox.ItemHeight = 17;
             this.Range2SelectBox.Items.AddRange(new object[] {
             this.comboItem1,
@@ -1670,6 +1673,7 @@
             this.comboItem11,
             this.comboItem12});
             this.Range2SelectBox.Name = "Range2SelectBox";
+            this.Range2SelectBox.Text = "50";
             // 
             // comboItem1
             // 
