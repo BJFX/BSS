@@ -64,7 +64,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(386, 287);
+            this.ClientSize = new System.Drawing.Size(374, 301);
             this.Controls.Add(this.AnsBox);
             this.Controls.Add(this.CommandBox);
             this.DoubleBuffered = true;

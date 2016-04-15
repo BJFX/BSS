@@ -159,7 +159,7 @@ namespace Survey
                     catch (Exception exception)
                     {
                         if (MainForm.Closeing == false)
-                            MessageBox.Show(exception.Message);
+                            MessageBox.Show("命令端口断开");
                     }
                     finally
                     {
@@ -211,7 +211,7 @@ namespace Survey
                     catch (Exception exception)
                     {
                         if(MainForm.Closeing==false)
-                            MessageBox.Show(exception.Message);
+                            MessageBox.Show("数据端口断开");
                     }
                     finally
                     {
@@ -245,12 +245,18 @@ namespace Survey
                     if (ACPacketHandle != null)
                         ACPacketHandle.Set();
                     string str = ParsePara(myReadBuffer);
+                    byte[] b = new byte[56];
+                    Buffer.BlockCopy(myReadBuffer,8,b,0,56);
+                    MainForm.mf.para.Highpara.Parse(b);
                     MainForm.mf.CmdWindow.DisplayAns(str);
                     break;
                 case (int)ComID.LowParaAns:
                     if (ACPacketHandle != null)
                         ACPacketHandle.Set();
                     str = ParsePara(myReadBuffer);
+                    b = new byte[56];
+                    Buffer.BlockCopy(myReadBuffer,8,b,0,56);
+                    MainForm.mf.para.Lowpara.Parse(b);
                     MainForm.mf.CmdWindow.DisplayAns(str);
                     break;
                 case (int)ComID.BSSdata:
@@ -269,15 +275,18 @@ namespace Survey
 
                     if (ParseBssData(myReadBuffer, out resultData))
                     {
-                        str = "收到侧扫数据，长度=" + myReadBuffer.Length+"字节\n";
-                        var et = resultData.Data.ALLData.Keys.GetEnumerator();
-                        while (et.MoveNext())
+                        BSSObject data = null;
+                        str = "";
+                        while (resultData.Data.ALLData.Count>0)
                         {
-                            int key = (int) et.Current;
-                            str += "数据:" + Enum.GetName(typeof (ObjectID), key)+"\n";
+                            data = resultData.Data.ALLData.Dequeue();
+                            str +=  "收到侧扫数据，长度=" + data.DataBytes.ToString()+"字节,类型:" + Enum.GetName(typeof (ObjectID), data.ID)+"\n";
+                            MainForm.mf.DisplayRTBSS(data);
+                            
                         }
+                        MainForm.mf.DisplayRTRange(resultData);
                         MainForm.mf.CmdWindow.DisplayAns(str);
-                        MainForm.mf.DisplayRTBSS(resultData);
+                        
                     }
                     break;
                 case (int)ComID.SensorData:
@@ -302,8 +311,8 @@ namespace Survey
         private bool ParseBssData(byte[] myReadBuffer,out BSSResultData result)
         {
             int length = BitConverter.ToInt32(myReadBuffer, 4);
-            byte[] resultBytes = new byte[length-10];
-            Buffer.BlockCopy(myReadBuffer, 8, resultBytes, 0, length - 10);
+            byte[] resultBytes = new byte[length-8];
+            Buffer.BlockCopy(myReadBuffer, 8, resultBytes, 0, length - 8);
             BSSResultData resultData = new BSSResultData();
             if (resultData.Parse(resultBytes))
             {

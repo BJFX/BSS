@@ -1,17 +1,19 @@
 ﻿using System;
 using System.Windows.Forms;
+using DevComponents.DotNetBar;
 
 namespace Survey.Forms
 {
-    public partial class ChartForm : Form
+    public partial class ChartForm : Office2007Form
     {
-        
+        private readonly MainForm _mf;
         private bool BinitailChart1 = false;
         private bool BinitailChart2 = false;
         private delegate void DisplayDelegate(int ChannelNumber, int DataNeedToRead, byte[] buf);
         public ChartOption option = new ChartOption();
-        public ChartForm()
+        public ChartForm(MainForm mf)
         {
+            _mf = mf;
             InitializeComponent();
         }
 
@@ -139,7 +141,7 @@ namespace Survey.Forms
             {
                 if ((option.Fq == Frequence.High && ChannelNumber == 2) || (option.Fq == Frequence.Low && ChannelNumber == 0))
                 {
-                    if (!BinitailChart1)
+                    if (!BinitailChart1 || chartLeft.DisplayLength != DataNeedToRead/2)
                     {
                         chartLeft.Initialize(2, (int)DataNeedToRead / 2, 4096, 100);
                         waveLeft.Initialize(2, (int)DataNeedToRead / 2, 4096, 100);
@@ -155,7 +157,7 @@ namespace Survey.Forms
                 }
                 if ((option.Fq == Frequence.High && ChannelNumber == 3) || (option.Fq == Frequence.Low && ChannelNumber == 1))
                 {
-                    if (!BinitailChart2)
+                    if (!BinitailChart2 || chartRight.DisplayLength != DataNeedToRead/2)
                     {
                         chartRight.Initialize(2, (int)DataNeedToRead / 2, 4096, 100);
                         waveRight.Initialize(2, (int)DataNeedToRead / 2, 4096, 100);
@@ -184,6 +186,12 @@ namespace Survey.Forms
 
                 PopUpOption(0);
 
+        }
+
+        private void ChartForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            e.Cancel = true;
+            _mf.ChildFormClose(this);
         }
 
 

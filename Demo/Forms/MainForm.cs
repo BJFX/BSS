@@ -35,10 +35,10 @@ namespace Survey.Forms
         private ChartForm BssView1 = null;
         private ChartForm BssView2 = null;
         public CommandLineForm CmdWindow = new CommandLineForm();
+        public BasicOption option = new BasicOption();
+        public ParaForm para = new ParaForm();
         private bool bPanel1triger;
         private bool bPanel2triger;
-        private bool bView1Playing = false;
-        private bool bView2Playing = false;
         public static MainForm mf;
         public NetEngine netcore;
         public MainForm()
@@ -88,9 +88,8 @@ namespace Survey.Forms
             }
             else if (BssView1 == child)
             {
-                BssView1.Close();
-                BssView1 = null;
-                if (BssView2 != null)
+                BssView1.Hide();
+                if (BssView2 != null && BssView2.Visible)
                     ShowView2Max();
                 else
                 {
@@ -99,21 +98,13 @@ namespace Survey.Forms
             }
             else if (BssView2 == child)
             {
-                BssView2.Close();
-                BssView2 = null;
-                if (BssView1 != null)
+                BssView2.Hide();
+                if (BssView1 != null && BssView1.Visible)
                     ShowView1Max();
                 else
                 {
                     NoneBssView();
                 }
-            }
-            if (BssView1 == null && BssView2 == null)
-            {
-                PlaybackTime.Stop();
-                if (playbackFileStream != null)
-                    playbackFileStream.Close();
-                this.Text = Title;
             }
         }
         private void Help_Click(object sender, EventArgs e)
@@ -149,7 +140,7 @@ namespace Survey.Forms
             splitViewer.SplitterDistance = splitViewer.Width;
             NoneBssView();
             NoneNaviAndSensor();
-            towFishToolStripMenuItem_Click(sender, e);
+            
             StatusLabel.Text = "就绪";
             StatusLabel.ForeColor = Color.White;
             LongLabel.ForeColor = Color.White;
@@ -160,6 +151,17 @@ namespace Survey.Forms
             {
                 netcore.Start();
             }
+            OpenBssView.PerformClick();
+            OpenBssView.PerformClick();
+            if (BssView1!=null)
+            {
+                BssView1.option.Fq = Frequence.High;
+            }
+            if (BssView2!=null)
+            {
+                BssView2.option.Fq = Frequence.Low;
+            }
+            SetWorkingState();
         }
 
         private void InitConfigure()
@@ -196,6 +198,7 @@ namespace Survey.Forms
             float persentage = offset * 100 / fi.Length;
             //playpercent.Value = (int)persentage;
             this.Text = Title + "-回放" + " - " + filename + "(" + persentage.ToString("F01") + "%)";
+            
             GetOnePingData();
         }
 
@@ -213,8 +216,6 @@ namespace Survey.Forms
                 PlaybackTime.Enabled = false;
                 float persentage = offset * 100 / fi.Length;
                 this.Text = Title + "-回放" + " - " + filename + "(" + persentage.ToString("F01") + "%)";
-                bView1Playing = false;
-                bView2Playing = false;
                 offset = 0;
 
                 return;
@@ -251,17 +252,15 @@ namespace Survey.Forms
                         offset = playbackFileStream.BaseStream.Position;
 
                         //display
-                        if (BssView1 != null && bView1Playing)
+                        if (BssView1 != null )
                         {
                             BssView1.DisplayChart((int)PingchanHeader.ChannelNumber, (int) DataNeedToRead, buf);
-                            Chart1Title.Text = "拖鱼, " + ((BssView1.option.Fq == Frequence.High) ? "高频, " : "低频, ") +
-                                          PingchanHeader.BandWidth.ToString();
+                            
                         }
-                        if (BssView2 != null && bView2Playing)
+                        if (BssView2 != null )
                         {
                             BssView2.DisplayChart((int)PingchanHeader.ChannelNumber, (int)DataNeedToRead, buf);
-                            Chart2Title.Text = "拖鱼, " + ((BssView2.option.Fq == Frequence.High) ? "高频, " : "低频, ") +
-                                          PingchanHeader.BandWidth.ToString();
+                            
                         }
                         if (offset >= fi.Length)
                             goto ReadMagic;//file end 
@@ -560,74 +559,48 @@ namespace Survey.Forms
         
     
         #region system Menu
-        private void towFishToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            hardDiskToolStripMenuItem.Checked = false;
-            towFishToolStripMenuItem.Checked = true;
-            Configuration.DiskMode = false;
-            OpenBtn.Enabled = Configuration.DiskMode;
-            StartBtn.Enabled = true;
-            Start2Btn.Enabled = true;
-            StopBtn.Enabled = false;
-            Stop2Btn.Enabled = false;
-            Open2Btn.Enabled = Configuration.DiskMode;
-            StatusLabel.Text = "就绪";
-        }
-
-        private void hardDiskToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            hardDiskToolStripMenuItem.Checked = true;
-            towFishToolStripMenuItem.Checked = false;
-            Configuration.DiskMode = true;
-            OpenBtn.Enabled = Configuration.DiskMode;
-            StartBtn.Enabled = false;
-            Start2Btn.Enabled = false;
-            StopBtn.Enabled = false;
-            Stop2Btn.Enabled = false;
-            Open2Btn.Enabled = Configuration.DiskMode;
-            StatusLabel.Text = "回放";
-
-        }
+        
+        
         private void ShowBss_Click(object sender, EventArgs e)
         {
             if (BssView1 == null)//没有侧扫1窗口
             {
-                BssView1 = new ChartForm();
-                //BssView1.TopLevel = false;
+                BssView1 = new ChartForm(this);
+                
                 BssView1.MdiParent =this ;
+                
+                BssView1.Dock = DockStyle.Fill;
                 BssView1.Parent = Bss1Panel;
                 BssView1.WindowState = FormWindowState.Normal;
-                BssView1.Location = new Point((Bss1Panel.Width - BssView1.Width) / 2, 0);
+              
                 BssView1.ShowRaw(bShowRaw);
                 BssView1.Show();
-                if(bView2Playing)
-                InitMenu1();
-                if (BssView2 == null)//没有view2
-                    ShowView1Max();
-                else
-                    ShowAllBssView();
-            }
-            else if (BssView2 == null)//没有侧扫2窗口
-            {
-                BssView2 = new ChartForm();
-                //BssView2. TopLevel = false;
-                BssView2.MdiParent =this ;
-                BssView2.Parent = Bss2Panel;
                 
-                BssView2.WindowState = FormWindowState.Normal;
-                BssView2.Location = new Point((Bss2Panel.Width - BssView2.Width) / 2, 0);
-                BssView2.ShowRaw(bShowRaw);
-                BssView2.Show();
-                InitMenu2();
-                //BssView2.Update();
-                
-                ShowAllBssView();
             }
-            else//2个BSS
+            else
             {
+                if(!BssView1.Visible)
+                    BssView1.Show();
+            }
+            if (BssView2 == null)//没有侧扫2窗口
+            {
+                BssView2 = new ChartForm(this);
 
+                BssView2.MdiParent = this;
+                BssView2.Dock = DockStyle.Fill;
+                BssView2.Parent = Bss2Panel;
+
+                BssView2.WindowState = FormWindowState.Normal;
+                //BssView2.ShowRaw(bShowRaw);
+                BssView2.Show();
             }
-            
+            else
+            {
+                if (!BssView2.Visible)
+                    BssView2.Show();
+            }
+                ShowAllBssView();
+            声纳图像ToolStripMenuItem.Checked = true;
         }
         private void ShowNavi_Click(object sender, EventArgs e)
         {
@@ -729,9 +702,7 @@ namespace Survey.Forms
         //第一个图放大（第二图关闭或创建第一个图）
         private void ShowView1Max()
         {
-            chartmenubar1.Visible = true;
-            chartmenubar2.Visible = false;
-            LeftTable.RowStyles[0].Height = 30;
+            LeftTable.RowStyles[0].Height = 0;
             LeftTable.RowStyles[1].SizeType = SizeType.Percent;
             LeftTable.RowStyles[1].Height = 100;
             LeftTable.RowStyles[2].Height = 0;
@@ -741,31 +712,26 @@ namespace Survey.Forms
         //第二个图放大（第一个图关闭）
         private void ShowView2Max()
         {
-            chartmenubar1.Visible = false;
-            chartmenubar2.Visible = true;
-            LeftTable.RowStyles[2].Height = 30;
-            LeftTable.RowStyles[3].SizeType = SizeType.Percent;
-            LeftTable.RowStyles[3].Height = 100;
+
             LeftTable.RowStyles[0].Height = 0;
             LeftTable.RowStyles[1].SizeType = SizeType.Percent;
             LeftTable.RowStyles[1].Height = 0;
+            LeftTable.RowStyles[2].Height = 0;
+            LeftTable.RowStyles[3].SizeType = SizeType.Percent;
+            LeftTable.RowStyles[3].Height = 100;
         }
         //有两个图一起出现
         private void ShowAllBssView()
         {
-            chartmenubar1.Visible = true;
-            chartmenubar2.Visible = true;
-            LeftTable.RowStyles[0].Height = 30;
+            LeftTable.RowStyles[0].Height = 0;
             LeftTable.RowStyles[1].SizeType = SizeType.Percent;
             LeftTable.RowStyles[1].Height = 50;
-            LeftTable.RowStyles[2].Height = 30;
+            LeftTable.RowStyles[2].Height = 0;
             LeftTable.RowStyles[3].SizeType = SizeType.Percent;
             LeftTable.RowStyles[3].Height = 50;
         }
         private void NoneBssView()
         {
-            chartmenubar1.Visible = false;
-            chartmenubar2.Visible = false;
             LeftTable.RowStyles[0].Height = 0;
             LeftTable.RowStyles[1].SizeType = SizeType.Percent;
             LeftTable.RowStyles[1].Height = 50;
@@ -813,28 +779,8 @@ namespace Survey.Forms
             splitViewer.SplitterDistance = splitViewer.Width + 7;
         }
 
-        private void InitMenu1()
-        {
-            Chart1Title.Text = "----------";
-            RangeSelectBox.Text = "150";
-            OpenBtn.Enabled = Configuration.DiskMode;
-            
-            CableOutInput.Value = 5;
-            StartInput.Value = 1;
-            EndInput.Value = 70;
-        }
-        private void InitMenu2()
-        {
-            Chart2Title.Text = "----------";
-            Range2SelectBox.Text = "150";
-            Open2Btn.Enabled = Configuration.DiskMode;
-
-            CableOutInput2.Value = 5;
-            StartInput2.Value = 1;
-            EndInput2.Value = 70;
-        }
         private void MainForm_SizeChanged(object sender, EventArgs e)
-        {
+        {/*
             Point last1, last2, newp;
             last1 = new Point(-1,-1);
             last2 = new Point(-1, -1);
@@ -869,64 +815,29 @@ namespace Survey.Forms
                     BssView2.Location = last2;
                     BssView2.Update();
                 }
-            }
+            }*/
         }
 
         private void Panel1_Scroll(object sender, ScrollEventArgs e)
         {
-            bPanel1triger = true;
-            if (!bPanel2triger&&BssView2!=null)
-            {
 
-                if(e.ScrollOrientation == ScrollOrientation.VerticalScroll)
-                    Bss2Panel.VerticalScroll.Value = e.NewValue;
-                if (e.ScrollOrientation == ScrollOrientation.HorizontalScroll)
-                    Bss2Panel.HorizontalScroll.Value = e.NewValue;
-            }
-            bPanel1triger = false;
         }
 
         private void Panel2_Scroll(object sender, ScrollEventArgs e)
         {
 
-            bPanel2triger = true;
-            if (!bPanel1triger&&BssView1!=null)
-            {
-                
-                if (e.ScrollOrientation == ScrollOrientation.VerticalScroll)
-                    Bss1Panel.VerticalScroll.Value = e.NewValue;
-                if (e.ScrollOrientation == ScrollOrientation.HorizontalScroll)
-                    Bss1Panel.HorizontalScroll.Value = e.NewValue;
-            }
-            bPanel2triger = false;
         }
 
-        private void HideView1_Click(object sender, EventArgs e)
-        {
-            ChildFormClose(BssView1);
-        }
-
-        private void HideView2_Click(object sender, EventArgs e)
-        {
-            ChildFormClose(BssView2);
-        }
+        
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Close();
-            
+            Close(); 
         }
         #endregion
 
         #region tool button
-        private  void TaskWizard_Click(object sender, EventArgs e)
-        {
-            ConnectForm cf  =new ConnectForm();
-            if (cf.ShowDialog() == DialogResult.OK)
-            {
-                //do something
-            }
-        }
+        
 
         private void OpenBssView_Click(object sender, EventArgs e)
         {
@@ -936,26 +847,12 @@ namespace Survey.Forms
         private void OpenNaviView_Click(object sender, EventArgs e)
         {
             ShowNavi_Click(sender,e);
-            ShowNavi.Checked = (NaviView!=null);
+            ShowNavi.Checked = (NaviView.Visible);
         }
         private void OpenSensorView_Click(object sender, EventArgs e)
         {
             ShowSensor_Click(sender,e);
-            ShowSensor.Checked = (SensorView!=null);
-        }
-        private void NaviTrackSet_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void SensorSetup_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void SystemSetup_Click(object sender, EventArgs e)
-        {
-
+            ShowSensor.Checked = (SensorView.Visible);
         }
         #endregion
 
@@ -975,356 +872,21 @@ namespace Survey.Forms
                 PlaybackTime.Enabled = true;
                 PlaybackTime.Interval = tick;
                 PlaybackTime.Start();
-
-                OpenBtn.Enabled = false;
-                Open2Btn.Enabled = false;
-                bView1Playing = true;
-                bView2Playing = true;
-                SpeedBtn.Enabled = true;
-                Speed2Btn.Enabled = true;
-                SlowBtn.Enabled = true;
-                Slow2Btn.Enabled = true;
-                ResetBtn.Enabled = true;
-                Reset2Btn.Enabled = true;
-                StartBtn.Enabled = false;
-                Start2Btn.Enabled = false;
-            }
-        }
-        private void Open2Btn_Click(object sender, EventArgs e)
-        {
-            if (openXtfFileDialog.ShowDialog() == DialogResult.OK)
-            {
-               filename = openXtfFileDialog.SafeFileName;
-               fi = new FileInfo(openXtfFileDialog.FileName);
-                if (playbackFileStream != null)
-                    playbackFileStream.Close();
-                playbackFileStream = new BinaryReader(openXtfFileDialog.OpenFile());
-                offset = 0;
-                this.Text = Title + "-回放" + " - " + filename + "(" + offset.ToString("F01") + "%)";
-
-                PlaybackTime.Enabled = true;
-                PlaybackTime.Interval = tick;
-                PlaybackTime.Start();
-                OpenBtn.Enabled = false;
-                Open2Btn.Enabled = false;
-                bView1Playing = true;
-                bView2Playing = true;
-                SpeedBtn.Enabled = true;
-                Speed2Btn.Enabled = true;
-                SlowBtn.Enabled = true;
-                Slow2Btn.Enabled = true;
-                ResetBtn.Enabled = true;
-                Reset2Btn.Enabled = true;
-                StartBtn.Enabled = false;
-                Start2Btn.Enabled = false;
-            }
-        }
-        private void StopBtn_Click(object sender, EventArgs e)
-        {
-
-            StartBtn.Enabled = true;
-            bView1Playing = false;
-            StopBtn.Enabled = false;
-            if (Configuration.DiskMode == true)
-            {
-                SpeedBtn.Enabled = false;
-
-                SlowBtn.Enabled = false;
-
-                ResetBtn.Enabled = false;
-            }
-        }
-        private void Stop2Btn_Click(object sender, EventArgs e)
-        {
-            Start2Btn.Enabled = true;
-            bView2Playing = false;
-            Stop2Btn.Enabled = false;
-            if (Configuration.DiskMode == true)
-            {
-
-                Speed2Btn.Enabled = false;
-                Slow2Btn.Enabled = false;
-                Reset2Btn.Enabled = false;
-            }
-        }
-        
-
-        private void SpeedBtn_Click(object sender, EventArgs e)
-        {
-            PlaybackTime.Interval /= 2;
-            if (PlaybackTime.Interval == 2)
-            {
-                SpeedBtn.Enabled = false;
-                Speed2Btn.Enabled = false;
-            }
-
-        }
-        private void Speed2Btn_Click(object sender, EventArgs e)
-        {
-            PlaybackTime.Interval /= 2;
-            if (PlaybackTime.Interval == 2)
-            {
-                SpeedBtn.Enabled = false;
-                Speed2Btn.Enabled = false;
-            }
-        }
-        private void StartBtn_Click(object sender, EventArgs e)
-        {
-
-            if (Configuration.DiskMode == true)
-            {
-                SpeedBtn.Enabled = true;
-                
-                SlowBtn.Enabled = true;
-                
-                ResetBtn.Enabled = true;
-                
-                StartBtn.Enabled = false;
-                StopBtn.Enabled = true;
-                bView1Playing = true;
-                PlaybackTime.Start();
-            }
-            else
-            {
-                //do command
-                this.Text = Title;
-                StartBtn.Enabled = false;
-                StopBtn.Enabled = true;
-                bView1Playing = true;
-                
-            }
-        }
-        private void Start2Btn_Click(object sender, EventArgs e)
-        {
-  
-            if (Configuration.DiskMode == true)
-            {
-                
-                Speed2Btn.Enabled = true;
-                
-                Slow2Btn.Enabled = true;
-                
-                Reset2Btn.Enabled = true;
-                Start2Btn.Enabled = false;
-                Stop2Btn.Enabled = true;
-                bView2Playing = true;
-                PlaybackTime.Start();
-            }
-            else
-            {
-                //do command
-                this.Text = Title;
-                Start2Btn.Enabled = false;
-                Stop2Btn.Enabled = true;
-                bView2Playing = true;
-            }
-        }
-
-        private void SlowBtn_Click(object sender, EventArgs e)
-        {
-            PlaybackTime.Interval *= 2;
-            SpeedBtn.Enabled = true;
-            Speed2Btn.Enabled = true;
-            if (PlaybackTime.Interval == 1024)
-            {
-                SlowBtn.Enabled = false;
-                Slow2Btn.Enabled = false;
-            }
-        }
-
-        private void Slow2Btn_Click(object sender, EventArgs e)
-        {
-            PlaybackTime.Interval *= 2;
-            SpeedBtn.Enabled = true;
-            Speed2Btn.Enabled = true;
-            if (PlaybackTime.Interval == 1024)
-            {
-                SlowBtn.Enabled = false;
-                Slow2Btn.Enabled = false;
-            }
-        }
-
-        private void ResetBtn_Click(object sender, EventArgs e)
-        {
-            PlaybackTime.Interval = tick;
-            PlaybackTime.Stop();
-            offset = 0;
-            if (BssView1 != null)
-                BssView1.Clear();
-            if (BssView2 != null)
-                BssView2.Clear();
-            if (playbackFileStream != null)
-                playbackFileStream.Close();
-            playbackFileStream = new BinaryReader(new FileStream(fi.FullName, FileMode.Open));
-            playbackFileStream.BaseStream.Seek(offset, SeekOrigin.Begin);
-            this.Text = Title + "-回放" + " - " + filename + "(" + offset.ToString("F01") + "%)";
-            StartBtn.Enabled = true;
-            Start2Btn.Enabled = true;
-            SpeedBtn.Enabled = true;
-            Speed2Btn.Enabled = true;
-            SlowBtn.Enabled = true;
-            Slow2Btn.Enabled = true;
-            ResetBtn.Enabled = false;
-            StopBtn.Enabled = false;
-            Stop2Btn.Enabled = false;
-        }
-
-        private void Reset2Btn_Click(object sender, EventArgs e)
-        {
-            PlaybackTime.Interval = tick;
-            PlaybackTime.Stop();
-            offset = 0;
-            if (BssView1 != null)
-                BssView1.Initial();
-            if (BssView2 != null)
-                BssView2.Initial();
-            if (playbackFileStream != null)
-                playbackFileStream.Close();
-            playbackFileStream = new BinaryReader(new FileStream(fi.FullName,FileMode.Open));
-            playbackFileStream.BaseStream.Seek(offset, SeekOrigin.Begin);
-            this.Text = Title + "-回放" + " - " + filename + "(" + offset.ToString("F01") + "%)";
-            StartBtn.Enabled = true;
-            Start2Btn.Enabled = true;
-            SpeedBtn.Enabled = true;
-            Speed2Btn.Enabled = true;
-            SlowBtn.Enabled = true;
-            Slow2Btn.Enabled = true;
-            Reset2Btn.Enabled = false;
-            StopBtn.Enabled = false;
-            Stop2Btn.Enabled = false;
-        }
-
-        
-
-        
-
-        private void TVGSetBtn_Click(object sender, EventArgs e)
-        {
-            if (BssView1 != null)
-            {
-                BssView1.PopUpOption(1);
-            }
-        }
-
-        private void TVGSet2Btn_Click(object sender, EventArgs e)
-        {
-            if (BssView2 != null)
-            {
-                BssView2.PopUpOption(1);
-            }
-        }
-
-        private void ColorBtn_Click(object sender, EventArgs e)
-        {
-            if (BssView1 != null)
-            {
-                BssView1.PopUpOption(2);
-            }
-        }
-
-        private void Color2Btn_Click(object sender, EventArgs e)
-        {
-            if (BssView2 != null)
-            {
-                BssView2.PopUpOption(2);
-            }
-        }
-
-        private void OptionBtn_Click(object sender, EventArgs e)
-        {
-            if (BssView1 != null)
-            {
-                BssView1.PopUpOption();
-            }
-        }
-
-        private void Option2Btn_Click(object sender, EventArgs e)
-        {
-            if (BssView2 != null)
-            {
-                BssView2.PopUpOption(1);
+                OpenToolStripMenuItem.Enabled = false;
+                SetReplayingState();
             }
         }
 
         private void ApplyBtn_Click(object sender, EventArgs e)
         {
-            uint range = 50;
-            if (RangeSelectBox.Text == "" || uint.TryParse(RangeSelectBox.Text, out range) == false)
-                return;
             
-                if (NetEngine.bConnect)
-                {
-                    CmdWindow.Show();
-                    BSSParameter para = new BSSParameter();
-                    para.Ts = (ushort)(range * 65121 / 750 + 1620);
-                    if (BssView1.option.Fq == Frequence.High)
-                    {
-                        
-                        CmdWindow.DisplayCommand("下发命令：设置高频声纳工作参数");
-                        
-                        if (netcore.SendCommand(Command.SetupHighBSS(para)) == false)
-                        {
-                            CmdWindow.DisplayAns("下发命令不成功：" + netcore.Status);
-                        }
-                    }
-                    else
-                    {
-                        
-                        CmdWindow.DisplayCommand("下发命令：设置低频声纳工作参数");
-
-                        if (netcore.SendCommand(Command.SetupLowBSS(para)) == false)
-                        {
-                            CmdWindow.DisplayAns("下发命令不成功：" + netcore.Status);
-                        }
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("网络未连接，请检查网络");
-                }
            
         }
 
-        private void Apply2Btn_Click(object sender, EventArgs e)
-        {
-            uint range = 50;
-            if (Range2SelectBox.Text == "" || uint.TryParse(Range2SelectBox.Text, out range)==false)
-                return;
-
-            if (NetEngine.bConnect)
-            {
-                CmdWindow.Show();
-                BSSParameter para = new BSSParameter();
-                para.Ts = (ushort)(range * 65121 / 750 + 1620);
-                if (BssView1.option.Fq == Frequence.High)
-                {
-
-                    CmdWindow.DisplayCommand("下发命令：设置高频声纳工作参数");
-
-                    if (netcore.SendCommand(Command.SetupHighBSS(para)) == false)
-                    {
-                        CmdWindow.DisplayAns("下发命令不成功：" + netcore.Status);
-                    }
-                }
-                else
-                {
-
-                    CmdWindow.DisplayCommand("下发命令：设置低频声纳工作参数");
-
-                    if (netcore.SendCommand(Command.SetupLowBSS(para)) == false)
-                    {
-                        CmdWindow.DisplayAns("下发命令不成功：" + netcore.Status);
-                    }
-                }
-            }
-            else
-            {
-                MessageBox.Show("网络未连接，请检查网络");
-            }
-        }
-
+        
         #endregion
 
+        #region test
         private void 开始工作ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             
@@ -1437,7 +999,11 @@ namespace Survey.Forms
                 MessageBox.Show("网络未连接，请检查网络");
             }
         }
-
+        private void 显示窗口ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CmdWindow.Show();
+        }
+        #endregion
         private void NetWorkTimer_Tick(object sender, EventArgs e)
         {
             if (!netcore.Initialed)
@@ -1459,57 +1025,317 @@ namespace Survey.Forms
             {
                 LinkStatusLabel.Text = "等待网络连接";
             }
+            if(BssView1!=null)
+                BssView1.Text = ((Configuration.DiskMode == true) ? "回放, " : "拖鱼, ") + ((BssView1.option.Fq == Frequence.High) ? "高频, " : "低频, ") +
+                                   "";
+            if(BssView2!=null)
+                BssView2.Text = ((Configuration.DiskMode == true) ? "回放, " : "拖鱼, ") + ((BssView2.option.Fq == Frequence.High) ? "高频, " : "低频, ") +
+                                   "";
         }
 
-
-
-
-
-        internal void DisplayRTBSS(BSSResultData resultData)
+        internal void DisplayRTBSS(BSSObject resultData)
         {
+            if (playbackFileStream != null) //replay mode
+            {
+                return;
+            }
             int ChannelNumber = 0;//xtf顺序0，左低，1，右低，2，左高，3右高
-            byte[] buf = null;
-            if (resultData.Data.ALLData.Contains((uint) ObjectID.PortLowBssData))
+            if (resultData.ID == (uint) ObjectID.PortLowBssData)
             {
                 ChannelNumber = 0;
-                buf = (byte[]) resultData.Data.ALLData[(uint) ObjectID.PortLowBssData];
-                DisplayChart(ChannelNumber, buf);
             }
-            if (resultData.Data.ALLData.Contains((uint)ObjectID.PortHighBssData))
+            if (resultData.ID == (uint) ObjectID.PortHighBssData)
             {
                 ChannelNumber = 2;
-                buf = (byte[])resultData.Data.ALLData[(uint)ObjectID.PortHighBssData];
-                DisplayChart(ChannelNumber, buf);
+                
             }
-            if (resultData.Data.ALLData.Contains((uint)ObjectID.StartboardHighBssData))
+            if (resultData.ID == (uint) ObjectID.StartboardHighBssData)
             {
                 ChannelNumber = 3;
-                buf = (byte[])resultData.Data.ALLData[(uint)ObjectID.StartboardHighBssData];
-                DisplayChart(ChannelNumber, buf);
+                
             }
-            if (resultData.Data.ALLData.Contains((uint)ObjectID.StartboardLowBssData))
+            if (resultData.ID == (uint) ObjectID.StartboardLowBssData)
             {
                 ChannelNumber = 1;
-                buf = (byte[])resultData.Data.ALLData[(uint)ObjectID.StartboardLowBssData];
-                DisplayChart(ChannelNumber, buf);
+                
             }
-            
+            DisplayChart(ChannelNumber, resultData.BssBytes);
         }
 
         private void DisplayChart(int ChannelNumber, byte[] buf)
         {
             //display
-            if (BssView1 != null && bView1Playing)
+            if (BssView1 != null )
             {
                 BssView1.DisplayChart(ChannelNumber, buf.Length, buf);
-                Chart1Title.Text = "拖鱼, " + ((BssView1.option.Fq == Frequence.High) ? "高频, " : "低频, ") +
+                BssView1.Text = "拖鱼, " + ((BssView1.option.Fq == Frequence.High) ? "高频, " : "低频, ") +
                                    "";
             }
-            if (BssView2 != null && bView2Playing)
+            if (BssView2 != null )
             {
                 BssView2.DisplayChart(ChannelNumber, buf.Length, buf);
-                Chart2Title.Text = "拖鱼, " + ((BssView2.option.Fq == Frequence.High) ? "高频, " : "低频, ") +
+                BssView2.Text = "拖鱼, " + ((BssView2.option.Fq == Frequence.High) ? "高频, " : "低频, ") +
                                    "";
+            }
+        }
+
+        
+
+        private void 回放ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PlaybackTime.Start();
+            SetReplayingState();
+        }
+
+        private void 暂停ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PlaybackTime.Stop();
+            SetPauseState();
+        }
+
+        private void 重置ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PlaybackTime.Interval = tick;
+            PlaybackTime.Stop();
+            offset = 0;
+            if (BssView1 != null)
+                BssView1.Initial();
+            if (BssView2 != null)
+                BssView2.Initial();
+            playbackFileStream.BaseStream.Seek(offset, SeekOrigin.Begin);
+            this.Text = Title + "-回放" + " - " + filename + "(" + offset.ToString("F01") + "%)";
+            SetReplayState();
+        }
+
+        private void 退出回放ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string message = "是否关闭回放文件？";
+            string caption = "消息";
+            MessageBoxButtons buttons = MessageBoxButtons.OKCancel;
+            MessageBoxIcon icon = MessageBoxIcon.Question;
+            MessageBoxDefaultButton defaultResult = MessageBoxDefaultButton.Button2;
+            // Show message box
+            DialogResult result = MessageBox.Show(message, caption, buttons, icon, defaultResult);
+            if (result == DialogResult.OK)
+            {
+                PlaybackTime.Stop();
+                if (playbackFileStream != null)
+                    playbackFileStream.Close();
+                this.Text = Title;
+                if (BssView1 != null)
+                    BssView1.Initial();
+                if (BssView2 != null)
+                    BssView2.Initial();
+                SetWorkingState();
+            }
+        }
+        private void SpeedBtn_Click(object sender, EventArgs e)
+        {
+            PlaybackTime.Interval /= 2;
+            SlowBtn.Enabled = true;
+            if (PlaybackTime.Interval == 2)
+            {
+                SpeedBtn.Enabled = false;
+            }
+
+        }
+
+        private void SlowBtn_Click(object sender, EventArgs e)
+        {
+            PlaybackTime.Interval *= 2;
+            SpeedBtn.Enabled = true;
+            if (PlaybackTime.Interval == 1024)
+            {
+                SlowBtn.Enabled = false;
+            }
+        }
+        private void SetReplayingState()
+        {
+            回放控制ToolStripMenuItem.Enabled = true;
+            回放ToolStripMenuItem.Enabled = false;
+            暂停ToolStripMenuItem.Enabled = true;
+            重置ToolStripMenuItem.Enabled = true;
+            退出回放ToolStripMenuItem.Enabled = true;
+            SlowBtn.Enabled = true;
+            SpeedBtn.Enabled = true;
+            if (PlaybackTime.Interval == 2)
+            {
+                SpeedBtn.Enabled = false;
+            }
+            if (PlaybackTime.Interval == 1024)
+            {
+                SlowBtn.Enabled = false;
+            }
+            ResetToolStripMenuItem.Enabled = true;
+            ExitReplayToolStripMenuItem.Enabled = true;
+            StartWorkToolStripMenuItem.Enabled = false;
+            StopWorkToolStripMenuItem.Enabled = false;
+            StatusLabel.Text = "正在回放...";
+        }
+        private void SetPauseState()
+        {
+            回放控制ToolStripMenuItem.Enabled = true;
+            回放ToolStripMenuItem.Enabled = true;
+            暂停ToolStripMenuItem.Enabled = false;
+            重置ToolStripMenuItem.Enabled = true;
+            退出回放ToolStripMenuItem.Enabled = true;
+            ResetToolStripMenuItem.Enabled = true;
+            ExitReplayToolStripMenuItem.Enabled = true;
+            SlowBtn.Enabled = false;
+            SpeedBtn.Enabled = false;
+            StartWorkToolStripMenuItem.Enabled = false;
+            StopWorkToolStripMenuItem.Enabled = false;
+            StatusLabel.Text = "暂停回放";
+        }
+        private void SetReplayState()
+        {
+            回放控制ToolStripMenuItem.Enabled = true;
+            回放ToolStripMenuItem.Enabled = true;
+            暂停ToolStripMenuItem.Enabled = false;
+            重置ToolStripMenuItem.Enabled = false;
+            退出回放ToolStripMenuItem.Enabled = true;
+            ResetToolStripMenuItem.Enabled = false;
+            ExitReplayToolStripMenuItem.Enabled = true;
+            SlowBtn.Enabled = false;
+            SpeedBtn.Enabled = false;
+            StartWorkToolStripMenuItem.Enabled = false;
+            StopWorkToolStripMenuItem.Enabled = false;
+            StatusLabel.Text = "准备回放";
+        }
+        private void SetWorkingState()
+        {
+            回放控制ToolStripMenuItem.Enabled = false;
+            ResetToolStripMenuItem.Enabled = false;
+            ExitReplayToolStripMenuItem.Enabled = false;
+            OpenToolStripMenuItem.Enabled = true;
+            StatusLabel.Text = "监听实时数据中...";
+        }
+
+        private void toolStripStopBtn_Click(object sender, EventArgs e)
+        {
+            if (NetEngine.bConnect)
+            {
+                CmdWindow.Show();
+                CmdWindow.DisplayCommand("下发命令：停止工作");
+                if (netcore.SendCommand(Command.StopCMD()) == false)
+                {
+                    CmdWindow.DisplayAns("下发命令不成功：" + netcore.Status);
+                }
+
+            }
+            else
+            {
+                MessageBox.Show("网络未连接，请检查网络");
+            }
+        }
+
+        private void toolStripStartBtn_Click(object sender, EventArgs e)
+        {
+            if (NetEngine.bConnect)
+            {
+                CmdWindow.Show();
+                CmdWindow.DisplayCommand("下发命令：开始工作");
+                if (netcore.SendCommand(Command.StartCMD()) == false)
+                {
+                    CmdWindow.DisplayAns("下发命令不成功：" + netcore.Status);
+                    
+                }
+            }
+            else
+            {
+                MessageBox.Show("网络未连接，请检查网络");
+            }
+        }
+
+        private void ResetToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PlaybackTime.Interval = tick;
+            PlaybackTime.Stop();
+            offset = 0;
+            if (BssView1 != null)
+                BssView1.Initial();
+            if (BssView2 != null)
+                BssView2.Initial();
+            playbackFileStream.BaseStream.Seek(offset, SeekOrigin.Begin);
+            this.Text = Title + "-回放" + " - " + filename + "(" + offset.ToString("F01") + "%)";
+            SetReplayState();
+        }
+
+        private void ExitReplayToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string message = "是否关闭回放文件？";
+            string caption = "消息";
+            MessageBoxButtons buttons = MessageBoxButtons.OKCancel;
+            MessageBoxIcon icon = MessageBoxIcon.Question;
+            MessageBoxDefaultButton defaultResult = MessageBoxDefaultButton.Button2;
+            // Show message box
+            DialogResult result = MessageBox.Show(message, caption, buttons, icon, defaultResult);
+            if (result == DialogResult.OK)
+            {
+                PlaybackTime.Stop();
+                if (playbackFileStream != null)
+                    playbackFileStream.Close();
+                this.Text = Title;
+                if (BssView1 != null)
+                    BssView1.Initial();
+                if (BssView2 != null)
+                    BssView2.Initial();
+                SetWorkingState();
+            }
+        }
+
+        private void StopWorkToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            toolStripStopBtn.PerformClick();
+        }
+
+        private void StartWorkToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            toolStripStartBtn.PerformClick();
+        }
+
+        private void 高频参数设置ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            para.Show(true);
+        }
+
+        private void 低频参数设置ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            para.Show(false);
+        }
+
+        private void 基本设置ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            option.Show();
+        }
+
+        internal void DisplayRTRange(BSSResultData resultData)
+        {
+            if (resultData == null)
+            {
+                return;
+            }
+            var highrange = (resultData.Parameter.Ts - 1620) * 750 / 65121;//暂时只有高频参数
+            //display
+            if (BssView1 != null && BssView1.option.Fq == Frequence.High)
+            {
+                //BssView1.DisplayChart(ChannelNumber, buf.Length, buf);
+                BssView1.Text = "拖鱼, " + "高频, " + highrange.ToString() + "米";
+            }
+            if (BssView1 != null && BssView1.option.Fq == Frequence.Low)
+            {
+                //BssView1.DisplayChart(ChannelNumber, buf.Length, buf);
+                BssView1.Text = "拖鱼, " + "低频, " +"";
+            }
+            if (BssView2 != null && BssView1.option.Fq == Frequence.High)
+            {
+                //BssView2.DisplayChart(ChannelNumber, buf.Length, buf);
+                BssView2.Text = "拖鱼, " + "高频, " + highrange.ToString() + "米";
+            }
+            if (BssView2 != null && BssView1.option.Fq == Frequence.Low)
+            {
+                //BssView2.DisplayChart(ChannelNumber, buf.Length, buf);
+                BssView2.Text = "拖鱼, " + "低频, " +"";
             }
         }
     }

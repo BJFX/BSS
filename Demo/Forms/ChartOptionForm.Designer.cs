@@ -30,6 +30,16 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ChartOptionForm));
             this.OptionTab = new DevComponents.DotNetBar.SuperTabControl();
+            this.superTabControlPanel2 = new DevComponents.DotNetBar.SuperTabControlPanel();
+            this.panelEx1 = new DevComponents.DotNetBar.PanelEx();
+            this.groupPanel3 = new DevComponents.DotNetBar.Controls.GroupPanel();
+            this.LowRd = new System.Windows.Forms.RadioButton();
+            this.HighRd = new System.Windows.Forms.RadioButton();
+            this.groupPanel1 = new DevComponents.DotNetBar.Controls.GroupPanel();
+            this.PortRd = new System.Windows.Forms.RadioButton();
+            this.StarboardRd = new System.Windows.Forms.RadioButton();
+            this.ShowBothRd = new System.Windows.Forms.RadioButton();
+            this.DisplaySetTab = new DevComponents.DotNetBar.SuperTabItem();
             this.superTabControlPanel5 = new DevComponents.DotNetBar.SuperTabControlPanel();
             this.panelEx4 = new DevComponents.DotNetBar.PanelEx();
             this.colorCombControl1 = new DevComponents.DotNetBar.ColorPickers.ColorCombControl();
@@ -47,22 +57,6 @@
             this.TowPlusOffsetradio = new System.Windows.Forms.RadioButton();
             this.Towradio = new System.Windows.Forms.RadioButton();
             this.AtiTrackTab = new DevComponents.DotNetBar.SuperTabItem();
-            this.superTabControlPanel2 = new DevComponents.DotNetBar.SuperTabControlPanel();
-            this.panelEx1 = new DevComponents.DotNetBar.PanelEx();
-            this.groupPanel3 = new DevComponents.DotNetBar.Controls.GroupPanel();
-            this.LowRd = new System.Windows.Forms.RadioButton();
-            this.HighRd = new System.Windows.Forms.RadioButton();
-            this.groupPanel2 = new DevComponents.DotNetBar.Controls.GroupPanel();
-            this.radioButton8 = new System.Windows.Forms.RadioButton();
-            this.radioButton7 = new System.Windows.Forms.RadioButton();
-            this.radioButton6 = new System.Windows.Forms.RadioButton();
-            this.radioButton5 = new System.Windows.Forms.RadioButton();
-            this.radioButton4 = new System.Windows.Forms.RadioButton();
-            this.groupPanel1 = new DevComponents.DotNetBar.Controls.GroupPanel();
-            this.PortRd = new System.Windows.Forms.RadioButton();
-            this.StarboardRd = new System.Windows.Forms.RadioButton();
-            this.ShowBothRd = new System.Windows.Forms.RadioButton();
-            this.DisplaySetTab = new DevComponents.DotNetBar.SuperTabItem();
             this.superTabControlPanel4 = new DevComponents.DotNetBar.SuperTabControlPanel();
             this.panelEx3 = new DevComponents.DotNetBar.PanelEx();
             this.GammaFactor = new DevComponents.DotNetBar.LabelX();
@@ -100,16 +94,15 @@
             this.ConfirmBtn = new DevComponents.DotNetBar.ButtonX();
             ((System.ComponentModel.ISupportInitialize)(this.OptionTab)).BeginInit();
             this.OptionTab.SuspendLayout();
+            this.superTabControlPanel2.SuspendLayout();
+            this.panelEx1.SuspendLayout();
+            this.groupPanel3.SuspendLayout();
+            this.groupPanel1.SuspendLayout();
             this.superTabControlPanel5.SuspendLayout();
             this.panelEx4.SuspendLayout();
             this.superTabControlPanel6.SuspendLayout();
             this.panelEx5.SuspendLayout();
             this.groupPanel6.SuspendLayout();
-            this.superTabControlPanel2.SuspendLayout();
-            this.panelEx1.SuspendLayout();
-            this.groupPanel3.SuspendLayout();
-            this.groupPanel2.SuspendLayout();
-            this.groupPanel1.SuspendLayout();
             this.superTabControlPanel4.SuspendLayout();
             this.panelEx3.SuspendLayout();
             this.superTabControlPanel3.SuspendLayout();
@@ -137,10 +130,10 @@
             this.OptionTab.ControlBox.MenuBox,
             this.OptionTab.ControlBox.CloseBox});
             this.OptionTab.Controls.Add(this.superTabControlPanel2);
-            this.OptionTab.Controls.Add(this.superTabControlPanel5);
-            this.OptionTab.Controls.Add(this.superTabControlPanel6);
-            this.OptionTab.Controls.Add(this.superTabControlPanel4);
             this.OptionTab.Controls.Add(this.superTabControlPanel3);
+            this.OptionTab.Controls.Add(this.superTabControlPanel4);
+            this.OptionTab.Controls.Add(this.superTabControlPanel6);
+            this.OptionTab.Controls.Add(this.superTabControlPanel5);
             this.OptionTab.Dock = System.Windows.Forms.DockStyle.Top;
             this.OptionTab.Location = new System.Drawing.Point(0, 0);
             this.OptionTab.Name = "OptionTab";
@@ -148,7 +141,7 @@
             this.OptionTab.SelectedTabFont = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.OptionTab.SelectedTabIndex = 0;
             this.OptionTab.ShowFocusRectangle = true;
-            this.OptionTab.Size = new System.Drawing.Size(574, 261);
+            this.OptionTab.Size = new System.Drawing.Size(531, 261);
             this.OptionTab.TabFont = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.OptionTab.TabIndex = 0;
             this.OptionTab.Tabs.AddRange(new DevComponents.DotNetBar.BaseItem[] {
@@ -160,13 +153,190 @@
             this.OptionTab.TabStyle = DevComponents.DotNetBar.eSuperTabStyle.VisualStudio2008Dock;
             this.OptionTab.Text = "ChartOptionTab";
             // 
+            // superTabControlPanel2
+            // 
+            this.superTabControlPanel2.Controls.Add(this.panelEx1);
+            this.superTabControlPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.superTabControlPanel2.Location = new System.Drawing.Point(0, 30);
+            this.superTabControlPanel2.Name = "superTabControlPanel2";
+            this.superTabControlPanel2.Size = new System.Drawing.Size(531, 231);
+            this.superTabControlPanel2.TabIndex = 2;
+            this.superTabControlPanel2.TabItem = this.DisplaySetTab;
+            // 
+            // panelEx1
+            // 
+            this.panelEx1.CanvasColor = System.Drawing.SystemColors.Control;
+            this.panelEx1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.panelEx1.Controls.Add(this.groupPanel3);
+            this.panelEx1.Controls.Add(this.groupPanel1);
+            this.panelEx1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelEx1.Location = new System.Drawing.Point(0, 0);
+            this.panelEx1.Name = "panelEx1";
+            this.panelEx1.Size = new System.Drawing.Size(531, 231);
+            this.panelEx1.Style.Alignment = System.Drawing.StringAlignment.Center;
+            this.panelEx1.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground;
+            this.panelEx1.Style.BackColor2.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2;
+            this.panelEx1.Style.Border = DevComponents.DotNetBar.eBorderType.SingleLine;
+            this.panelEx1.Style.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder;
+            this.panelEx1.Style.ForeColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText;
+            this.panelEx1.Style.GradientAngle = 90;
+            this.panelEx1.TabIndex = 0;
+            // 
+            // groupPanel3
+            // 
+            this.groupPanel3.CanvasColor = System.Drawing.SystemColors.Control;
+            this.groupPanel3.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2010;
+            this.groupPanel3.Controls.Add(this.LowRd);
+            this.groupPanel3.Controls.Add(this.HighRd);
+            this.groupPanel3.DrawTitleBox = false;
+            this.groupPanel3.Location = new System.Drawing.Point(140, 3);
+            this.groupPanel3.Name = "groupPanel3";
+            this.groupPanel3.Size = new System.Drawing.Size(94, 100);
+            // 
+            // 
+            // 
+            this.groupPanel3.Style.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2;
+            this.groupPanel3.Style.BackColorGradientAngle = 90;
+            this.groupPanel3.Style.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground;
+            this.groupPanel3.Style.BorderBottom = DevComponents.DotNetBar.eStyleBorderType.Solid;
+            this.groupPanel3.Style.BorderBottomWidth = 1;
+            this.groupPanel3.Style.BorderColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder;
+            this.groupPanel3.Style.BorderLeft = DevComponents.DotNetBar.eStyleBorderType.Solid;
+            this.groupPanel3.Style.BorderLeftWidth = 1;
+            this.groupPanel3.Style.BorderRight = DevComponents.DotNetBar.eStyleBorderType.Solid;
+            this.groupPanel3.Style.BorderRightWidth = 1;
+            this.groupPanel3.Style.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid;
+            this.groupPanel3.Style.BorderTopWidth = 1;
+            this.groupPanel3.Style.CornerDiameter = 4;
+            this.groupPanel3.Style.CornerType = DevComponents.DotNetBar.eCornerType.Rounded;
+            this.groupPanel3.Style.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Center;
+            this.groupPanel3.Style.TextColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText;
+            this.groupPanel3.Style.TextLineAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Near;
+            // 
+            // 
+            // 
+            this.groupPanel3.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            // 
+            // 
+            // 
+            this.groupPanel3.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.groupPanel3.TabIndex = 1;
+            this.groupPanel3.Text = "声纳频率";
+            // 
+            // LowRd
+            // 
+            this.LowRd.AutoSize = true;
+            this.LowRd.Location = new System.Drawing.Point(17, 26);
+            this.LowRd.Name = "LowRd";
+            this.LowRd.Size = new System.Drawing.Size(47, 16);
+            this.LowRd.TabIndex = 1;
+            this.LowRd.TabStop = true;
+            this.LowRd.Text = "低频";
+            this.LowRd.UseVisualStyleBackColor = true;
+            // 
+            // HighRd
+            // 
+            this.HighRd.AutoSize = true;
+            this.HighRd.Location = new System.Drawing.Point(17, 4);
+            this.HighRd.Name = "HighRd";
+            this.HighRd.Size = new System.Drawing.Size(47, 16);
+            this.HighRd.TabIndex = 0;
+            this.HighRd.TabStop = true;
+            this.HighRd.Text = "高频";
+            this.HighRd.UseVisualStyleBackColor = true;
+            // 
+            // groupPanel1
+            // 
+            this.groupPanel1.CanvasColor = System.Drawing.SystemColors.Control;
+            this.groupPanel1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2010;
+            this.groupPanel1.Controls.Add(this.PortRd);
+            this.groupPanel1.Controls.Add(this.StarboardRd);
+            this.groupPanel1.Controls.Add(this.ShowBothRd);
+            this.groupPanel1.DrawTitleBox = false;
+            this.groupPanel1.Location = new System.Drawing.Point(3, 3);
+            this.groupPanel1.Name = "groupPanel1";
+            this.groupPanel1.Size = new System.Drawing.Size(131, 100);
+            // 
+            // 
+            // 
+            this.groupPanel1.Style.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2;
+            this.groupPanel1.Style.BackColorGradientAngle = 90;
+            this.groupPanel1.Style.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground;
+            this.groupPanel1.Style.BorderBottom = DevComponents.DotNetBar.eStyleBorderType.Solid;
+            this.groupPanel1.Style.BorderBottomWidth = 1;
+            this.groupPanel1.Style.BorderColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder;
+            this.groupPanel1.Style.BorderLeft = DevComponents.DotNetBar.eStyleBorderType.Solid;
+            this.groupPanel1.Style.BorderLeftWidth = 1;
+            this.groupPanel1.Style.BorderRight = DevComponents.DotNetBar.eStyleBorderType.Solid;
+            this.groupPanel1.Style.BorderRightWidth = 1;
+            this.groupPanel1.Style.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid;
+            this.groupPanel1.Style.BorderTopWidth = 1;
+            this.groupPanel1.Style.CornerDiameter = 4;
+            this.groupPanel1.Style.CornerType = DevComponents.DotNetBar.eCornerType.Rounded;
+            this.groupPanel1.Style.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Center;
+            this.groupPanel1.Style.TextColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText;
+            this.groupPanel1.Style.TextLineAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Near;
+            // 
+            // 
+            // 
+            this.groupPanel1.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            // 
+            // 
+            // 
+            this.groupPanel1.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.groupPanel1.TabIndex = 0;
+            this.groupPanel1.Text = "数据显示";
+            // 
+            // PortRd
+            // 
+            this.PortRd.AutoSize = true;
+            this.PortRd.Location = new System.Drawing.Point(7, 48);
+            this.PortRd.Name = "PortRd";
+            this.PortRd.Size = new System.Drawing.Size(47, 16);
+            this.PortRd.TabIndex = 2;
+            this.PortRd.TabStop = true;
+            this.PortRd.Text = "左舷";
+            this.PortRd.UseVisualStyleBackColor = true;
+            this.PortRd.CheckedChanged += new System.EventHandler(this.PortRd_CheckedChanged);
+            // 
+            // StarboardRd
+            // 
+            this.StarboardRd.AutoSize = true;
+            this.StarboardRd.Location = new System.Drawing.Point(7, 26);
+            this.StarboardRd.Name = "StarboardRd";
+            this.StarboardRd.Size = new System.Drawing.Size(47, 16);
+            this.StarboardRd.TabIndex = 1;
+            this.StarboardRd.TabStop = true;
+            this.StarboardRd.Text = "右舷";
+            this.StarboardRd.UseVisualStyleBackColor = true;
+            this.StarboardRd.CheckedChanged += new System.EventHandler(this.StarboardRd_CheckedChanged);
+            // 
+            // ShowBothRd
+            // 
+            this.ShowBothRd.AutoSize = true;
+            this.ShowBothRd.Location = new System.Drawing.Point(7, 4);
+            this.ShowBothRd.Name = "ShowBothRd";
+            this.ShowBothRd.Size = new System.Drawing.Size(47, 16);
+            this.ShowBothRd.TabIndex = 0;
+            this.ShowBothRd.TabStop = true;
+            this.ShowBothRd.Text = "全部";
+            this.ShowBothRd.UseVisualStyleBackColor = true;
+            this.ShowBothRd.CheckedChanged += new System.EventHandler(this.ShowBothRd_CheckedChanged);
+            // 
+            // DisplaySetTab
+            // 
+            this.DisplaySetTab.AttachedControl = this.superTabControlPanel2;
+            this.DisplaySetTab.GlobalItem = false;
+            this.DisplaySetTab.Name = "DisplaySetTab";
+            this.DisplaySetTab.Text = "显示设置";
+            // 
             // superTabControlPanel5
             // 
             this.superTabControlPanel5.Controls.Add(this.panelEx4);
             this.superTabControlPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.superTabControlPanel5.Location = new System.Drawing.Point(0, 0);
+            this.superTabControlPanel5.Location = new System.Drawing.Point(0, 30);
             this.superTabControlPanel5.Name = "superTabControlPanel5";
-            this.superTabControlPanel5.Size = new System.Drawing.Size(574, 261);
+            this.superTabControlPanel5.Size = new System.Drawing.Size(531, 231);
             this.superTabControlPanel5.TabIndex = 5;
             this.superTabControlPanel5.TabItem = this.RangeLineTab;
             // 
@@ -184,7 +354,7 @@
             this.panelEx4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelEx4.Location = new System.Drawing.Point(0, 0);
             this.panelEx4.Name = "panelEx4";
-            this.panelEx4.Size = new System.Drawing.Size(574, 261);
+            this.panelEx4.Size = new System.Drawing.Size(531, 231);
             this.panelEx4.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.panelEx4.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground;
             this.panelEx4.Style.BackColor2.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2;
@@ -283,14 +453,15 @@
             this.RangeLineTab.GlobalItem = false;
             this.RangeLineTab.Name = "RangeLineTab";
             this.RangeLineTab.Text = "距离线";
+            this.RangeLineTab.Visible = false;
             // 
             // superTabControlPanel6
             // 
             this.superTabControlPanel6.Controls.Add(this.panelEx5);
             this.superTabControlPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.superTabControlPanel6.Location = new System.Drawing.Point(0, 0);
+            this.superTabControlPanel6.Location = new System.Drawing.Point(0, 30);
             this.superTabControlPanel6.Name = "superTabControlPanel6";
-            this.superTabControlPanel6.Size = new System.Drawing.Size(574, 261);
+            this.superTabControlPanel6.Size = new System.Drawing.Size(531, 231);
             this.superTabControlPanel6.TabIndex = 6;
             this.superTabControlPanel6.TabItem = this.AtiTrackTab;
             // 
@@ -302,7 +473,7 @@
             this.panelEx5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelEx5.Location = new System.Drawing.Point(0, 0);
             this.panelEx5.Name = "panelEx5";
-            this.panelEx5.Size = new System.Drawing.Size(574, 261);
+            this.panelEx5.Size = new System.Drawing.Size(531, 231);
             this.panelEx5.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.panelEx5.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground;
             this.panelEx5.Style.BackColor2.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2;
@@ -393,291 +564,15 @@
             this.AtiTrackTab.GlobalItem = false;
             this.AtiTrackTab.Name = "AtiTrackTab";
             this.AtiTrackTab.Text = "底跟踪";
-            // 
-            // superTabControlPanel2
-            // 
-            this.superTabControlPanel2.Controls.Add(this.panelEx1);
-            this.superTabControlPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.superTabControlPanel2.Location = new System.Drawing.Point(0, 30);
-            this.superTabControlPanel2.Name = "superTabControlPanel2";
-            this.superTabControlPanel2.Size = new System.Drawing.Size(574, 231);
-            this.superTabControlPanel2.TabIndex = 2;
-            this.superTabControlPanel2.TabItem = this.DisplaySetTab;
-            // 
-            // panelEx1
-            // 
-            this.panelEx1.CanvasColor = System.Drawing.SystemColors.Control;
-            this.panelEx1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.panelEx1.Controls.Add(this.groupPanel3);
-            this.panelEx1.Controls.Add(this.groupPanel2);
-            this.panelEx1.Controls.Add(this.groupPanel1);
-            this.panelEx1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelEx1.Location = new System.Drawing.Point(0, 0);
-            this.panelEx1.Name = "panelEx1";
-            this.panelEx1.Size = new System.Drawing.Size(574, 231);
-            this.panelEx1.Style.Alignment = System.Drawing.StringAlignment.Center;
-            this.panelEx1.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground;
-            this.panelEx1.Style.BackColor2.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2;
-            this.panelEx1.Style.Border = DevComponents.DotNetBar.eBorderType.SingleLine;
-            this.panelEx1.Style.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder;
-            this.panelEx1.Style.ForeColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText;
-            this.panelEx1.Style.GradientAngle = 90;
-            this.panelEx1.TabIndex = 0;
-            // 
-            // groupPanel3
-            // 
-            this.groupPanel3.CanvasColor = System.Drawing.SystemColors.Control;
-            this.groupPanel3.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2010;
-            this.groupPanel3.Controls.Add(this.LowRd);
-            this.groupPanel3.Controls.Add(this.HighRd);
-            this.groupPanel3.DrawTitleBox = false;
-            this.groupPanel3.Location = new System.Drawing.Point(432, 3);
-            this.groupPanel3.Name = "groupPanel3";
-            this.groupPanel3.Size = new System.Drawing.Size(94, 100);
-            // 
-            // 
-            // 
-            this.groupPanel3.Style.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2;
-            this.groupPanel3.Style.BackColorGradientAngle = 90;
-            this.groupPanel3.Style.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground;
-            this.groupPanel3.Style.BorderBottom = DevComponents.DotNetBar.eStyleBorderType.Solid;
-            this.groupPanel3.Style.BorderBottomWidth = 1;
-            this.groupPanel3.Style.BorderColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder;
-            this.groupPanel3.Style.BorderLeft = DevComponents.DotNetBar.eStyleBorderType.Solid;
-            this.groupPanel3.Style.BorderLeftWidth = 1;
-            this.groupPanel3.Style.BorderRight = DevComponents.DotNetBar.eStyleBorderType.Solid;
-            this.groupPanel3.Style.BorderRightWidth = 1;
-            this.groupPanel3.Style.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid;
-            this.groupPanel3.Style.BorderTopWidth = 1;
-            this.groupPanel3.Style.CornerDiameter = 4;
-            this.groupPanel3.Style.CornerType = DevComponents.DotNetBar.eCornerType.Rounded;
-            this.groupPanel3.Style.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Center;
-            this.groupPanel3.Style.TextColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText;
-            this.groupPanel3.Style.TextLineAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Near;
-            // 
-            // 
-            // 
-            this.groupPanel3.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            // 
-            // 
-            // 
-            this.groupPanel3.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.groupPanel3.TabIndex = 1;
-            this.groupPanel3.Text = "声纳频率";
-            // 
-            // LowRd
-            // 
-            this.LowRd.AutoSize = true;
-            this.LowRd.Location = new System.Drawing.Point(17, 26);
-            this.LowRd.Name = "LowRd";
-            this.LowRd.Size = new System.Drawing.Size(47, 16);
-            this.LowRd.TabIndex = 1;
-            this.LowRd.TabStop = true;
-            this.LowRd.Text = "低频";
-            this.LowRd.UseVisualStyleBackColor = true;
-            // 
-            // HighRd
-            // 
-            this.HighRd.AutoSize = true;
-            this.HighRd.Location = new System.Drawing.Point(17, 4);
-            this.HighRd.Name = "HighRd";
-            this.HighRd.Size = new System.Drawing.Size(47, 16);
-            this.HighRd.TabIndex = 0;
-            this.HighRd.TabStop = true;
-            this.HighRd.Text = "高频";
-            this.HighRd.UseVisualStyleBackColor = true;
-            // 
-            // groupPanel2
-            // 
-            this.groupPanel2.CanvasColor = System.Drawing.SystemColors.Control;
-            this.groupPanel2.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2010;
-            this.groupPanel2.Controls.Add(this.radioButton8);
-            this.groupPanel2.Controls.Add(this.radioButton7);
-            this.groupPanel2.Controls.Add(this.radioButton6);
-            this.groupPanel2.Controls.Add(this.radioButton5);
-            this.groupPanel2.Controls.Add(this.radioButton4);
-            this.groupPanel2.DrawTitleBox = false;
-            this.groupPanel2.Location = new System.Drawing.Point(147, 3);
-            this.groupPanel2.Name = "groupPanel2";
-            this.groupPanel2.Size = new System.Drawing.Size(276, 100);
-            // 
-            // 
-            // 
-            this.groupPanel2.Style.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2;
-            this.groupPanel2.Style.BackColorGradientAngle = 90;
-            this.groupPanel2.Style.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground;
-            this.groupPanel2.Style.BorderBottom = DevComponents.DotNetBar.eStyleBorderType.Solid;
-            this.groupPanel2.Style.BorderBottomWidth = 1;
-            this.groupPanel2.Style.BorderColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder;
-            this.groupPanel2.Style.BorderLeft = DevComponents.DotNetBar.eStyleBorderType.Solid;
-            this.groupPanel2.Style.BorderLeftWidth = 1;
-            this.groupPanel2.Style.BorderRight = DevComponents.DotNetBar.eStyleBorderType.Solid;
-            this.groupPanel2.Style.BorderRightWidth = 1;
-            this.groupPanel2.Style.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid;
-            this.groupPanel2.Style.BorderTopWidth = 1;
-            this.groupPanel2.Style.CornerDiameter = 4;
-            this.groupPanel2.Style.CornerType = DevComponents.DotNetBar.eCornerType.Rounded;
-            this.groupPanel2.Style.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Center;
-            this.groupPanel2.Style.TextColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText;
-            this.groupPanel2.Style.TextLineAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Near;
-            // 
-            // 
-            // 
-            this.groupPanel2.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            // 
-            // 
-            // 
-            this.groupPanel2.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.groupPanel2.TabIndex = 1;
-            this.groupPanel2.Text = "修正/处理";
-            // 
-            // radioButton8
-            // 
-            this.radioButton8.AutoSize = true;
-            this.radioButton8.Location = new System.Drawing.Point(145, 26);
-            this.radioButton8.Name = "radioButton8";
-            this.radioButton8.Size = new System.Drawing.Size(29, 16);
-            this.radioButton8.TabIndex = 4;
-            this.radioButton8.TabStop = true;
-            this.radioButton8.Text = "4";
-            this.radioButton8.UseVisualStyleBackColor = true;
-            // 
-            // radioButton7
-            // 
-            this.radioButton7.AutoSize = true;
-            this.radioButton7.Location = new System.Drawing.Point(145, 4);
-            this.radioButton7.Name = "radioButton7";
-            this.radioButton7.Size = new System.Drawing.Size(29, 16);
-            this.radioButton7.TabIndex = 3;
-            this.radioButton7.TabStop = true;
-            this.radioButton7.Text = "2";
-            this.radioButton7.UseVisualStyleBackColor = true;
-            // 
-            // radioButton6
-            // 
-            this.radioButton6.AutoSize = true;
-            this.radioButton6.Location = new System.Drawing.Point(3, 48);
-            this.radioButton6.Name = "radioButton6";
-            this.radioButton6.Size = new System.Drawing.Size(29, 16);
-            this.radioButton6.TabIndex = 2;
-            this.radioButton6.TabStop = true;
-            this.radioButton6.Text = "5";
-            this.radioButton6.UseVisualStyleBackColor = true;
-            // 
-            // radioButton5
-            // 
-            this.radioButton5.AutoSize = true;
-            this.radioButton5.Location = new System.Drawing.Point(3, 26);
-            this.radioButton5.Name = "radioButton5";
-            this.radioButton5.Size = new System.Drawing.Size(29, 16);
-            this.radioButton5.TabIndex = 1;
-            this.radioButton5.TabStop = true;
-            this.radioButton5.Text = "3";
-            this.radioButton5.UseVisualStyleBackColor = true;
-            // 
-            // radioButton4
-            // 
-            this.radioButton4.AutoSize = true;
-            this.radioButton4.Location = new System.Drawing.Point(3, 4);
-            this.radioButton4.Name = "radioButton4";
-            this.radioButton4.Size = new System.Drawing.Size(29, 16);
-            this.radioButton4.TabIndex = 0;
-            this.radioButton4.TabStop = true;
-            this.radioButton4.Text = "1";
-            this.radioButton4.UseVisualStyleBackColor = true;
-            // 
-            // groupPanel1
-            // 
-            this.groupPanel1.CanvasColor = System.Drawing.SystemColors.Control;
-            this.groupPanel1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2010;
-            this.groupPanel1.Controls.Add(this.PortRd);
-            this.groupPanel1.Controls.Add(this.StarboardRd);
-            this.groupPanel1.Controls.Add(this.ShowBothRd);
-            this.groupPanel1.DrawTitleBox = false;
-            this.groupPanel1.Location = new System.Drawing.Point(3, 3);
-            this.groupPanel1.Name = "groupPanel1";
-            this.groupPanel1.Size = new System.Drawing.Size(131, 100);
-            // 
-            // 
-            // 
-            this.groupPanel1.Style.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2;
-            this.groupPanel1.Style.BackColorGradientAngle = 90;
-            this.groupPanel1.Style.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground;
-            this.groupPanel1.Style.BorderBottom = DevComponents.DotNetBar.eStyleBorderType.Solid;
-            this.groupPanel1.Style.BorderBottomWidth = 1;
-            this.groupPanel1.Style.BorderColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder;
-            this.groupPanel1.Style.BorderLeft = DevComponents.DotNetBar.eStyleBorderType.Solid;
-            this.groupPanel1.Style.BorderLeftWidth = 1;
-            this.groupPanel1.Style.BorderRight = DevComponents.DotNetBar.eStyleBorderType.Solid;
-            this.groupPanel1.Style.BorderRightWidth = 1;
-            this.groupPanel1.Style.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid;
-            this.groupPanel1.Style.BorderTopWidth = 1;
-            this.groupPanel1.Style.CornerDiameter = 4;
-            this.groupPanel1.Style.CornerType = DevComponents.DotNetBar.eCornerType.Rounded;
-            this.groupPanel1.Style.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Center;
-            this.groupPanel1.Style.TextColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText;
-            this.groupPanel1.Style.TextLineAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Near;
-            // 
-            // 
-            // 
-            this.groupPanel1.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            // 
-            // 
-            // 
-            this.groupPanel1.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.groupPanel1.TabIndex = 0;
-            this.groupPanel1.Text = "数据显示";
-            // 
-            // PortRd
-            // 
-            this.PortRd.AutoSize = true;
-            this.PortRd.Location = new System.Drawing.Point(7, 48);
-            this.PortRd.Name = "PortRd";
-            this.PortRd.Size = new System.Drawing.Size(47, 16);
-            this.PortRd.TabIndex = 2;
-            this.PortRd.TabStop = true;
-            this.PortRd.Text = "左舷";
-            this.PortRd.UseVisualStyleBackColor = true;
-            this.PortRd.CheckedChanged += new System.EventHandler(this.PortRd_CheckedChanged);
-            // 
-            // StarboardRd
-            // 
-            this.StarboardRd.AutoSize = true;
-            this.StarboardRd.Location = new System.Drawing.Point(7, 26);
-            this.StarboardRd.Name = "StarboardRd";
-            this.StarboardRd.Size = new System.Drawing.Size(47, 16);
-            this.StarboardRd.TabIndex = 1;
-            this.StarboardRd.TabStop = true;
-            this.StarboardRd.Text = "右舷";
-            this.StarboardRd.UseVisualStyleBackColor = true;
-            this.StarboardRd.CheckedChanged += new System.EventHandler(this.StarboardRd_CheckedChanged);
-            // 
-            // ShowBothRd
-            // 
-            this.ShowBothRd.AutoSize = true;
-            this.ShowBothRd.Location = new System.Drawing.Point(7, 4);
-            this.ShowBothRd.Name = "ShowBothRd";
-            this.ShowBothRd.Size = new System.Drawing.Size(47, 16);
-            this.ShowBothRd.TabIndex = 0;
-            this.ShowBothRd.TabStop = true;
-            this.ShowBothRd.Text = "全部";
-            this.ShowBothRd.UseVisualStyleBackColor = true;
-            this.ShowBothRd.CheckedChanged += new System.EventHandler(this.ShowBothRd_CheckedChanged);
-            // 
-            // DisplaySetTab
-            // 
-            this.DisplaySetTab.AttachedControl = this.superTabControlPanel2;
-            this.DisplaySetTab.GlobalItem = false;
-            this.DisplaySetTab.Name = "DisplaySetTab";
-            this.DisplaySetTab.Text = "显示设置";
+            this.AtiTrackTab.Visible = false;
             // 
             // superTabControlPanel4
             // 
             this.superTabControlPanel4.Controls.Add(this.panelEx3);
             this.superTabControlPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.superTabControlPanel4.Location = new System.Drawing.Point(0, 0);
+            this.superTabControlPanel4.Location = new System.Drawing.Point(0, 30);
             this.superTabControlPanel4.Name = "superTabControlPanel4";
-            this.superTabControlPanel4.Size = new System.Drawing.Size(574, 261);
+            this.superTabControlPanel4.Size = new System.Drawing.Size(531, 231);
             this.superTabControlPanel4.TabIndex = 4;
             this.superTabControlPanel4.TabItem = this.ColorTab;
             // 
@@ -693,7 +588,7 @@
             this.panelEx3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelEx3.Location = new System.Drawing.Point(0, 0);
             this.panelEx3.Name = "panelEx3";
-            this.panelEx3.Size = new System.Drawing.Size(574, 261);
+            this.panelEx3.Size = new System.Drawing.Size(531, 231);
             this.panelEx3.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.panelEx3.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground;
             this.panelEx3.Style.BackColor2.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2;
@@ -786,9 +681,9 @@
             // 
             this.superTabControlPanel3.Controls.Add(this.panelEx2);
             this.superTabControlPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.superTabControlPanel3.Location = new System.Drawing.Point(0, 0);
+            this.superTabControlPanel3.Location = new System.Drawing.Point(0, 28);
             this.superTabControlPanel3.Name = "superTabControlPanel3";
-            this.superTabControlPanel3.Size = new System.Drawing.Size(574, 261);
+            this.superTabControlPanel3.Size = new System.Drawing.Size(531, 233);
             this.superTabControlPanel3.TabIndex = 3;
             this.superTabControlPanel3.TabItem = this.TVGTab;
             // 
@@ -805,7 +700,7 @@
             this.panelEx2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelEx2.Location = new System.Drawing.Point(0, 0);
             this.panelEx2.Name = "panelEx2";
-            this.panelEx2.Size = new System.Drawing.Size(574, 261);
+            this.panelEx2.Size = new System.Drawing.Size(531, 233);
             this.panelEx2.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.panelEx2.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground;
             this.panelEx2.Style.BackColor2.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2;
@@ -1170,6 +1065,7 @@
             this.TVGTab.GlobalItem = false;
             this.TVGTab.Name = "TVGTab";
             this.TVGTab.Text = "TVG";
+            this.TVGTab.Visible = false;
             // 
             // superTabItem1
             // 
@@ -1192,7 +1088,7 @@
             this.ConfirmBtn.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.ConfirmBtn.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
             this.ConfirmBtn.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.ConfirmBtn.Location = new System.Drawing.Point(451, 267);
+            this.ConfirmBtn.Location = new System.Drawing.Point(448, 267);
             this.ConfirmBtn.Name = "ConfirmBtn";
             this.ConfirmBtn.Size = new System.Drawing.Size(75, 23);
             this.ConfirmBtn.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -1204,7 +1100,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(574, 312);
+            this.ClientSize = new System.Drawing.Size(531, 299);
             this.Controls.Add(this.ConfirmBtn);
             this.Controls.Add(this.OptionTab);
             this.DoubleBuffered = true;
@@ -1217,20 +1113,18 @@
             this.Load += new System.EventHandler(this.ChartOptionForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.OptionTab)).EndInit();
             this.OptionTab.ResumeLayout(false);
+            this.superTabControlPanel2.ResumeLayout(false);
+            this.panelEx1.ResumeLayout(false);
+            this.groupPanel3.ResumeLayout(false);
+            this.groupPanel3.PerformLayout();
+            this.groupPanel1.ResumeLayout(false);
+            this.groupPanel1.PerformLayout();
             this.superTabControlPanel5.ResumeLayout(false);
             this.panelEx4.ResumeLayout(false);
             this.superTabControlPanel6.ResumeLayout(false);
             this.panelEx5.ResumeLayout(false);
             this.groupPanel6.ResumeLayout(false);
             this.groupPanel6.PerformLayout();
-            this.superTabControlPanel2.ResumeLayout(false);
-            this.panelEx1.ResumeLayout(false);
-            this.groupPanel3.ResumeLayout(false);
-            this.groupPanel3.PerformLayout();
-            this.groupPanel2.ResumeLayout(false);
-            this.groupPanel2.PerformLayout();
-            this.groupPanel1.ResumeLayout(false);
-            this.groupPanel1.PerformLayout();
             this.superTabControlPanel4.ResumeLayout(false);
             this.panelEx3.ResumeLayout(false);
             this.superTabControlPanel3.ResumeLayout(false);
@@ -1260,7 +1154,6 @@
         private DevComponents.DotNetBar.SuperTabControlPanel superTabControlPanel1;
         private DevComponents.DotNetBar.PanelEx panelEx1;
         private DevComponents.DotNetBar.Controls.GroupPanel groupPanel3;
-        private DevComponents.DotNetBar.Controls.GroupPanel groupPanel2;
         private DevComponents.DotNetBar.Controls.GroupPanel groupPanel1;
         private DevComponents.DotNetBar.PanelEx panelEx5;
         private DevComponents.DotNetBar.PanelEx panelEx4;
@@ -1268,11 +1161,6 @@
         private DevComponents.DotNetBar.PanelEx panelEx2;
         private System.Windows.Forms.RadioButton LowRd;
         private System.Windows.Forms.RadioButton HighRd;
-        private System.Windows.Forms.RadioButton radioButton8;
-        private System.Windows.Forms.RadioButton radioButton7;
-        private System.Windows.Forms.RadioButton radioButton6;
-        private System.Windows.Forms.RadioButton radioButton5;
-        private System.Windows.Forms.RadioButton radioButton4;
         private System.Windows.Forms.RadioButton PortRd;
         private System.Windows.Forms.RadioButton StarboardRd;
         private System.Windows.Forms.RadioButton ShowBothRd;

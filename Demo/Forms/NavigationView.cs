@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.Windows.Forms;
+using DevComponents.DotNetBar;
 using GMap.NET;
 using GMap.NET.WindowsForms;
 using GMap.NET.WindowsForms.Markers;
@@ -11,7 +12,7 @@ using Survey.MapCustmize;
 
 namespace Survey.Forms
 {
-    public partial class NavigationView : Form
+    public partial class NavigationView : Office2007Form
     {
         private MainForm mf;
         // marker

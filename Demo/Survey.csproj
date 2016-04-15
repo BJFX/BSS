@@ -36,6 +36,9 @@
     <StartupObject>
     </StartupObject>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Logo.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="DevComponents.DotNetBar.Design">
       <HintPath>..\..\..\..\ioa\参考开源软件\DotNetBar\DevComponents.DotNetBar.Design.dll</HintPath>
@@ -70,6 +73,12 @@
     <Compile Include="Forms\AboutBox.Designer.cs">
       <DependentUpon>AboutBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\BasicOption.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\BasicOption.Designer.cs">
+      <DependentUpon>BasicOption.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\ChartForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -94,6 +103,12 @@
     </Compile>
     <Compile Include="Forms\ConnectForm.Designer.cs">
       <DependentUpon>ConnectForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ParaForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ParaForm.Designer.cs">
+      <DependentUpon>ParaForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\SensorOptionForm.cs">
       <SubType>Form</SubType>
@@ -138,6 +153,9 @@
     <EmbeddedResource Include="Forms\AboutBox.resx">
       <DependentUpon>AboutBox.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\BasicOption.resx">
+      <DependentUpon>BasicOption.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\ChartForm.resx">
       <DependentUpon>ChartForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -155,6 +173,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\NavigationView.resx">
       <DependentUpon>NavigationView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ParaForm.resx">
+      <DependentUpon>ParaForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SensorOptionForm.resx">
       <DependentUpon>SensorOptionForm.cs</DependentUpon>
@@ -196,7 +217,23 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Img\Back.png" />
+    <Content Include="Img\Bss.png" />
+    <Content Include="Img\closefile.png" />
+    <Content Include="Img\down.png" />
+    <Content Include="Img\exit_replay.png" />
+    <Content Include="Img\Logo.ico" />
     <Content Include="Img\logo.png" />
+    <Content Include="Img\Navi.png" />
+    <Content Include="Img\openfile.png" />
+    <Content Include="Img\pause.png" />
+    <Content Include="Img\play.png" />
+    <Content Include="Img\sensor.png" />
+    <Content Include="Img\setup.png" />
+    <Content Include="Img\start.png" />
+    <Content Include="Img\Stop_Work.png" />
+    <Content Include="Img\up.png" />
+    <Content Include="Logo.ico" />
     <None Include="Resources\552738.png" />
   </ItemGroup>
   <ItemGroup />

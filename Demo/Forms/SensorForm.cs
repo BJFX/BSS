@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
+using DevComponents.DotNetBar;
 
 namespace Survey.Forms
 {
@@ -17,7 +18,7 @@ namespace Survey.Forms
         Altitude
 
     }
-    public partial class SensorForm : Form
+    public partial class SensorForm : Office2007Form
     {
         private readonly MainForm _mf;
         private Dictionary<int, string> _lineName = new Dictionary<int, string>();

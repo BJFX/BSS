@@ -163,10 +163,11 @@
             this.waveBoxV.DisplayAmpMax = 180D;
             this.waveBoxV.DisplayCount = 10;
             this.waveBoxV.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.waveBoxV.Location = new System.Drawing.Point(3, 3);
+            this.waveBoxV.Location = new System.Drawing.Point(0, 0);
+            this.waveBoxV.Margin = new System.Windows.Forms.Padding(0);
             this.waveBoxV.Name = "waveBoxV";
             this.tableLayoutPanel1.SetRowSpan(this.waveBoxV, 8);
-            this.waveBoxV.Size = new System.Drawing.Size(214, 449);
+            this.waveBoxV.Size = new System.Drawing.Size(220, 455);
             this.waveBoxV.TabIndex = 0;
             this.waveBoxV.MouseClick += new System.Windows.Forms.MouseEventHandler(this.waveBoxV_MouseClick);
             // 
@@ -177,7 +178,7 @@
             this.ClientSize = new System.Drawing.Size(369, 455);
             this.Controls.Add(this.tableLayoutPanel1);
             this.DoubleBuffered = true;
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "SensorForm";

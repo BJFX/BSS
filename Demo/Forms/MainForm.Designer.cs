@@ -82,29 +82,36 @@
             this.LeftToolStripPanel = new System.Windows.Forms.ToolStripPanel();
             this.ContentPanel = new System.Windows.Forms.ToolStripContentPanel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.TaskWizard = new System.Windows.Forms.ToolStripButton();
             this.OpenBssView = new System.Windows.Forms.ToolStripButton();
             this.OpenNaviView = new System.Windows.Forms.ToolStripButton();
-            this.NaviTrackSet = new System.Windows.Forms.ToolStripButton();
-            this.SensorSetup = new System.Windows.Forms.ToolStripButton();
             this.OpenSensorView = new System.Windows.Forms.ToolStripButton();
-            this.SystemSetup = new System.Windows.Forms.ToolStripButton();
+            this.SystemSetup = new System.Windows.Forms.ToolStripSplitButton();
+            this.工程设置ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.高频参数设置ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.低频参数设置ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripStartBtn = new System.Windows.Forms.ToolStripButton();
+            this.toolStripStopBtn = new System.Windows.Forms.ToolStripButton();
             this.DataSaveBox = new System.Windows.Forms.ToolStripTextBox();
             this.dockContainerItem2 = new DevComponents.DotNetBar.DockContainerItem();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.sessionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.newStateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.openStateFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveStateTpFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.OpenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ResetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ExitReplayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.openDeviceFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveDevicesToFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.StartWorkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.StopWorkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.基本设置ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.sourceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.towFishToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.hardDiskToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.printToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.回放控制ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.回放ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.暂停ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.重置ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.SpeedBtn = new System.Windows.Forms.ToolStripMenuItem();
+            this.SlowBtn = new System.Windows.Forms.ToolStripMenuItem();
+            this.退出回放ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.windowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.原始数据ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.声纳图像ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -120,6 +127,7 @@
             this.设置低频工作参数ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.读取高频参数ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.读取低频参数ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.显示窗口ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dockContainerItem13 = new DevComponents.DotNetBar.DockContainerItem();
             this.dockContainerItem7 = new DevComponents.DotNetBar.DockContainerItem();
             this.dockContainerItem8 = new DevComponents.DotNetBar.DockContainerItem();
@@ -134,12 +142,11 @@
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.splitViewer = new System.Windows.Forms.SplitContainer();
             this.LeftTable = new System.Windows.Forms.TableLayoutPanel();
-            this.chartmenubar1 = new DevComponents.DotNetBar.Bar();
-            this.CableOutInput = new System.Windows.Forms.NumericUpDown();
-            this.StartInput = new System.Windows.Forms.NumericUpDown();
-            this.EndInput = new System.Windows.Forms.NumericUpDown();
-            this.Chart1Title = new DevComponents.DotNetBar.LabelItem();
-            this.RangeSelectBox = new DevComponents.DotNetBar.ComboBoxItem();
+            this.Bss2Panel = new System.Windows.Forms.Panel();
+            this.Bss1Panel = new System.Windows.Forms.Panel();
+            this.RightTable = new System.Windows.Forms.TableLayoutPanel();
+            this.Sensorpanel = new System.Windows.Forms.Panel();
+            this.Navipanel = new System.Windows.Forms.Panel();
             this.Item15 = new DevComponents.Editors.ComboItem();
             this.Item20 = new DevComponents.Editors.ComboItem();
             this.Item30 = new DevComponents.Editors.ComboItem();
@@ -152,32 +159,6 @@
             this.Item150 = new DevComponents.Editors.ComboItem();
             this.Item175 = new DevComponents.Editors.ComboItem();
             this.Item200 = new DevComponents.Editors.ComboItem();
-            this.OpenBtn = new DevComponents.DotNetBar.ButtonItem();
-            this.StopBtn = new DevComponents.DotNetBar.ButtonItem();
-            this.StartBtn = new DevComponents.DotNetBar.ButtonItem();
-            this.SpeedBtn = new DevComponents.DotNetBar.ButtonItem();
-            this.SlowBtn = new DevComponents.DotNetBar.ButtonItem();
-            this.ResetBtn = new DevComponents.DotNetBar.ButtonItem();
-            this.MeasureBtn = new DevComponents.DotNetBar.ButtonItem();
-            this.TVGSetBtn = new DevComponents.DotNetBar.ButtonItem();
-            this.ColorBtn = new DevComponents.DotNetBar.ButtonItem();
-            this.OptionBtn = new DevComponents.DotNetBar.ButtonItem();
-            this.labelItem1 = new DevComponents.DotNetBar.LabelItem();
-            this.controlContainerItem2 = new DevComponents.DotNetBar.ControlContainerItem();
-            this.ApplyBtn = new DevComponents.DotNetBar.ButtonItem();
-            this.labelItem2 = new DevComponents.DotNetBar.LabelItem();
-            this.labelitem3 = new DevComponents.DotNetBar.LabelItem();
-            this.controlContainerItem3 = new DevComponents.DotNetBar.ControlContainerItem();
-            this.labelItem4 = new DevComponents.DotNetBar.LabelItem();
-            this.controlContainerItem4 = new DevComponents.DotNetBar.ControlContainerItem();
-            this.HideView1 = new DevComponents.DotNetBar.ButtonItem();
-            this.Bss2Panel = new System.Windows.Forms.Panel();
-            this.chartmenubar2 = new DevComponents.DotNetBar.Bar();
-            this.CableOutInput2 = new System.Windows.Forms.NumericUpDown();
-            this.StartInput2 = new System.Windows.Forms.NumericUpDown();
-            this.EndInput2 = new System.Windows.Forms.NumericUpDown();
-            this.Chart2Title = new DevComponents.DotNetBar.LabelItem();
-            this.Range2SelectBox = new DevComponents.DotNetBar.ComboBoxItem();
             this.comboItem1 = new DevComponents.Editors.ComboItem();
             this.comboItem2 = new DevComponents.Editors.ComboItem();
             this.comboItem3 = new DevComponents.Editors.ComboItem();
@@ -190,29 +171,6 @@
             this.comboItem10 = new DevComponents.Editors.ComboItem();
             this.comboItem11 = new DevComponents.Editors.ComboItem();
             this.comboItem12 = new DevComponents.Editors.ComboItem();
-            this.Open2Btn = new DevComponents.DotNetBar.ButtonItem();
-            this.Stop2Btn = new DevComponents.DotNetBar.ButtonItem();
-            this.Start2Btn = new DevComponents.DotNetBar.ButtonItem();
-            this.Speed2Btn = new DevComponents.DotNetBar.ButtonItem();
-            this.Slow2Btn = new DevComponents.DotNetBar.ButtonItem();
-            this.Reset2Btn = new DevComponents.DotNetBar.ButtonItem();
-            this.Measure2Btn = new DevComponents.DotNetBar.ButtonItem();
-            this.TVGSet2Btn = new DevComponents.DotNetBar.ButtonItem();
-            this.Color2Btn = new DevComponents.DotNetBar.ButtonItem();
-            this.Option2Btn = new DevComponents.DotNetBar.ButtonItem();
-            this.labelItem5 = new DevComponents.DotNetBar.LabelItem();
-            this.controlContainerItem1 = new DevComponents.DotNetBar.ControlContainerItem();
-            this.Apply2Btn = new DevComponents.DotNetBar.ButtonItem();
-            this.labelItem6 = new DevComponents.DotNetBar.LabelItem();
-            this.labelItem7 = new DevComponents.DotNetBar.LabelItem();
-            this.controlContainerItem5 = new DevComponents.DotNetBar.ControlContainerItem();
-            this.labelItem8 = new DevComponents.DotNetBar.LabelItem();
-            this.controlContainerItem6 = new DevComponents.DotNetBar.ControlContainerItem();
-            this.HideView2 = new DevComponents.DotNetBar.ButtonItem();
-            this.Bss1Panel = new System.Windows.Forms.Panel();
-            this.RightTable = new System.Windows.Forms.TableLayoutPanel();
-            this.Sensorpanel = new System.Windows.Forms.Panel();
-            this.Navipanel = new System.Windows.Forms.Panel();
             this.openXtfFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.NetWorkTimer = new System.Windows.Forms.Timer(this.components);
             this.DataPanel.SuspendLayout();
@@ -225,16 +183,6 @@
             this.splitViewer.Panel2.SuspendLayout();
             this.splitViewer.SuspendLayout();
             this.LeftTable.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chartmenubar1)).BeginInit();
-            this.chartmenubar1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.CableOutInput)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.StartInput)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.EndInput)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chartmenubar2)).BeginInit();
-            this.chartmenubar2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.CableOutInput2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.StartInput2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.EndInput2)).BeginInit();
             this.RightTable.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -528,7 +476,7 @@
             this.tableLayoutPanel3.SetRowSpan(this.SonarHeightBox, 2);
             this.SonarHeightBox.Size = new System.Drawing.Size(135, 60);
             this.SonarHeightBox.TabIndex = 14;
-            this.SonarHeightBox.Text = "3.3";
+            this.SonarHeightBox.Text = "...";
             this.SonarHeightBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // ErrtextBox
@@ -841,13 +789,12 @@
             // toolStrip1
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.TaskWizard,
             this.OpenBssView,
             this.OpenNaviView,
-            this.NaviTrackSet,
-            this.SensorSetup,
             this.OpenSensorView,
             this.SystemSetup,
+            this.toolStripStartBtn,
+            this.toolStripStopBtn,
             this.DataSaveBox});
             this.toolStrip1.Location = new System.Drawing.Point(0, 25);
             this.toolStrip1.Name = "toolStrip1";
@@ -855,54 +802,29 @@
             this.toolStrip1.TabIndex = 17;
             this.toolStrip1.Text = "toolStrip1";
             // 
-            // TaskWizard
-            // 
-            this.TaskWizard.Image = ((System.Drawing.Image)(resources.GetObject("TaskWizard.Image")));
-            this.TaskWizard.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.TaskWizard.Name = "TaskWizard";
-            this.TaskWizard.Size = new System.Drawing.Size(76, 22);
-            this.TaskWizard.Text = "任务向导";
-            this.TaskWizard.Click += new System.EventHandler(this.TaskWizard_Click);
-            // 
             // OpenBssView
             // 
             this.OpenBssView.Image = ((System.Drawing.Image)(resources.GetObject("OpenBssView.Image")));
             this.OpenBssView.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.OpenBssView.Name = "OpenBssView";
-            this.OpenBssView.Size = new System.Drawing.Size(64, 22);
-            this.OpenBssView.Text = "瀑布图";
+            this.OpenBssView.Size = new System.Drawing.Size(88, 22);
+            this.OpenBssView.Text = "新建测扫图";
             this.OpenBssView.Click += new System.EventHandler(this.OpenBssView_Click);
             // 
             // OpenNaviView
             // 
             this.OpenNaviView.Image = ((System.Drawing.Image)(resources.GetObject("OpenNaviView.Image")));
+            this.OpenNaviView.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.OpenNaviView.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.OpenNaviView.Name = "OpenNaviView";
             this.OpenNaviView.Size = new System.Drawing.Size(76, 22);
             this.OpenNaviView.Text = "导航显示";
             this.OpenNaviView.Click += new System.EventHandler(this.OpenNaviView_Click);
             // 
-            // NaviTrackSet
-            // 
-            this.NaviTrackSet.Image = ((System.Drawing.Image)(resources.GetObject("NaviTrackSet.Image")));
-            this.NaviTrackSet.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.NaviTrackSet.Name = "NaviTrackSet";
-            this.NaviTrackSet.Size = new System.Drawing.Size(88, 22);
-            this.NaviTrackSet.Text = "航迹线设置";
-            this.NaviTrackSet.Click += new System.EventHandler(this.NaviTrackSet_Click);
-            // 
-            // SensorSetup
-            // 
-            this.SensorSetup.Image = ((System.Drawing.Image)(resources.GetObject("SensorSetup.Image")));
-            this.SensorSetup.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.SensorSetup.Name = "SensorSetup";
-            this.SensorSetup.Size = new System.Drawing.Size(88, 22);
-            this.SensorSetup.Text = "传感器位置";
-            this.SensorSetup.Click += new System.EventHandler(this.SensorSetup_Click);
-            // 
             // OpenSensorView
             // 
             this.OpenSensorView.Image = ((System.Drawing.Image)(resources.GetObject("OpenSensorView.Image")));
+            this.OpenSensorView.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.OpenSensorView.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.OpenSensorView.Name = "OpenSensorView";
             this.OpenSensorView.Size = new System.Drawing.Size(88, 22);
@@ -912,12 +834,54 @@
             // 
             // SystemSetup
             // 
+            this.SystemSetup.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.工程设置ToolStripMenuItem,
+            this.高频参数设置ToolStripMenuItem,
+            this.低频参数设置ToolStripMenuItem});
             this.SystemSetup.Image = ((System.Drawing.Image)(resources.GetObject("SystemSetup.Image")));
             this.SystemSetup.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.SystemSetup.Name = "SystemSetup";
-            this.SystemSetup.Size = new System.Drawing.Size(76, 22);
+            this.SystemSetup.Size = new System.Drawing.Size(88, 22);
             this.SystemSetup.Text = "系统设置";
-            this.SystemSetup.Click += new System.EventHandler(this.SystemSetup_Click);
+            // 
+            // 工程设置ToolStripMenuItem
+            // 
+            this.工程设置ToolStripMenuItem.Name = "工程设置ToolStripMenuItem";
+            this.工程设置ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.工程设置ToolStripMenuItem.Text = "基本设置";
+            this.工程设置ToolStripMenuItem.Click += new System.EventHandler(this.基本设置ToolStripMenuItem_Click);
+            // 
+            // 高频参数设置ToolStripMenuItem
+            // 
+            this.高频参数设置ToolStripMenuItem.Name = "高频参数设置ToolStripMenuItem";
+            this.高频参数设置ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.高频参数设置ToolStripMenuItem.Text = "高频参数设置";
+            this.高频参数设置ToolStripMenuItem.Click += new System.EventHandler(this.高频参数设置ToolStripMenuItem_Click);
+            // 
+            // 低频参数设置ToolStripMenuItem
+            // 
+            this.低频参数设置ToolStripMenuItem.Name = "低频参数设置ToolStripMenuItem";
+            this.低频参数设置ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.低频参数设置ToolStripMenuItem.Text = "低频参数设置";
+            this.低频参数设置ToolStripMenuItem.Click += new System.EventHandler(this.低频参数设置ToolStripMenuItem_Click);
+            // 
+            // toolStripStartBtn
+            // 
+            this.toolStripStartBtn.Image = ((System.Drawing.Image)(resources.GetObject("toolStripStartBtn.Image")));
+            this.toolStripStartBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripStartBtn.Name = "toolStripStartBtn";
+            this.toolStripStartBtn.Size = new System.Drawing.Size(76, 22);
+            this.toolStripStartBtn.Text = "开始工作";
+            this.toolStripStartBtn.Click += new System.EventHandler(this.toolStripStartBtn_Click);
+            // 
+            // toolStripStopBtn
+            // 
+            this.toolStripStopBtn.Image = ((System.Drawing.Image)(resources.GetObject("toolStripStopBtn.Image")));
+            this.toolStripStopBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripStopBtn.Name = "toolStripStopBtn";
+            this.toolStripStopBtn.Size = new System.Drawing.Size(76, 22);
+            this.toolStripStopBtn.Text = "停止工作";
+            this.toolStripStopBtn.Click += new System.EventHandler(this.toolStripStopBtn_Click);
             // 
             // DataSaveBox
             // 
@@ -925,6 +889,7 @@
             this.DataSaveBox.Name = "DataSaveBox";
             this.DataSaveBox.Size = new System.Drawing.Size(100, 25);
             this.DataSaveBox.Text = "XTF数据未保存";
+            this.DataSaveBox.Click += new System.EventHandler(this.DataSaveBox_Click);
             // 
             // dockContainerItem2
             // 
@@ -935,8 +900,7 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.sessionToolStripMenuItem,
-            this.sourceToolStripMenuItem,
-            this.printToolStripMenuItem,
+            this.回放控制ToolStripMenuItem,
             this.windowToolStripMenuItem,
             this.helpToolStripMenuItem,
             this.testToolStripMenuItem});
@@ -948,94 +912,155 @@
             // 
             // sessionToolStripMenuItem
             // 
+            this.sessionToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.sessionToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.newStateToolStripMenuItem,
-            this.openStateFileToolStripMenuItem,
-            this.saveStateTpFileToolStripMenuItem,
+            this.OpenToolStripMenuItem,
+            this.ResetToolStripMenuItem,
+            this.ExitReplayToolStripMenuItem,
             this.toolStripSeparator1,
-            this.openDeviceFileToolStripMenuItem,
-            this.saveDevicesToFileToolStripMenuItem,
+            this.StartWorkToolStripMenuItem,
+            this.StopWorkToolStripMenuItem,
             this.toolStripSeparator2,
+            this.基本设置ToolStripMenuItem,
+            this.toolStripSeparator4,
             this.exitToolStripMenuItem});
+            this.sessionToolStripMenuItem.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.sessionToolStripMenuItem.Name = "sessionToolStripMenuItem";
-            this.sessionToolStripMenuItem.Size = new System.Drawing.Size(64, 21);
-            this.sessionToolStripMenuItem.Text = "Session";
+            this.sessionToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F)));
+            this.sessionToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
+            this.sessionToolStripMenuItem.Text = "文件";
             // 
-            // newStateToolStripMenuItem
+            // OpenToolStripMenuItem
             // 
-            this.newStateToolStripMenuItem.Name = "newStateToolStripMenuItem";
-            this.newStateToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
-            this.newStateToolStripMenuItem.Text = "New State";
+            this.OpenToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("OpenToolStripMenuItem.Image")));
+            this.OpenToolStripMenuItem.Name = "OpenToolStripMenuItem";
+            this.OpenToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.OpenToolStripMenuItem.Text = "打开文件(XTF)";
+            this.OpenToolStripMenuItem.Click += new System.EventHandler(this.OpenBtn_Click);
             // 
-            // openStateFileToolStripMenuItem
+            // ResetToolStripMenuItem
             // 
-            this.openStateFileToolStripMenuItem.Name = "openStateFileToolStripMenuItem";
-            this.openStateFileToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
-            this.openStateFileToolStripMenuItem.Text = "Open State File";
+            this.ResetToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("ResetToolStripMenuItem.Image")));
+            this.ResetToolStripMenuItem.Name = "ResetToolStripMenuItem";
+            this.ResetToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.ResetToolStripMenuItem.Text = "重置文件";
+            this.ResetToolStripMenuItem.Click += new System.EventHandler(this.ResetToolStripMenuItem_Click);
             // 
-            // saveStateTpFileToolStripMenuItem
+            // ExitReplayToolStripMenuItem
             // 
-            this.saveStateTpFileToolStripMenuItem.Name = "saveStateTpFileToolStripMenuItem";
-            this.saveStateTpFileToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
-            this.saveStateTpFileToolStripMenuItem.Text = "Save State to File";
+            this.ExitReplayToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("ExitReplayToolStripMenuItem.Image")));
+            this.ExitReplayToolStripMenuItem.Name = "ExitReplayToolStripMenuItem";
+            this.ExitReplayToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.ExitReplayToolStripMenuItem.Text = "关闭文件";
+            this.ExitReplayToolStripMenuItem.Click += new System.EventHandler(this.ExitReplayToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(187, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(150, 6);
             // 
-            // openDeviceFileToolStripMenuItem
+            // StartWorkToolStripMenuItem
             // 
-            this.openDeviceFileToolStripMenuItem.Name = "openDeviceFileToolStripMenuItem";
-            this.openDeviceFileToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
-            this.openDeviceFileToolStripMenuItem.Text = "Open Device File";
+            this.StartWorkToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("StartWorkToolStripMenuItem.Image")));
+            this.StartWorkToolStripMenuItem.Name = "StartWorkToolStripMenuItem";
+            this.StartWorkToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.StartWorkToolStripMenuItem.Text = "开始工作";
+            this.StartWorkToolStripMenuItem.Click += new System.EventHandler(this.StartWorkToolStripMenuItem_Click);
             // 
-            // saveDevicesToFileToolStripMenuItem
+            // StopWorkToolStripMenuItem
             // 
-            this.saveDevicesToFileToolStripMenuItem.Name = "saveDevicesToFileToolStripMenuItem";
-            this.saveDevicesToFileToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
-            this.saveDevicesToFileToolStripMenuItem.Text = "Save Devices to File";
+            this.StopWorkToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("StopWorkToolStripMenuItem.Image")));
+            this.StopWorkToolStripMenuItem.Name = "StopWorkToolStripMenuItem";
+            this.StopWorkToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.StopWorkToolStripMenuItem.Text = "停止工作";
+            this.StopWorkToolStripMenuItem.Click += new System.EventHandler(this.StopWorkToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(187, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(150, 6);
+            // 
+            // 基本设置ToolStripMenuItem
+            // 
+            this.基本设置ToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("基本设置ToolStripMenuItem.Image")));
+            this.基本设置ToolStripMenuItem.Name = "基本设置ToolStripMenuItem";
+            this.基本设置ToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.基本设置ToolStripMenuItem.Text = "基本设置";
+            this.基本设置ToolStripMenuItem.Click += new System.EventHandler(this.基本设置ToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(150, 6);
             // 
             // exitToolStripMenuItem
             // 
+            this.exitToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("exitToolStripMenuItem.Image")));
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
-            // sourceToolStripMenuItem
+            // 回放控制ToolStripMenuItem
             // 
-            this.sourceToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.towFishToolStripMenuItem,
-            this.hardDiskToolStripMenuItem});
-            this.sourceToolStripMenuItem.Name = "sourceToolStripMenuItem";
-            this.sourceToolStripMenuItem.Size = new System.Drawing.Size(60, 21);
-            this.sourceToolStripMenuItem.Text = "Source";
+            this.回放控制ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.回放ToolStripMenuItem,
+            this.暂停ToolStripMenuItem,
+            this.重置ToolStripMenuItem,
+            this.SpeedBtn,
+            this.SlowBtn,
+            this.退出回放ToolStripMenuItem});
+            this.回放控制ToolStripMenuItem.Name = "回放控制ToolStripMenuItem";
+            this.回放控制ToolStripMenuItem.Size = new System.Drawing.Size(68, 21);
+            this.回放控制ToolStripMenuItem.Text = "回放控制";
             // 
-            // towFishToolStripMenuItem
+            // 回放ToolStripMenuItem
             // 
-            this.towFishToolStripMenuItem.Name = "towFishToolStripMenuItem";
-            this.towFishToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
-            this.towFishToolStripMenuItem.Text = "TowFish";
-            this.towFishToolStripMenuItem.Click += new System.EventHandler(this.towFishToolStripMenuItem_Click);
+            this.回放ToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("回放ToolStripMenuItem.Image")));
+            this.回放ToolStripMenuItem.Name = "回放ToolStripMenuItem";
+            this.回放ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.回放ToolStripMenuItem.Text = "回放";
+            this.回放ToolStripMenuItem.Click += new System.EventHandler(this.回放ToolStripMenuItem_Click);
             // 
-            // hardDiskToolStripMenuItem
+            // 暂停ToolStripMenuItem
             // 
-            this.hardDiskToolStripMenuItem.Name = "hardDiskToolStripMenuItem";
-            this.hardDiskToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
-            this.hardDiskToolStripMenuItem.Text = "Hard Disk";
-            this.hardDiskToolStripMenuItem.Click += new System.EventHandler(this.hardDiskToolStripMenuItem_Click);
+            this.暂停ToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("暂停ToolStripMenuItem.Image")));
+            this.暂停ToolStripMenuItem.Name = "暂停ToolStripMenuItem";
+            this.暂停ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.暂停ToolStripMenuItem.Text = "暂停";
+            this.暂停ToolStripMenuItem.Click += new System.EventHandler(this.暂停ToolStripMenuItem_Click);
             // 
-            // printToolStripMenuItem
+            // 重置ToolStripMenuItem
             // 
-            this.printToolStripMenuItem.Name = "printToolStripMenuItem";
-            this.printToolStripMenuItem.Size = new System.Drawing.Size(46, 21);
-            this.printToolStripMenuItem.Text = "Print";
+            this.重置ToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("重置ToolStripMenuItem.Image")));
+            this.重置ToolStripMenuItem.Name = "重置ToolStripMenuItem";
+            this.重置ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.重置ToolStripMenuItem.Text = "重置";
+            this.重置ToolStripMenuItem.Click += new System.EventHandler(this.重置ToolStripMenuItem_Click);
+            // 
+            // SpeedBtn
+            // 
+            this.SpeedBtn.Image = ((System.Drawing.Image)(resources.GetObject("SpeedBtn.Image")));
+            this.SpeedBtn.Name = "SpeedBtn";
+            this.SpeedBtn.Size = new System.Drawing.Size(152, 22);
+            this.SpeedBtn.Text = "加速";
+            this.SpeedBtn.Click += new System.EventHandler(this.SpeedBtn_Click);
+            // 
+            // SlowBtn
+            // 
+            this.SlowBtn.Image = ((System.Drawing.Image)(resources.GetObject("SlowBtn.Image")));
+            this.SlowBtn.Name = "SlowBtn";
+            this.SlowBtn.Size = new System.Drawing.Size(152, 22);
+            this.SlowBtn.Text = "减速";
+            this.SlowBtn.Click += new System.EventHandler(this.SlowBtn_Click);
+            // 
+            // 退出回放ToolStripMenuItem
+            // 
+            this.退出回放ToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("退出回放ToolStripMenuItem.Image")));
+            this.退出回放ToolStripMenuItem.Name = "退出回放ToolStripMenuItem";
+            this.退出回放ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.退出回放ToolStripMenuItem.Text = "关闭文件";
+            this.退出回放ToolStripMenuItem.Click += new System.EventHandler(this.退出回放ToolStripMenuItem_Click);
             // 
             // windowToolStripMenuItem
             // 
@@ -1047,8 +1072,10 @@
             this.ShowNavi,
             this.ShowSensor});
             this.windowToolStripMenuItem.Name = "windowToolStripMenuItem";
-            this.windowToolStripMenuItem.Size = new System.Drawing.Size(67, 21);
-            this.windowToolStripMenuItem.Text = "Window";
+            this.windowToolStripMenuItem.ShortcutKeyDisplayString = "";
+            this.windowToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.W)));
+            this.windowToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
+            this.windowToolStripMenuItem.Text = "窗口";
             // 
             // 原始数据ToolStripMenuItem
             // 
@@ -1064,7 +1091,7 @@
             // 
             this.声纳图像ToolStripMenuItem.Name = "声纳图像ToolStripMenuItem";
             this.声纳图像ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
-            this.声纳图像ToolStripMenuItem.Text = "瀑布图";
+            this.声纳图像ToolStripMenuItem.Text = "测扫图";
             this.声纳图像ToolStripMenuItem.Click += new System.EventHandler(this.ShowBss_Click);
             // 
             // toolStripSeparator3
@@ -1101,8 +1128,10 @@
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(47, 21);
-            this.helpToolStripMenuItem.Text = "Help";
+            this.helpToolStripMenuItem.ShortcutKeyDisplayString = "（H）";
+            this.helpToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.H)));
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
+            this.helpToolStripMenuItem.Text = "帮助";
             this.helpToolStripMenuItem.Click += new System.EventHandler(this.Help_Click);
             // 
             // testToolStripMenuItem
@@ -1113,10 +1142,11 @@
             this.设置高频工作参数ToolStripMenuItem,
             this.设置低频工作参数ToolStripMenuItem,
             this.读取高频参数ToolStripMenuItem,
-            this.读取低频参数ToolStripMenuItem});
+            this.读取低频参数ToolStripMenuItem,
+            this.显示窗口ToolStripMenuItem});
             this.testToolStripMenuItem.Name = "testToolStripMenuItem";
             this.testToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
-            this.testToolStripMenuItem.Text = "Test";
+            this.testToolStripMenuItem.Text = "测试";
             // 
             // 开始工作ToolStripMenuItem
             // 
@@ -1159,6 +1189,13 @@
             this.读取低频参数ToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
             this.读取低频参数ToolStripMenuItem.Text = "读取低频参数";
             this.读取低频参数ToolStripMenuItem.Click += new System.EventHandler(this.读取低频参数ToolStripMenuItem_Click);
+            // 
+            // 显示窗口ToolStripMenuItem
+            // 
+            this.显示窗口ToolStripMenuItem.Name = "显示窗口ToolStripMenuItem";
+            this.显示窗口ToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
+            this.显示窗口ToolStripMenuItem.Text = "显示窗口";
+            this.显示窗口ToolStripMenuItem.Click += new System.EventHandler(this.显示窗口ToolStripMenuItem_Click);
             // 
             // dockContainerItem13
             // 
@@ -1245,9 +1282,7 @@
             this.LeftTable.ColumnCount = 1;
             this.LeftTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.LeftTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.LeftTable.Controls.Add(this.chartmenubar1, 0, 0);
             this.LeftTable.Controls.Add(this.Bss2Panel, 0, 3);
-            this.LeftTable.Controls.Add(this.chartmenubar2, 0, 2);
             this.LeftTable.Controls.Add(this.Bss1Panel, 0, 1);
             this.LeftTable.Dock = System.Windows.Forms.DockStyle.Fill;
             this.LeftTable.Location = new System.Drawing.Point(0, 0);
@@ -1260,124 +1295,61 @@
             this.LeftTable.Size = new System.Drawing.Size(1299, 543);
             this.LeftTable.TabIndex = 38;
             // 
-            // chartmenubar1
+            // Bss2Panel
             // 
-            this.chartmenubar1.AccessibleDescription = "DotNetBar Bar (chartmenubar1)";
-            this.chartmenubar1.AccessibleName = "DotNetBar Bar";
-            this.chartmenubar1.AccessibleRole = System.Windows.Forms.AccessibleRole.ToolBar;
-            this.chartmenubar1.AntiAlias = true;
-            this.chartmenubar1.Controls.Add(this.CableOutInput);
-            this.chartmenubar1.Controls.Add(this.StartInput);
-            this.chartmenubar1.Controls.Add(this.EndInput);
-            this.chartmenubar1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.chartmenubar1.DockSide = DevComponents.DotNetBar.eDockSide.Document;
-            this.chartmenubar1.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F);
-            this.chartmenubar1.Items.AddRange(new DevComponents.DotNetBar.BaseItem[] {
-            this.Chart1Title,
-            this.RangeSelectBox,
-            this.OpenBtn,
-            this.StopBtn,
-            this.StartBtn,
-            this.SpeedBtn,
-            this.SlowBtn,
-            this.ResetBtn,
-            this.MeasureBtn,
-            this.TVGSetBtn,
-            this.ColorBtn,
-            this.OptionBtn,
-            this.labelItem1,
-            this.controlContainerItem2,
-            this.ApplyBtn,
-            this.labelItem2,
-            this.labelitem3,
-            this.controlContainerItem3,
-            this.labelItem4,
-            this.controlContainerItem4,
-            this.HideView1});
-            this.chartmenubar1.Location = new System.Drawing.Point(3, 3);
-            this.chartmenubar1.Name = "chartmenubar1";
-            this.chartmenubar1.Size = new System.Drawing.Size(1293, 28);
-            this.chartmenubar1.Stretch = true;
-            this.chartmenubar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.chartmenubar1.TabIndex = 43;
-            this.chartmenubar1.TabStop = false;
+            this.Bss2Panel.AutoSize = true;
+            this.Bss2Panel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Bss2Panel.Location = new System.Drawing.Point(0, 301);
+            this.Bss2Panel.Margin = new System.Windows.Forms.Padding(0);
+            this.Bss2Panel.Name = "Bss2Panel";
+            this.Bss2Panel.Size = new System.Drawing.Size(1299, 242);
+            this.Bss2Panel.TabIndex = 42;
             // 
-            // CableOutInput
+            // Bss1Panel
             // 
-            this.CableOutInput.Location = new System.Drawing.Point(565, 2);
-            this.CableOutInput.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.CableOutInput.Name = "CableOutInput";
-            this.CableOutInput.Size = new System.Drawing.Size(54, 23);
-            this.CableOutInput.TabIndex = 10000;
-            this.CableOutInput.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
+            this.Bss1Panel.AutoScroll = true;
+            this.Bss1Panel.AutoSize = true;
+            this.Bss1Panel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Bss1Panel.Location = new System.Drawing.Point(0, 30);
+            this.Bss1Panel.Margin = new System.Windows.Forms.Padding(0);
+            this.Bss1Panel.Name = "Bss1Panel";
+            this.Bss1Panel.Size = new System.Drawing.Size(1299, 241);
+            this.Bss1Panel.TabIndex = 41;
             // 
-            // StartInput
+            // RightTable
             // 
-            this.StartInput.Location = new System.Drawing.Point(763, 2);
-            this.StartInput.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.StartInput.Name = "StartInput";
-            this.StartInput.Size = new System.Drawing.Size(54, 23);
-            this.StartInput.TabIndex = 10001;
-            this.StartInput.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
+            this.RightTable.ColumnCount = 1;
+            this.RightTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.RightTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.RightTable.Controls.Add(this.Sensorpanel, 0, 1);
+            this.RightTable.Controls.Add(this.Navipanel, 0, 0);
+            this.RightTable.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.RightTable.Location = new System.Drawing.Point(0, 0);
+            this.RightTable.Margin = new System.Windows.Forms.Padding(0);
+            this.RightTable.Name = "RightTable";
+            this.RightTable.RowCount = 2;
+            this.RightTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.RightTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.RightTable.Size = new System.Drawing.Size(23, 543);
+            this.RightTable.TabIndex = 0;
             // 
-            // EndInput
+            // Sensorpanel
             // 
-            this.EndInput.Location = new System.Drawing.Point(855, 2);
-            this.EndInput.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.EndInput.Name = "EndInput";
-            this.EndInput.Size = new System.Drawing.Size(54, 23);
-            this.EndInput.TabIndex = 10002;
-            this.EndInput.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
+            this.Sensorpanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Sensorpanel.Location = new System.Drawing.Point(0, 271);
+            this.Sensorpanel.Margin = new System.Windows.Forms.Padding(0);
+            this.Sensorpanel.Name = "Sensorpanel";
+            this.Sensorpanel.Size = new System.Drawing.Size(23, 272);
+            this.Sensorpanel.TabIndex = 1;
             // 
-            // Chart1Title
+            // Navipanel
             // 
-            this.Chart1Title.Name = "Chart1Title";
-            this.Chart1Title.Text = "----------";
-            // 
-            // RangeSelectBox
-            // 
-            this.RangeSelectBox.DropDownHeight = 106;
-            this.RangeSelectBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDown;
-            this.RangeSelectBox.ItemHeight = 17;
-            this.RangeSelectBox.Items.AddRange(new object[] {
-            this.Item15,
-            this.Item20,
-            this.Item30,
-            this.Item40,
-            this.Item50,
-            this.Item60,
-            this.Item75,
-            this.Item100,
-            this.Item125,
-            this.Item150,
-            this.Item175,
-            this.Item200});
-            this.RangeSelectBox.Name = "RangeSelectBox";
-            this.RangeSelectBox.Text = "50";
+            this.Navipanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Navipanel.Location = new System.Drawing.Point(0, 0);
+            this.Navipanel.Margin = new System.Windows.Forms.Padding(0);
+            this.Navipanel.Name = "Navipanel";
+            this.Navipanel.Size = new System.Drawing.Size(23, 271);
+            this.Navipanel.TabIndex = 0;
             // 
             // Item15
             // 
@@ -1427,254 +1399,6 @@
             // 
             this.Item200.Text = "200";
             // 
-            // OpenBtn
-            // 
-            this.OpenBtn.Name = "OpenBtn";
-            this.OpenBtn.Text = "打开";
-            this.OpenBtn.Click += new System.EventHandler(this.OpenBtn_Click);
-            // 
-            // StopBtn
-            // 
-            this.StopBtn.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText;
-            this.StopBtn.Enabled = false;
-            this.StopBtn.Name = "StopBtn";
-            this.StopBtn.Text = "停止";
-            this.StopBtn.Click += new System.EventHandler(this.StopBtn_Click);
-            // 
-            // StartBtn
-            // 
-            this.StartBtn.Name = "StartBtn";
-            this.StartBtn.Text = "开始";
-            this.StartBtn.Click += new System.EventHandler(this.StartBtn_Click);
-            // 
-            // SpeedBtn
-            // 
-            this.SpeedBtn.Enabled = false;
-            this.SpeedBtn.Name = "SpeedBtn";
-            this.SpeedBtn.Text = "加速";
-            this.SpeedBtn.Click += new System.EventHandler(this.SpeedBtn_Click);
-            // 
-            // SlowBtn
-            // 
-            this.SlowBtn.Enabled = false;
-            this.SlowBtn.Name = "SlowBtn";
-            this.SlowBtn.Text = "减速";
-            this.SlowBtn.Click += new System.EventHandler(this.SlowBtn_Click);
-            // 
-            // ResetBtn
-            // 
-            this.ResetBtn.Enabled = false;
-            this.ResetBtn.Name = "ResetBtn";
-            this.ResetBtn.Text = "重置";
-            this.ResetBtn.Click += new System.EventHandler(this.ResetBtn_Click);
-            // 
-            // MeasureBtn
-            // 
-            this.MeasureBtn.Name = "MeasureBtn";
-            this.MeasureBtn.Text = "测量";
-            // 
-            // TVGSetBtn
-            // 
-            this.TVGSetBtn.Name = "TVGSetBtn";
-            this.TVGSetBtn.Text = "TVG设置";
-            this.TVGSetBtn.Click += new System.EventHandler(this.TVGSetBtn_Click);
-            // 
-            // ColorBtn
-            // 
-            this.ColorBtn.Name = "ColorBtn";
-            this.ColorBtn.Text = "颜色";
-            this.ColorBtn.Click += new System.EventHandler(this.ColorBtn_Click);
-            // 
-            // OptionBtn
-            // 
-            this.OptionBtn.Name = "OptionBtn";
-            this.OptionBtn.Text = "设置";
-            this.OptionBtn.Click += new System.EventHandler(this.OptionBtn_Click);
-            // 
-            // labelItem1
-            // 
-            this.labelItem1.Name = "labelItem1";
-            this.labelItem1.Text = "线缆长度:";
-            // 
-            // controlContainerItem2
-            // 
-            this.controlContainerItem2.AllowItemResize = false;
-            this.controlContainerItem2.Control = this.CableOutInput;
-            this.controlContainerItem2.MenuVisibility = DevComponents.DotNetBar.eMenuVisibility.VisibleAlways;
-            this.controlContainerItem2.Name = "controlContainerItem2";
-            // 
-            // ApplyBtn
-            // 
-            this.ApplyBtn.AutoCheckOnClick = true;
-            this.ApplyBtn.Name = "ApplyBtn";
-            this.ApplyBtn.Text = "应用";
-            this.ApplyBtn.Click += new System.EventHandler(this.ApplyBtn_Click);
-            // 
-            // labelItem2
-            // 
-            this.labelItem2.Name = "labelItem2";
-            this.labelItem2.Text = "底跟踪限制:";
-            // 
-            // labelitem3
-            // 
-            this.labelitem3.Name = "labelitem3";
-            this.labelitem3.Text = "开始:";
-            // 
-            // controlContainerItem3
-            // 
-            this.controlContainerItem3.AllowItemResize = false;
-            this.controlContainerItem3.Control = this.StartInput;
-            this.controlContainerItem3.MenuVisibility = DevComponents.DotNetBar.eMenuVisibility.VisibleAlways;
-            this.controlContainerItem3.Name = "controlContainerItem3";
-            // 
-            // labelItem4
-            // 
-            this.labelItem4.Name = "labelItem4";
-            this.labelItem4.Text = "结束:";
-            // 
-            // controlContainerItem4
-            // 
-            this.controlContainerItem4.AllowItemResize = false;
-            this.controlContainerItem4.Control = this.EndInput;
-            this.controlContainerItem4.MenuVisibility = DevComponents.DotNetBar.eMenuVisibility.VisibleAlways;
-            this.controlContainerItem4.Name = "controlContainerItem4";
-            // 
-            // HideView1
-            // 
-            this.HideView1.HotFontBold = true;
-            this.HideView1.Name = "HideView1";
-            this.HideView1.Text = "关闭";
-            this.HideView1.Click += new System.EventHandler(this.HideView1_Click);
-            // 
-            // Bss2Panel
-            // 
-            this.Bss2Panel.AutoScroll = true;
-            this.Bss2Panel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Bss2Panel.Location = new System.Drawing.Point(3, 304);
-            this.Bss2Panel.Name = "Bss2Panel";
-            this.Bss2Panel.Size = new System.Drawing.Size(1293, 236);
-            this.Bss2Panel.TabIndex = 42;
-            this.Bss2Panel.Scroll += new System.Windows.Forms.ScrollEventHandler(this.Panel2_Scroll);
-            // 
-            // chartmenubar2
-            // 
-            this.chartmenubar2.AccessibleDescription = "DotNetBar Bar (chartmenubar2)";
-            this.chartmenubar2.AccessibleName = "DotNetBar Bar";
-            this.chartmenubar2.AccessibleRole = System.Windows.Forms.AccessibleRole.ToolBar;
-            this.chartmenubar2.AntiAlias = true;
-            this.chartmenubar2.Controls.Add(this.CableOutInput2);
-            this.chartmenubar2.Controls.Add(this.StartInput2);
-            this.chartmenubar2.Controls.Add(this.EndInput2);
-            this.chartmenubar2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.chartmenubar2.DockSide = DevComponents.DotNetBar.eDockSide.Document;
-            this.chartmenubar2.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F);
-            this.chartmenubar2.Items.AddRange(new DevComponents.DotNetBar.BaseItem[] {
-            this.Chart2Title,
-            this.Range2SelectBox,
-            this.Open2Btn,
-            this.Stop2Btn,
-            this.Start2Btn,
-            this.Speed2Btn,
-            this.Slow2Btn,
-            this.Reset2Btn,
-            this.Measure2Btn,
-            this.TVGSet2Btn,
-            this.Color2Btn,
-            this.Option2Btn,
-            this.labelItem5,
-            this.controlContainerItem1,
-            this.Apply2Btn,
-            this.labelItem6,
-            this.labelItem7,
-            this.controlContainerItem5,
-            this.labelItem8,
-            this.controlContainerItem6,
-            this.HideView2});
-            this.chartmenubar2.Location = new System.Drawing.Point(3, 274);
-            this.chartmenubar2.Name = "chartmenubar2";
-            this.chartmenubar2.Size = new System.Drawing.Size(1293, 28);
-            this.chartmenubar2.Stretch = true;
-            this.chartmenubar2.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.chartmenubar2.TabIndex = 40;
-            this.chartmenubar2.TabStop = false;
-            // 
-            // CableOutInput2
-            // 
-            this.CableOutInput2.Location = new System.Drawing.Point(565, 2);
-            this.CableOutInput2.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.CableOutInput2.Name = "CableOutInput2";
-            this.CableOutInput2.Size = new System.Drawing.Size(54, 23);
-            this.CableOutInput2.TabIndex = 10000;
-            this.CableOutInput2.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            // 
-            // StartInput2
-            // 
-            this.StartInput2.Location = new System.Drawing.Point(763, 2);
-            this.StartInput2.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.StartInput2.Name = "StartInput2";
-            this.StartInput2.Size = new System.Drawing.Size(54, 23);
-            this.StartInput2.TabIndex = 10001;
-            this.StartInput2.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            // 
-            // EndInput2
-            // 
-            this.EndInput2.Location = new System.Drawing.Point(855, 2);
-            this.EndInput2.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.EndInput2.Name = "EndInput2";
-            this.EndInput2.Size = new System.Drawing.Size(54, 23);
-            this.EndInput2.TabIndex = 10002;
-            this.EndInput2.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            // 
-            // Chart2Title
-            // 
-            this.Chart2Title.Name = "Chart2Title";
-            this.Chart2Title.Text = "----------";
-            // 
-            // Range2SelectBox
-            // 
-            this.Range2SelectBox.DropDownHeight = 106;
-            this.Range2SelectBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDown;
-            this.Range2SelectBox.ItemHeight = 17;
-            this.Range2SelectBox.Items.AddRange(new object[] {
-            this.comboItem1,
-            this.comboItem2,
-            this.comboItem3,
-            this.comboItem4,
-            this.comboItem5,
-            this.comboItem6,
-            this.comboItem7,
-            this.comboItem8,
-            this.comboItem9,
-            this.comboItem10,
-            this.comboItem11,
-            this.comboItem12});
-            this.Range2SelectBox.Name = "Range2SelectBox";
-            this.Range2SelectBox.Text = "50";
-            // 
             // comboItem1
             // 
             this.comboItem1.Text = "15";
@@ -1723,169 +1447,6 @@
             // 
             this.comboItem12.Text = "200";
             // 
-            // Open2Btn
-            // 
-            this.Open2Btn.Name = "Open2Btn";
-            this.Open2Btn.Text = "打开";
-            this.Open2Btn.Click += new System.EventHandler(this.Open2Btn_Click);
-            // 
-            // Stop2Btn
-            // 
-            this.Stop2Btn.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText;
-            this.Stop2Btn.Enabled = false;
-            this.Stop2Btn.Name = "Stop2Btn";
-            this.Stop2Btn.Text = "停止";
-            this.Stop2Btn.Click += new System.EventHandler(this.Stop2Btn_Click);
-            // 
-            // Start2Btn
-            // 
-            this.Start2Btn.Name = "Start2Btn";
-            this.Start2Btn.Text = "开始";
-            this.Start2Btn.Click += new System.EventHandler(this.Start2Btn_Click);
-            // 
-            // Speed2Btn
-            // 
-            this.Speed2Btn.Enabled = false;
-            this.Speed2Btn.Name = "Speed2Btn";
-            this.Speed2Btn.Text = "加速";
-            this.Speed2Btn.Click += new System.EventHandler(this.Speed2Btn_Click);
-            // 
-            // Slow2Btn
-            // 
-            this.Slow2Btn.Enabled = false;
-            this.Slow2Btn.Name = "Slow2Btn";
-            this.Slow2Btn.Text = "减速";
-            this.Slow2Btn.Click += new System.EventHandler(this.Slow2Btn_Click);
-            // 
-            // Reset2Btn
-            // 
-            this.Reset2Btn.Enabled = false;
-            this.Reset2Btn.Name = "Reset2Btn";
-            this.Reset2Btn.Text = "重置";
-            this.Reset2Btn.Click += new System.EventHandler(this.Reset2Btn_Click);
-            // 
-            // Measure2Btn
-            // 
-            this.Measure2Btn.Name = "Measure2Btn";
-            this.Measure2Btn.Text = "测量";
-            // 
-            // TVGSet2Btn
-            // 
-            this.TVGSet2Btn.Name = "TVGSet2Btn";
-            this.TVGSet2Btn.Text = "TVG设置";
-            this.TVGSet2Btn.Click += new System.EventHandler(this.TVGSet2Btn_Click);
-            // 
-            // Color2Btn
-            // 
-            this.Color2Btn.Name = "Color2Btn";
-            this.Color2Btn.Text = "颜色";
-            this.Color2Btn.Click += new System.EventHandler(this.Color2Btn_Click);
-            // 
-            // Option2Btn
-            // 
-            this.Option2Btn.Name = "Option2Btn";
-            this.Option2Btn.Text = "设置";
-            this.Option2Btn.Click += new System.EventHandler(this.Option2Btn_Click);
-            // 
-            // labelItem5
-            // 
-            this.labelItem5.Name = "labelItem5";
-            this.labelItem5.Text = "线缆长度:";
-            // 
-            // controlContainerItem1
-            // 
-            this.controlContainerItem1.AllowItemResize = false;
-            this.controlContainerItem1.Control = this.CableOutInput2;
-            this.controlContainerItem1.MenuVisibility = DevComponents.DotNetBar.eMenuVisibility.VisibleAlways;
-            this.controlContainerItem1.Name = "controlContainerItem1";
-            // 
-            // Apply2Btn
-            // 
-            this.Apply2Btn.Name = "Apply2Btn";
-            this.Apply2Btn.Text = "应用";
-            this.Apply2Btn.Click += new System.EventHandler(this.Apply2Btn_Click);
-            // 
-            // labelItem6
-            // 
-            this.labelItem6.Name = "labelItem6";
-            this.labelItem6.Text = "底跟踪限制:";
-            // 
-            // labelItem7
-            // 
-            this.labelItem7.Name = "labelItem7";
-            this.labelItem7.Text = "开始:";
-            // 
-            // controlContainerItem5
-            // 
-            this.controlContainerItem5.AllowItemResize = false;
-            this.controlContainerItem5.Control = this.StartInput2;
-            this.controlContainerItem5.MenuVisibility = DevComponents.DotNetBar.eMenuVisibility.VisibleAlways;
-            this.controlContainerItem5.Name = "controlContainerItem5";
-            // 
-            // labelItem8
-            // 
-            this.labelItem8.Name = "labelItem8";
-            this.labelItem8.Text = "结束:";
-            // 
-            // controlContainerItem6
-            // 
-            this.controlContainerItem6.AllowItemResize = false;
-            this.controlContainerItem6.Control = this.EndInput2;
-            this.controlContainerItem6.MenuVisibility = DevComponents.DotNetBar.eMenuVisibility.VisibleAlways;
-            this.controlContainerItem6.Name = "controlContainerItem6";
-            // 
-            // HideView2
-            // 
-            this.HideView2.HotFontBold = true;
-            this.HideView2.Name = "HideView2";
-            this.HideView2.Text = "关闭";
-            this.HideView2.Click += new System.EventHandler(this.HideView2_Click);
-            // 
-            // Bss1Panel
-            // 
-            this.Bss1Panel.AutoScroll = true;
-            this.Bss1Panel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Bss1Panel.Location = new System.Drawing.Point(3, 33);
-            this.Bss1Panel.Name = "Bss1Panel";
-            this.Bss1Panel.Size = new System.Drawing.Size(1293, 235);
-            this.Bss1Panel.TabIndex = 41;
-            this.Bss1Panel.Scroll += new System.Windows.Forms.ScrollEventHandler(this.Panel1_Scroll);
-            // 
-            // RightTable
-            // 
-            this.RightTable.ColumnCount = 1;
-            this.RightTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.RightTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.RightTable.Controls.Add(this.Sensorpanel, 0, 1);
-            this.RightTable.Controls.Add(this.Navipanel, 0, 0);
-            this.RightTable.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.RightTable.Location = new System.Drawing.Point(0, 0);
-            this.RightTable.Margin = new System.Windows.Forms.Padding(0);
-            this.RightTable.Name = "RightTable";
-            this.RightTable.RowCount = 2;
-            this.RightTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.RightTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.RightTable.Size = new System.Drawing.Size(23, 543);
-            this.RightTable.TabIndex = 0;
-            // 
-            // Sensorpanel
-            // 
-            this.Sensorpanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Sensorpanel.Location = new System.Drawing.Point(0, 271);
-            this.Sensorpanel.Margin = new System.Windows.Forms.Padding(0);
-            this.Sensorpanel.Name = "Sensorpanel";
-            this.Sensorpanel.Size = new System.Drawing.Size(23, 272);
-            this.Sensorpanel.TabIndex = 1;
-            // 
-            // Navipanel
-            // 
-            this.Navipanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Navipanel.Location = new System.Drawing.Point(0, 0);
-            this.Navipanel.Margin = new System.Windows.Forms.Padding(0);
-            this.Navipanel.Name = "Navipanel";
-            this.Navipanel.Size = new System.Drawing.Size(23, 271);
-            this.Navipanel.TabIndex = 0;
-            // 
             // openXtfFileDialog
             // 
             this.openXtfFileDialog.FileName = "openFileDialog1";
@@ -1910,6 +1471,7 @@
             this.Controls.Add(this.StatusBar);
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("宋体", 12F);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.IsMdiContainer = true;
             this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(4);
@@ -1933,16 +1495,7 @@
             this.splitViewer.Panel2.ResumeLayout(false);
             this.splitViewer.ResumeLayout(false);
             this.LeftTable.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.chartmenubar1)).EndInit();
-            this.chartmenubar1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.CableOutInput)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.StartInput)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.EndInput)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chartmenubar2)).EndInit();
-            this.chartmenubar2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.CableOutInput2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.StartInput2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.EndInput2)).EndInit();
+            this.LeftTable.PerformLayout();
             this.RightTable.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -1997,9 +1550,6 @@
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton OpenBssView;
         private System.Windows.Forms.ToolStripButton OpenNaviView;
-        private System.Windows.Forms.ToolStripButton NaviTrackSet;
-        private System.Windows.Forms.ToolStripButton SensorSetup;
-        private System.Windows.Forms.ToolStripButton SystemSetup;
         private System.Windows.Forms.ToolStripTextBox DataSaveBox;
         private System.Windows.Forms.ToolStripPanel BottomToolStripPanel;
         private System.Windows.Forms.ToolStripPanel TopToolStripPanel;
@@ -2009,18 +1559,14 @@
         private DevComponents.DotNetBar.DockContainerItem dockContainerItem2;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem sessionToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem newStateToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem openStateFileToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem saveStateTpFileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem OpenToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ExitReplayToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ResetToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripMenuItem openDeviceFileToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem saveDevicesToFileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem StartWorkToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem StopWorkToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem sourceToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem towFishToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem hardDiskToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem printToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem windowToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 声纳图像ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ShowInfoRegion;
@@ -2044,12 +1590,6 @@
         private System.Windows.Forms.TextBox SonarHeightBox;
         private System.Windows.Forms.SplitContainer splitViewer;
         private System.Windows.Forms.TableLayoutPanel LeftTable;
-        private DevComponents.DotNetBar.Bar chartmenubar1;
-        private System.Windows.Forms.NumericUpDown CableOutInput;
-        private System.Windows.Forms.NumericUpDown StartInput;
-        private System.Windows.Forms.NumericUpDown EndInput;
-        private DevComponents.DotNetBar.LabelItem Chart1Title;
-        private DevComponents.DotNetBar.ComboBoxItem RangeSelectBox;
         private DevComponents.Editors.ComboItem Item15;
         private DevComponents.Editors.ComboItem Item20;
         private DevComponents.Editors.ComboItem Item30;
@@ -2062,32 +1602,7 @@
         private DevComponents.Editors.ComboItem Item150;
         private DevComponents.Editors.ComboItem Item175;
         private DevComponents.Editors.ComboItem Item200;
-        private DevComponents.DotNetBar.ButtonItem OpenBtn;
-        private DevComponents.DotNetBar.ButtonItem StopBtn;
-        private DevComponents.DotNetBar.ButtonItem StartBtn;
-        private DevComponents.DotNetBar.ButtonItem SpeedBtn;
-        private DevComponents.DotNetBar.ButtonItem SlowBtn;
-        private DevComponents.DotNetBar.ButtonItem ResetBtn;
-        private DevComponents.DotNetBar.ButtonItem MeasureBtn;
-        private DevComponents.DotNetBar.ButtonItem TVGSetBtn;
-        private DevComponents.DotNetBar.ButtonItem ColorBtn;
-        private DevComponents.DotNetBar.ButtonItem OptionBtn;
-        private DevComponents.DotNetBar.LabelItem labelItem1;
-        private DevComponents.DotNetBar.ControlContainerItem controlContainerItem2;
-        private DevComponents.DotNetBar.ButtonItem ApplyBtn;
-        private DevComponents.DotNetBar.LabelItem labelItem2;
-        private DevComponents.DotNetBar.LabelItem labelitem3;
-        private DevComponents.DotNetBar.ControlContainerItem controlContainerItem3;
-        private DevComponents.DotNetBar.LabelItem labelItem4;
-        private DevComponents.DotNetBar.ControlContainerItem controlContainerItem4;
-        private DevComponents.DotNetBar.ButtonItem HideView1;
         private System.Windows.Forms.Panel Bss2Panel;
-        private DevComponents.DotNetBar.Bar chartmenubar2;
-        private System.Windows.Forms.NumericUpDown CableOutInput2;
-        private System.Windows.Forms.NumericUpDown StartInput2;
-        private System.Windows.Forms.NumericUpDown EndInput2;
-        private DevComponents.DotNetBar.LabelItem Chart2Title;
-        private DevComponents.DotNetBar.ComboBoxItem Range2SelectBox;
         private DevComponents.Editors.ComboItem comboItem1;
         private DevComponents.Editors.ComboItem comboItem2;
         private DevComponents.Editors.ComboItem comboItem3;
@@ -2100,25 +1615,6 @@
         private DevComponents.Editors.ComboItem comboItem10;
         private DevComponents.Editors.ComboItem comboItem11;
         private DevComponents.Editors.ComboItem comboItem12;
-        private DevComponents.DotNetBar.ButtonItem Open2Btn;
-        private DevComponents.DotNetBar.ButtonItem Stop2Btn;
-        private DevComponents.DotNetBar.ButtonItem Start2Btn;
-        private DevComponents.DotNetBar.ButtonItem Speed2Btn;
-        private DevComponents.DotNetBar.ButtonItem Slow2Btn;
-        private DevComponents.DotNetBar.ButtonItem Reset2Btn;
-        private DevComponents.DotNetBar.ButtonItem Measure2Btn;
-        private DevComponents.DotNetBar.ButtonItem TVGSet2Btn;
-        private DevComponents.DotNetBar.ButtonItem Color2Btn;
-        private DevComponents.DotNetBar.ButtonItem Option2Btn;
-        private DevComponents.DotNetBar.LabelItem labelItem5;
-        private DevComponents.DotNetBar.ControlContainerItem controlContainerItem1;
-        private DevComponents.DotNetBar.ButtonItem Apply2Btn;
-        private DevComponents.DotNetBar.LabelItem labelItem6;
-        private DevComponents.DotNetBar.LabelItem labelItem7;
-        private DevComponents.DotNetBar.ControlContainerItem controlContainerItem5;
-        private DevComponents.DotNetBar.LabelItem labelItem8;
-        private DevComponents.DotNetBar.ControlContainerItem controlContainerItem6;
-        private DevComponents.DotNetBar.ButtonItem HideView2;
         private System.Windows.Forms.Panel Bss1Panel;
         private System.Windows.Forms.TableLayoutPanel RightTable;
         private System.Windows.Forms.Panel Sensorpanel;
@@ -2133,8 +1629,23 @@
         private System.Windows.Forms.ToolStripMenuItem 设置低频工作参数ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 读取高频参数ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 读取低频参数ToolStripMenuItem;
-        public System.Windows.Forms.ToolStripButton TaskWizard;
         private System.Windows.Forms.Timer NetWorkTimer;
         private DevComponents.DotNetBar.LabelItem LinkStatusLabel;
+        private System.Windows.Forms.ToolStripMenuItem 显示窗口ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 回放控制ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 回放ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 暂停ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 重置ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 退出回放ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripButton toolStripStartBtn;
+        private System.Windows.Forms.ToolStripButton toolStripStopBtn;
+        private System.Windows.Forms.ToolStripMenuItem 基本设置ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripMenuItem SpeedBtn;
+        private System.Windows.Forms.ToolStripMenuItem SlowBtn;
+        private System.Windows.Forms.ToolStripSplitButton SystemSetup;
+        private System.Windows.Forms.ToolStripMenuItem 工程设置ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 高频参数设置ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 低频参数设置ToolStripMenuItem;
     }
 }

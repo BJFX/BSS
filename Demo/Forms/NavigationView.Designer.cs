@@ -35,13 +35,12 @@ namespace Survey.Forms
             this.ZoomOut = new System.Windows.Forms.ToolStripButton();
             this.ZoomIn = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.TrackSet = new System.Windows.Forms.ToolStripButton();
             this.ShowTrack = new System.Windows.Forms.ToolStripButton();
             this.Ranging = new System.Windows.Forms.ToolStripButton();
             this.AutoTrack = new System.Windows.Forms.ToolStripButton();
             this.ReturnNode = new System.Windows.Forms.ToolStripButton();
-            this.MainMap = new CustomMap();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.MainMap = new Survey.MapCustmize.CustomMap();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -53,7 +52,6 @@ namespace Survey.Forms
             this.ZoomOut,
             this.ZoomIn,
             this.toolStripSeparator1,
-            this.TrackSet,
             this.ShowTrack,
             this.Ranging,
             this.AutoTrack,
@@ -89,15 +87,6 @@ namespace Survey.Forms
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
-            // 
-            // TrackSet
-            // 
-            this.TrackSet.Image = ((System.Drawing.Image)(resources.GetObject("TrackSet.Image")));
-            this.TrackSet.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.TrackSet.Name = "TrackSet";
-            this.TrackSet.Size = new System.Drawing.Size(76, 22);
-            this.TrackSet.Text = "航迹设置";
-            this.TrackSet.Click += new System.EventHandler(this.TrackSet_Click);
             // 
             // ShowTrack
             // 
@@ -140,6 +129,11 @@ namespace Survey.Forms
             this.ReturnNode.ToolTipText = "地图中心点回到目标点";
             this.ReturnNode.Click += new System.EventHandler(this.ReturnNode_Click);
             // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            // 
             // MainMap
             // 
             this.MainMap.BackColor = System.Drawing.Color.DeepSkyBlue;
@@ -166,11 +160,6 @@ namespace Survey.Forms
             this.MainMap.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MainMap_MouseDown);
             this.MainMap.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MainMap_MouseMove);
             this.MainMap.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MainMap_MouseUp);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
             // 
             // NavigationView
             // 
@@ -204,7 +193,6 @@ namespace Survey.Forms
         private System.Windows.Forms.ToolStripButton ZoomOut;
         private System.Windows.Forms.ToolStripButton ZoomIn;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripButton TrackSet;
         private System.Windows.Forms.ToolStripButton ShowTrack;
         private System.Windows.Forms.ToolStripButton Ranging;
         private CustomMap MainMap;

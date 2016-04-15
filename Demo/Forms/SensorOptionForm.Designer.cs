@@ -143,7 +143,7 @@
             this.ConfirmBtn.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.ConfirmBtn.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
             this.ConfirmBtn.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.ConfirmBtn.Location = new System.Drawing.Point(375, 199);
+            this.ConfirmBtn.Location = new System.Drawing.Point(312, 199);
             this.ConfirmBtn.Name = "ConfirmBtn";
             this.ConfirmBtn.Size = new System.Drawing.Size(75, 23);
             this.ConfirmBtn.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -156,7 +156,7 @@
             this.AcceptButton = this.ConfirmBtn;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(459, 240);
+            this.ClientSize = new System.Drawing.Size(409, 247);
             this.Controls.Add(this.ConfirmBtn);
             this.Controls.Add(this.groupBox1);
             this.DoubleBuffered = true;

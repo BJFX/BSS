@@ -324,6 +324,10 @@ namespace Survey
                 FrameNo = BitConverter.ToUInt32(dataBytes, 6 + idx);
                 BssBytes = new byte[DataBytes];
                 Buffer.BlockCopy(dataBytes, idx+10, BssBytes,0, DataBytes);
+                if ((ID == (uint)ObjectID.PortLowBssData) || (ID == (uint)ObjectID.PortHighBssData))//reverse port data
+                {
+                    Array.Reverse(BssBytes);
+                }
                 return DataBytes;
             }
             catch (Exception)
@@ -335,11 +339,11 @@ namespace Survey
     }
     public class DtObject
     {
-        public Hashtable ALLData = null;
+        public Queue<BSSObject> ALLData = null;
         
         public DtObject()
         {
-            ALLData = new Hashtable();
+            ALLData = new Queue<BSSObject>();
         }
         public bool Parse(byte[] d)
         {
@@ -351,8 +355,8 @@ namespace Survey
                 int n = bssObject.Parse(d, readlength);
                 if (n == 0)
                     break;
-                readlength += n;
-                ALLData.Add(bssObject.ID, bssObject.BssBytes);
+                readlength += n+10;
+                ALLData.Enqueue(bssObject);
             } while (readlength != d.Length);
             if(readlength!=d.Length)
                 return false;
