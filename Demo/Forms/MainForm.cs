@@ -120,13 +120,15 @@ namespace Survey.Forms
                 DataSaveBox.Text = "正在保存XTF数据";
                 DataSaveBox.BackColor = Color.Green;
                 Configuration.bSaveXTF = true;
+                Configuration.bNewXTF = true;
+
             }
             else
             {
                 DataSaveBox.Text = "XTF数据未保存";
                 DataSaveBox.BackColor = Color.Red;
                 Configuration.bSaveXTF = false;
-
+                Configuration.bNewXTF = false;
             }
         }
 
@@ -1025,12 +1027,7 @@ namespace Survey.Forms
             {
                 LinkStatusLabel.Text = "等待网络连接";
             }
-            if(BssView1!=null)
-                BssView1.Text = ((Configuration.DiskMode == true) ? "回放, " : "拖鱼, ") + ((BssView1.option.Fq == Frequence.High) ? "高频, " : "低频, ") +
-                                   "";
-            if(BssView2!=null)
-                BssView2.Text = ((Configuration.DiskMode == true) ? "回放, " : "拖鱼, ") + ((BssView2.option.Fq == Frequence.High) ? "高频, " : "低频, ") +
-                                   "";
+            
         }
 
         internal void DisplayRTBSS(BSSObject resultData)
@@ -1068,14 +1065,12 @@ namespace Survey.Forms
             if (BssView1 != null )
             {
                 BssView1.DisplayChart(ChannelNumber, buf.Length, buf);
-                BssView1.Text = "拖鱼, " + ((BssView1.option.Fq == Frequence.High) ? "高频, " : "低频, ") +
-                                   "";
+                
             }
             if (BssView2 != null )
             {
                 BssView2.DisplayChart(ChannelNumber, buf.Length, buf);
-                BssView2.Text = "拖鱼, " + ((BssView2.option.Fq == Frequence.High) ? "高频, " : "低频, ") +
-                                   "";
+                
             }
         }
 
@@ -1315,28 +1310,35 @@ namespace Survey.Forms
             {
                 return;
             }
-            var highrange = (resultData.Parameter.Ts - 1620) * 750 / 65121;//暂时只有高频参数
+            var highrange = (resultData.Parameter.Ts/2) * 750 / 65121;//
+            var Lowrange = (resultData.Parameter.Ts) * 750 / 64737;//
             //display
+            string title = "";
             if (BssView1 != null && BssView1.option.Fq == Frequence.High)
             {
                 //BssView1.DisplayChart(ChannelNumber, buf.Length, buf);
-                BssView1.Text = "拖鱼, " + "高频, " + highrange.ToString() + "米";
+                title = "拖鱼, " + "高频, " + highrange.ToString() + "米";
+                BssView1.SetTitle(title);
             }
             if (BssView1 != null && BssView1.option.Fq == Frequence.Low)
             {
                 //BssView1.DisplayChart(ChannelNumber, buf.Length, buf);
-                BssView1.Text = "拖鱼, " + "低频, " +"";
+                title = "拖鱼, " + "低频, " + Lowrange.ToString() + "米";
+                BssView1.SetTitle(title);
             }
-            if (BssView2 != null && BssView1.option.Fq == Frequence.High)
+            if (BssView2 != null && BssView2.option.Fq == Frequence.High)
             {
                 //BssView2.DisplayChart(ChannelNumber, buf.Length, buf);
-                BssView2.Text = "拖鱼, " + "高频, " + highrange.ToString() + "米";
+                title = "拖鱼, " + "高频, " + highrange.ToString() + "米";
+                BssView2.SetTitle(title);
             }
-            if (BssView2 != null && BssView1.option.Fq == Frequence.Low)
+            if (BssView2 != null && BssView2.option.Fq == Frequence.Low)
             {
                 //BssView2.DisplayChart(ChannelNumber, buf.Length, buf);
-                BssView2.Text = "拖鱼, " + "低频, " +"";
+                title = "拖鱼, " + "低频, " + Lowrange.ToString() + "米";
+                BssView2.SetTitle(title);
             }
+
         }
     }
 }

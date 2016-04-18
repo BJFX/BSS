@@ -10,6 +10,7 @@ namespace Survey.Forms
         private bool BinitailChart1 = false;
         private bool BinitailChart2 = false;
         private delegate void DisplayDelegate(int ChannelNumber, int DataNeedToRead, byte[] buf);
+        private delegate void DisplayTitleDelegate(string title);
         public ChartOption option = new ChartOption();
         public ChartForm(MainForm mf)
         {
@@ -195,7 +196,19 @@ namespace Survey.Forms
         }
 
 
+        public void SetTitle(string title)
+        {
+            if (SideTable.InvokeRequired)
+            {
+                DisplayTitleDelegate d = new DisplayTitleDelegate(SetTitle);
+                this.Invoke(d, new object[] { title });
+            }
+            else
+            {
+                this.Text = title;
+            }
 
+        }
 
 
 

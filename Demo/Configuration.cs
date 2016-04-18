@@ -7,6 +7,7 @@ namespace Survey
     public class Configuration
     {
         public static bool bSaveXTF;
+        public static bool bNewXTF = false;//保存XTF时是否是新文件标志位
         public static bool DiskMode;
         public static string SlnName;
         public static string DataPath;

@@ -168,6 +168,62 @@ namespace Survey
                 }
                 
             }
+
+            public byte[] pack()
+            {
+                byte[] dataBytes = new byte[1024];
+                dataBytes[0] = FileFormat;
+                dataBytes[1] = SystemType;
+                Buffer.BlockCopy(RecordingProgramName, 0, dataBytes, 2, 8);
+                Buffer.BlockCopy(RecordingProgramVersion,0,dataBytes, 10, 8);
+                Buffer.BlockCopy(SonarName, 0, dataBytes, 18, 16);
+                Buffer.BlockCopy(BitConverter.GetBytes(SonarType), 0, dataBytes, 34, 2);
+                Buffer.BlockCopy(NoteString, 0, dataBytes, 36, 64);
+                Buffer.BlockCopy(ThisFileName, 0, dataBytes,100, 64);
+                Buffer.BlockCopy(BitConverter.GetBytes(NavUnits), 0, dataBytes, 164, 2);
+                Buffer.BlockCopy(BitConverter.GetBytes(NumberOfSonarChannels), 0, dataBytes, 166, 2);
+                Buffer.BlockCopy(BitConverter.GetBytes(NumberOfBathymetryChannels), 0, dataBytes, 168, 2);
+                Buffer.BlockCopy(BitConverter.GetBytes(NumberOfForwardLookArrays), 0, dataBytes, 170, 2);
+                Buffer.BlockCopy(BitConverter.GetBytes(NumberOfEchoStrengthChannels), 0, dataBytes, 172, 2);
+                dataBytes[175] = NumberOfInterferometryChannels;
+                Buffer.BlockCopy(BitConverter.GetBytes(NavigationLatency), 0, dataBytes, 204, 4);
+                Buffer.BlockCopy(BitConverter.GetBytes(NavOffsetY), 0, dataBytes, 216, 4);
+                Buffer.BlockCopy(BitConverter.GetBytes(NavOffsetX), 0, dataBytes, 220, 4);
+                Buffer.BlockCopy(BitConverter.GetBytes(NavOffsetZ), 0, dataBytes, 224, 4);
+                Buffer.BlockCopy(BitConverter.GetBytes(NavOffsetYaw), 0, dataBytes, 228, 4);
+                Buffer.BlockCopy(BitConverter.GetBytes(MRUOffsetY), 0, dataBytes, 232, 4);
+                Buffer.BlockCopy(BitConverter.GetBytes(MRUOffsetX), 0, dataBytes, 236, 4);
+                Buffer.BlockCopy(BitConverter.GetBytes(MRUOffsetZ), 0, dataBytes, 240, 4);
+                Buffer.BlockCopy(BitConverter.GetBytes(MRUOffsetYaw), 0, dataBytes, 244, 4);
+                Buffer.BlockCopy(BitConverter.GetBytes(MRUOffsetPitch), 0, dataBytes, 248, 4);
+                Buffer.BlockCopy(BitConverter.GetBytes(MRUOffsetRoll), 0, dataBytes, 252, 4);
+
+                for (int i = 0; i < 6; i++)//应该不会大于6
+                {
+                    int offset = 256+i*128;
+                    dataBytes[offset] = ChanInfo[i].TypeOfChannel;
+                    dataBytes[offset+1] = ChanInfo[i].SubChannelNumber;
+                    Buffer.BlockCopy(BitConverter.GetBytes(ChanInfo[i].CorrectionFlags), 0, dataBytes, offset+2, 2);
+                    Buffer.BlockCopy(BitConverter.GetBytes(ChanInfo[i].UniPolar), 0, dataBytes, offset + 4, 2);
+                    Buffer.BlockCopy(BitConverter.GetBytes(ChanInfo[i].bytesPerSample), 0, dataBytes, offset + 6, 2);
+
+                    Buffer.BlockCopy(ChanInfo[i].ChannelName, 0, dataBytes, offset+12, 16);
+                    Buffer.BlockCopy(BitConverter.GetBytes(ChanInfo[i].VoltScale), 0, dataBytes, offset + 28, 4);
+                    Buffer.BlockCopy(BitConverter.GetBytes(ChanInfo[i].Frequency), 0, dataBytes, offset + 32, 4);
+                    Buffer.BlockCopy(BitConverter.GetBytes(ChanInfo[i].HorizBeamAngle), 0, dataBytes, offset + 36, 4);
+                    Buffer.BlockCopy(BitConverter.GetBytes(ChanInfo[i].TiltAngle), 0, dataBytes, offset + 40, 4);
+                    Buffer.BlockCopy(BitConverter.GetBytes(ChanInfo[i].BeamWidth), 0, dataBytes, offset + 44, 4);
+                    Buffer.BlockCopy(BitConverter.GetBytes(ChanInfo[i].OffsetX), 0, dataBytes, offset + 48, 4);
+                    Buffer.BlockCopy(BitConverter.GetBytes(ChanInfo[i].OffsetY), 0, dataBytes, offset + 52, 4);
+                    Buffer.BlockCopy(BitConverter.GetBytes(ChanInfo[i].OffsetZ), 0, dataBytes, offset + 56, 4);
+                    Buffer.BlockCopy(BitConverter.GetBytes(ChanInfo[i].OffsetYaw), 0, dataBytes, offset + 60, 4);
+                    Buffer.BlockCopy(BitConverter.GetBytes(ChanInfo[i].OffsetPitch), 0, dataBytes, offset + 64, 4);
+                    Buffer.BlockCopy(BitConverter.GetBytes(ChanInfo[i].OffsetRoll), 0, dataBytes, offset + 68, 4);
+                    Buffer.BlockCopy(BitConverter.GetBytes(ChanInfo[i].BeamsPerArray), 0, dataBytes, offset + 72, 2);
+                    dataBytes[offset + 74] = ChanInfo[i].SampleFormat;
+                }
+                return dataBytes;
+            }
         };
 
 

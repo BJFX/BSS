@@ -1,6 +1,6 @@
 using System;
-using System.IO ;
 using System.Globalization;
+using System.IO;
 namespace Survey
 {
 	/// <summary>
@@ -8,31 +8,102 @@ namespace Survey
 	/// </summary>
 	public class csFile
 	{
-        public string fileName;
-        public StreamReader ts;
-        public StreamWriter ws;
-        public BinaryReader br;
-        public BinaryWriter bw;
-        public bool opened, writeOpened;
+	    private string fileName;
+        protected StreamReader ts;
+        protected StreamWriter ws;
+        protected BinaryReader br;
+        protected BinaryWriter bw;
+	    private bool opened;
+	    private bool writeOpened;
+	    protected string ext = @"dat";
+        protected long length;
+	    protected long sizelimit;
+        protected string header = "Log";
+	    public DirectoryInfo Di = new DirectoryInfo(@".\");
 		//-----------
-		public csFile() {
+        public csFile(string strheader = null, string extstr = null)
+        {
+            header = strheader ?? (header);
+            ext = extstr ?? (ext);
 			init();
 		}
 		//-----------
 		private void init() {
 			opened = false;
 			writeOpened = false;
+		    length = 0;
+		    sizelimit = 1024*1024;//1MB
 		}
+
+	    public void SetFileSizeLimit(long size)
+	    {
+	        if (size>0)
+	        {
+	            sizelimit = size;
+	        }
+	    }
+	    public string CreateFullFileName()
+	    {
+            string timestring = CreateNonBlankTimeString();
+
+            return Di.FullName +"\\"+ header + timestring + "." + ext;
+	    }
+
+	    public string CreateNonBlankTimeString()
+	    {
+	         string timestring = DateTime.Now.Year.ToString("0000_", CultureInfo.InvariantCulture) +
+	               DateTime.Now.Month.ToString("00_", CultureInfo.InvariantCulture) +
+	               DateTime.Now.Day.ToString("00_", CultureInfo.InvariantCulture) +
+	               DateTime.Now.Hour.ToString("00_", CultureInfo.InvariantCulture)
+	               + DateTime.Now.Minute.ToString("00_", CultureInfo.InvariantCulture) +
+	               DateTime.Now.Second.ToString("00", CultureInfo.InvariantCulture);
+	        return timestring;
+	    }
+        public string CreateTimeString()
+        {
+            string timestring = "(" + DateTime.Now.Month.ToString("00", CultureInfo.InvariantCulture) + "/" + DateTime.Now.Day.ToString("00", CultureInfo.InvariantCulture) + " " + DateTime.Now.Hour.ToString("00", CultureInfo.InvariantCulture)
+                    + ":" + DateTime.Now.Minute.ToString("00", CultureInfo.InvariantCulture) + ":" + DateTime.Now.Second.ToString("00", CultureInfo.InvariantCulture) + ")";
+            return timestring;
+        }
+	    public void SetPath(DirectoryInfo di=null)
+	    {
+	        if (di != null)
+	            Di = di;
+	    }
 		//-----------
 		public csFile(string file_name) 	{
 			fileName = file_name;
 			init();
 		}
-		//-----------
-		public bool OpenForRead(string file_name){
+        public long FileLen
+        {
+            get
+            {
+                return length;
+            }
+        }
+
+	    public string FileName
+	    {
+	        get { return fileName; }
+	    }
+
+	    public bool Opened
+	    {
+	        get { return opened; }
+	    }
+
+	    public bool WriteOpened
+	    {
+	        get { return writeOpened; }
+	    }
+
+
+	    //-----------
+        public bool OpenForRead(string file_name){
 			fileName = file_name;
 			try {
-				ts = new StreamReader (fileName);
+                ts = new StreamReader(File.Open(fileName, FileMode.Open, FileAccess.Write, FileShare.ReadWrite));
 				opened=true;
 			}
 			catch(FileNotFoundException e) {
@@ -54,8 +125,9 @@ namespace Survey
 			ws.WriteLine (s);
 		}
 		//-----------
-        public virtual void close()
+        public virtual void Close()
         {
+            length = 0;
             writeOpened = false;
             if (ts!=null)
 				ts.Close();
@@ -71,11 +143,14 @@ namespace Survey
 			return OpenForWrite(fileName);
 		}
 		//-----------
-		public bool OpenForWrite(string file_name) {
-			try{
-				ws = new StreamWriter (file_name);
+		public bool OpenForWrite(string file_name)
+		{
+		    if (file_name == null) throw new ArgumentNullException("file_name");
+		    try{
+                fileName = file_name;
+                ws = new StreamWriter(File.Open(fileName, FileMode.Append, FileAccess.Write, FileShare.Read));
                 ws.AutoFlush = true;
-				fileName = file_name;
+                length = 0;
 				writeOpened = true;
 				return true;
 			}
@@ -83,7 +158,8 @@ namespace Survey
 				return false;
 			}
 		}
-        //-----------
+
+	    //-----------
         public bool BinaryOpenWrite()
         {
             return BinaryOpenWrite(fileName);
@@ -91,11 +167,13 @@ namespace Survey
         //-----------
         public bool BinaryOpenWrite(string file_name)
         {
+            if (file_name == null) throw new ArgumentNullException("file_name");
             try
             {
-                bw = new BinaryWriter(File.Open(file_name, FileMode.OpenOrCreate));
+                bw = new BinaryWriter(File.Open(file_name, FileMode.OpenOrCreate,FileAccess.Write,FileShare.Read));
                 fileName = file_name;
                 writeOpened = true;
+                length = 0;
                 return true;
             }
             catch (FileNotFoundException e)
@@ -103,16 +181,18 @@ namespace Survey
                 return false;
             }
         }
-        //-----------
+
+	    //-----------
         public bool BinaryOpenRead()
         {
             return BinaryOpenRead(fileName);
         }
         public bool BinaryOpenRead(string file_name)
         {
+            if (file_name == null) throw new ArgumentNullException("file_name");
             try
             {
-                br = new BinaryReader(File.Open(file_name, FileMode.Open));
+                br = new BinaryReader(File.Open(file_name, FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
                 fileName = file_name;
                 writeOpened = true;
                 return true;
@@ -122,119 +202,98 @@ namespace Survey
                 return false;
             }
         }
-        public virtual void BinaryWrite(byte[] data)
+
+	    public virtual void BinaryWrite(byte[] data)
         {
-            this.bw.Write(data);
+            bw.Write(data);
         }
+
+	    public virtual bool Create()
+	    {
+	        return false;
+	    }
+
 	}
 
     public class LogFile:csFile
     {
-        public csFile logfile;
-        private string ext;
-        public long length; 
-        public LogFile(string extstr)
-        {
-            ext = extstr;
-            logfile = new csFile();
-            length = 0;
-            
-        }
-        public bool OpenFile(DirectoryInfo di)
-        {
-            if(di.Exists)
-            {
-                string timestring = DateTime.Now.Year.ToString("0000_", CultureInfo.InvariantCulture) + DateTime.Now.Month.ToString("00_", CultureInfo.InvariantCulture) + DateTime.Now.Day.ToString("00_", CultureInfo.InvariantCulture) + DateTime.Now.Hour.ToString("00_", CultureInfo.InvariantCulture)
-                    + DateTime.Now.Minute.ToString("00_", CultureInfo.InvariantCulture) + DateTime.Now.Second.ToString("00", CultureInfo.InvariantCulture);
-                string filename = di.FullName;//文件路径
-                filename = filename + "\\" + ext + timestring + ".txt";
+        public LogFile(string strheader = null, string extstr = null)
+            : base(strheader, extstr){}
 
-                return logfile.OpenForWrite(filename);
-            }
-            else
-                return false;
-        }
-        public override void writeLine(string s)
+        public static int index = 0;
+        private bool OpenStreamFile()
         {
-            string timestring = "("+DateTime.Now.Month.ToString("00", CultureInfo.InvariantCulture) +"/"+ DateTime.Now.Day.ToString("00", CultureInfo.InvariantCulture) +" "+ DateTime.Now.Hour.ToString("00", CultureInfo.InvariantCulture)
-                    + ":" + DateTime.Now.Minute.ToString("00", CultureInfo.InvariantCulture) + ":" + DateTime.Now.Second.ToString("00", CultureInfo.InvariantCulture)+")";
-            s = timestring + s;
-            logfile.ws.WriteLine(s);
-            
+            if (Di.Exists == false)
+            {
+                Di.Create();
+            }
+            return Di.Exists && OpenForWrite(CreateFullFileName());
+        }
+        public bool Create()
+        {
+            return OpenStreamFile();
+        }
+                
+
+        public long Write(string s)
+        {
+            if (WriteOpened == false)
+            {
+                if (Create() == false)
+                    return 0;
+            }
+
+            s = CreateTimeString() + s;
+            ws.WriteLine(s);
+
             length += s.Length;
             length += 2;
-        }
-
-        public override void close()
-        {
-            logfile.close();
-            length = 0;
-            if (logfile.ts != null)
-                logfile.ts.Close();
-            if (logfile.ws != null)
-                logfile.ws.Close();
-            if (logfile.br != null)
-                logfile.br.Close();
-            if (logfile.bw != null)
-                logfile.bw.Close();
+            if (length>sizelimit)
+            {
+                Close();
+                header += (++index).ToString();
+            }
+            return length;
         }
         
     }
 
-    public class AdFile : csFile
+    public class ADFile : csFile
     {
-        public csFile adfile;
-        private long length;
-        private string ext;
-        public AdFile(string extstr)
+        public ADFile(string strheader = null, string extstr = null)
+            : base(strheader, extstr){}
+
+        public static int index = 0;
+        private bool OpenBinaryFile()
         {
-            ext = extstr;
-            length = 0;
-            adfile = new csFile();
-            
-        }
-        public long FileLen
-        {
-            get
+            if (Di.Exists == false)
             {
-                return length;
+                Di.Create();
             }
+            return Di.Exists && BinaryOpenWrite(CreateFullFileName());
         }
-        public bool OpenFile(DirectoryInfo di)
+        public override bool Create()
         {
-            if(di.Exists)
+            SetFileSizeLimit(100*1024*1024);
+            return OpenBinaryFile();
+        }
+
+        //if you want to create new file everytime, call close() after write()
+        public long Write(byte[] data)
+        {
+            if (WriteOpened == false)
             {
-                string timestring = DateTime.Now.Year.ToString("0000", CultureInfo.InvariantCulture) + DateTime.Now.Month.ToString("00", CultureInfo.InvariantCulture) + DateTime.Now.Day.ToString("00", CultureInfo.InvariantCulture) + DateTime.Now.Hour.ToString("00", CultureInfo.InvariantCulture)
-                    + DateTime.Now.Minute.ToString("00", CultureInfo.InvariantCulture) + DateTime.Now.Second.ToString("00", CultureInfo.InvariantCulture);
-                string filename = di.FullName;//文件路径
-                filename = filename + "\\" + ext + timestring + ".dat";
-                
-                return adfile.BinaryOpenWrite(filename);
+                if (Create() == false)
+                    return 0;
             }
-            else
-                return false;
-        }
-        public override void BinaryWrite(byte[] data)
-        {
-            adfile.bw.Write(data);
+            bw.Write(data);
             length += data.Length;
-        }
-        public override void close()
-        {
-            length = 0;
-            
-            if (adfile.ts != null)
-                adfile.ts.Close();
-            if (adfile.ws != null)
-                adfile.ws.Close();
-            if (adfile.br != null)
-                adfile.br.Close();
-            if (adfile.bw != null)
+            if (length>sizelimit)
             {
-                adfile.bw.Close();
+                Close();
+                header += (++index).ToString();
             }
-            adfile.close();
+            return length;
         }
-        
     }
 }

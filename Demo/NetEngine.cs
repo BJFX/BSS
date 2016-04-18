@@ -22,7 +22,11 @@ namespace Survey
         public static bool bConnect;
         public bool Initialed = false;
         string MyExecPath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetModules()[0].FullyQualifiedName);
-        public AdFile BssFile = new AdFile("BSS");
+        public ADFile BssFile = new ADFile("BSS","raw");
+        public ADFile XtfFile = new ADFile("BSS","xtf");
+        private XTFFILEHEADER Header = new XTFFILEHEADER();
+        private XTFPINGCHANHEADER PingchanHeader = new XTFPINGCHANHEADER();
+        private XTFPINGHEADER PingHeader = new XTFPINGHEADER();
         public EventWaitHandle ACPacketHandle;//AC响应包同步事件句柄
         public bool hasRecv = false;
         public string Status;
@@ -118,7 +122,8 @@ namespace Survey
                     DataThread.Abort();
                 }
             }
-
+            if(BssFile.Opened)
+                BssFile.Close();
         }
         public void RecvAnsThread(object obj)
         {
@@ -262,15 +267,11 @@ namespace Survey
                 case (int)ComID.BSSdata:
                     if(!hasRecv)
                         {
-                            BssFile.OpenFile(new DirectoryInfo(MyExecPath));
+                            BssFile.SetPath(new DirectoryInfo(MyExecPath));
+                            XtfFile.SetPath(new DirectoryInfo(MyExecPath));
                             hasRecv = true;
                         }
-                    BssFile.BinaryWrite(myReadBuffer);
-                    if (BssFile.FileLen > 1024 * 1024 * 100)
-                        {
-                            BssFile.close();
-                            BssFile.OpenFile(new DirectoryInfo(MyExecPath));
-                        }
+                    BssFile.Write(myReadBuffer);
                     BSSResultData resultData = new BSSResultData();
 
                     if (ParseBssData(myReadBuffer, out resultData))
@@ -282,6 +283,7 @@ namespace Survey
                             data = resultData.Data.ALLData.Dequeue();
                             str +=  "收到侧扫数据，长度=" + data.DataBytes.ToString()+"字节,类型:" + Enum.GetName(typeof (ObjectID), data.ID)+"\n";
                             MainForm.mf.DisplayRTBSS(data);
+                            //save to xtf file 
                             
                         }
                         MainForm.mf.DisplayRTRange(resultData);

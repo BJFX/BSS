@@ -326,7 +326,10 @@ namespace Survey
                 Buffer.BlockCopy(dataBytes, idx+10, BssBytes,0, DataBytes);
                 if ((ID == (uint)ObjectID.PortLowBssData) || (ID == (uint)ObjectID.PortHighBssData))//reverse port data
                 {
-                    Array.Reverse(BssBytes);
+                    var reversearray = new ushort[DataBytes/2];
+                    Buffer.BlockCopy(BssBytes, 0, reversearray, 0, DataBytes);
+                    Array.Reverse(reversearray);
+                    Buffer.BlockCopy(reversearray, 0, BssBytes, 0, DataBytes);
                 }
                 return DataBytes;
             }

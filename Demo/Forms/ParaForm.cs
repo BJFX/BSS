@@ -69,7 +69,7 @@ namespace Survey.Forms
             {
                 MainForm.mf.CmdWindow.Show();
                 BSSParameter para = new BSSParameter();
-                para.Ts = (ushort)(RangeInput.Value * 65121 / 750 + 1620);
+                para.Ts = (ushort)(RangeInput.Value * 65121 / 750 );
                 if (CurrentType)
                 {
 
