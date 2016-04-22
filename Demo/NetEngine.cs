@@ -231,8 +231,10 @@ namespace Survey
         }
         
 
-        private void ParseNetworkPacket(byte[] myReadBuffer, int PacketLength)
+        private void ParseNetworkPacket(byte[] ReadBuffer, int PacketLength)
         {
+            byte[] myReadBuffer = new byte[PacketLength+8];
+            Buffer.BlockCopy(ReadBuffer,0,myReadBuffer,0,PacketLength);
             switch (BitConverter.ToUInt16(myReadBuffer,0))
             {
                 case (int)ComID.Ans:
@@ -268,6 +270,7 @@ namespace Survey
                     if(!hasRecv)
                         {
                             BssFile.SetPath(new DirectoryInfo(MyExecPath));
+                        
                             XtfFile.SetPath(new DirectoryInfo(MyExecPath));
                             hasRecv = true;
                         }
@@ -277,16 +280,24 @@ namespace Survey
                     if (ParseBssData(myReadBuffer, out resultData))
                     {
                         BSSObject data = null;
+                        List<BSSObject> datalist = new List<BSSObject>();
                         str = "";
                         while (resultData.Data.ALLData.Count>0)
                         {
                             data = resultData.Data.ALLData.Dequeue();
                             str +=  "收到侧扫数据，长度=" + data.DataBytes.ToString()+"字节,类型:" + Enum.GetName(typeof (ObjectID), data.ID)+"\n";
                             MainForm.mf.DisplayRTBSS(data);
-                            //save to xtf file 
-                            
+                            datalist.Add(data);
                         }
-                        MainForm.mf.DisplayRTRange(resultData);
+                        //save to xtf file 
+                        if (Configuration.bSaveXTF)
+                        {
+                            SaveXTF(datalist, resultData.Parameter);
+                        }
+                        datalist.Clear();
+                        var highrange = (resultData.Parameter.Ts / 2) * 750 / 65121;//
+                        var Lowrange = (resultData.Parameter.Ts) * 750 / 64737;//
+                        MainForm.mf.DisplayRTRange(highrange.ToString(), Lowrange.ToString());
                         MainForm.mf.CmdWindow.DisplayAns(str);
                         
                     }
@@ -302,6 +313,60 @@ namespace Survey
                     break;
                 default:
                     break;
+            }
+        }
+
+        private void SaveXTF(List<BSSObject> datalist, BSSParameter parameter)
+        {
+            if (XtfFile.WriteOpened == false)
+            {
+                XtfFile.Create();
+                XtfFile.Write(Header.pack());
+            }
+            DateTime dt = DateTime.Now;
+            PingHeader.Year = (ushort)dt.Year;
+            PingHeader.Month = (byte)dt.Month;
+            PingHeader.Day = (byte)dt.Day;
+            PingHeader.Hour = (byte)dt.Hour;
+            PingHeader.Minute = (byte)dt.Minute;
+            PingHeader.Second = (byte)dt.Second;
+            PingHeader.HSeconds = (byte)(dt.Millisecond/ 10);
+            PingHeader.PingNumber = datalist[0].FrameNo;
+            XtfFile.Write(PingHeader.pack());
+            foreach (var bssObject in datalist)
+            {
+                if (bssObject.ID == (uint) ObjectID.PortLowBssData)
+                {
+                    PingchanHeader.ChannelNumber = 0;
+                    PingchanHeader.SlantRange = parameter.Ts*750/Header.ChanInfo[0].Frequency;
+                    PingchanHeader.NumSamples = (uint)bssObject.DataBytes/Header.ChanInfo[0].bytesPerSample;
+                    XtfFile.Write(PingchanHeader.Pack());
+                    
+                }
+                else if (bssObject.ID == (uint)ObjectID.StartboardLowBssData)
+                {
+                    PingchanHeader.ChannelNumber = 1;
+                    PingchanHeader.SlantRange = parameter.Ts * 750 / Header.ChanInfo[1].Frequency;
+                    PingchanHeader.NumSamples = (uint)bssObject.DataBytes / Header.ChanInfo[1].bytesPerSample;
+                    XtfFile.Write(PingchanHeader.Pack());
+                    
+                }
+                else if (bssObject.ID == (uint)ObjectID.PortHighBssData)
+                {
+                    PingchanHeader.ChannelNumber = 2;
+                    PingchanHeader.SlantRange = parameter.Ts/2 * 750 / Header.ChanInfo[2].Frequency;
+                    PingchanHeader.NumSamples = (uint)bssObject.DataBytes / Header.ChanInfo[2].bytesPerSample;
+                    XtfFile.Write(PingchanHeader.Pack());
+
+                }
+                else if (bssObject.ID == (uint)ObjectID.StartboardHighBssData)
+                {
+                    PingchanHeader.ChannelNumber = 3;
+                    PingchanHeader.SlantRange = parameter.Ts/2 * 750 / Header.ChanInfo[3].Frequency;
+                    PingchanHeader.NumSamples = (uint)bssObject.DataBytes / Header.ChanInfo[3].bytesPerSample;
+                    XtfFile.Write(PingchanHeader.Pack());
+                }
+                XtfFile.Write(bssObject.BssBytes);
             }
         }
 

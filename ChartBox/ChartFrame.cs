@@ -181,15 +181,15 @@ namespace ChartBox
             switch (index)
             {
                 case 0:
-                    color = amplitude*(EndColor.B - StartColor.B)/255 + StartColor.B;
+                    color = Math.Sqrt(amplitude)*(EndColor.B - StartColor.B)/255 + StartColor.B;
                     max = EndColor.B - StartColor.B;
                     break;
                 case 1:
-                    color = amplitude * (EndColor.G - StartColor.G) / 255 + StartColor.G;
+                    color = Math.Sqrt(amplitude) * (EndColor.G - StartColor.G) / 255 + StartColor.G;
                     max = EndColor.G - StartColor.G;
                     break;
                 case 2:
-                    color = amplitude * (EndColor.R - StartColor.R) / 255 + StartColor.R;
+                    color = Math.Sqrt(amplitude) * (EndColor.R - StartColor.R) / 255 + StartColor.R;
                     max = EndColor.R - StartColor.R;
                     break;
                 default:

@@ -154,6 +154,7 @@ namespace Survey
             // grows 1K in size for each additional 8 channels.
             public XTFFILEHEADER()
             {
+                FileFormat = 0x7B;
                 RecordingProgramName = new char[8];
                 RecordingProgramVersion = new char[8];
                 SonarName = new char[16];
@@ -167,6 +168,15 @@ namespace Survey
                     ChanInfo.Add(new CHANINFO());
                 }
                 
+                ChanInfo[0].Frequency = 64737;
+                ChanInfo[0].bytesPerSample = 2;
+                ChanInfo[1].Frequency = 64737;
+                ChanInfo[1].bytesPerSample = 2;
+                ChanInfo[2].Frequency = 65121;
+                ChanInfo[2].bytesPerSample = 2;
+                ChanInfo[3].Frequency = 65121;
+                ChanInfo[3].bytesPerSample = 2;
+
             }
 
             public byte[] pack()
@@ -519,8 +529,91 @@ namespace Survey
 
             public XTFPINGHEADER()
             {
+                MagicNumber = 0xFACE;
+                HeaderType = 0;
                 Reserved1= new ushort[2];
                 ReservedSpace2 = new byte[11];
+            }
+
+            public byte[] pack()
+            {
+                byte[] dataBytes = new byte[256];
+                Buffer.BlockCopy(BitConverter.GetBytes(MagicNumber), 0, dataBytes, 0, 2);
+                dataBytes[2] = HeaderType;
+                dataBytes[3]= SubChannelNumber;
+                Buffer.BlockCopy(BitConverter.GetBytes(NumChansToFollow), 0, dataBytes, 4, 2);
+                Buffer.BlockCopy(BitConverter.GetBytes(NumbytesThisRecord), 0, dataBytes, 10, 4);
+                Buffer.BlockCopy(BitConverter.GetBytes(Year), 0, dataBytes, 14, 2);
+                dataBytes[16] = Month;
+                dataBytes[17] = Day;
+                dataBytes[18] = Hour;
+                dataBytes[19] = Minute;
+                dataBytes[20] = Second;
+                dataBytes[21] = HSeconds;
+                Buffer.BlockCopy(BitConverter.GetBytes(JulianDay), 0, dataBytes, 22, 2);
+                Buffer.BlockCopy(BitConverter.GetBytes(EventNumber), 0, dataBytes, 24, 4);
+                Buffer.BlockCopy(BitConverter.GetBytes(PingNumber), 0, dataBytes, 28, 4);
+                Buffer.BlockCopy(BitConverter.GetBytes(SoundVelocity), 0, dataBytes, 32, 4);
+                Buffer.BlockCopy(BitConverter.GetBytes(OceanTide), 0, dataBytes, 36, 4);
+                Buffer.BlockCopy(BitConverter.GetBytes(Reserved2), 0, dataBytes, 40, 4);
+                Buffer.BlockCopy(BitConverter.GetBytes(ConductivityFreq), 0, dataBytes, 44, 4);
+                Buffer.BlockCopy(BitConverter.GetBytes(TemperatureFreq), 0, dataBytes, 48, 4);
+                Buffer.BlockCopy(BitConverter.GetBytes(PressureFreq), 0, dataBytes, 52, 4);
+                Buffer.BlockCopy(BitConverter.GetBytes(PressureTemp), 0, dataBytes, 56, 4);
+                Buffer.BlockCopy(BitConverter.GetBytes(Conductivity), 0, dataBytes, 60, 4);
+                Buffer.BlockCopy(BitConverter.GetBytes(WaterTemperature), 0, dataBytes, 64, 4);
+                Buffer.BlockCopy(BitConverter.GetBytes(Pressure), 0, dataBytes, 68, 4);
+                Buffer.BlockCopy(BitConverter.GetBytes(ComputedSoundVelocity), 0, dataBytes, 72, 4);
+                Buffer.BlockCopy(BitConverter.GetBytes(MagX), 0, dataBytes, 76, 4);
+                Buffer.BlockCopy(BitConverter.GetBytes(MagY), 0, dataBytes, 80, 4);
+                Buffer.BlockCopy(BitConverter.GetBytes(MagZ), 0, dataBytes, 84, 4);
+                Buffer.BlockCopy(BitConverter.GetBytes(AuxVal1), 0, dataBytes, 88, 4);
+                Buffer.BlockCopy(BitConverter.GetBytes(AuxVal2), 0, dataBytes, 92, 4);
+                Buffer.BlockCopy(BitConverter.GetBytes(AuxVal3), 0, dataBytes, 96, 4);
+                Buffer.BlockCopy(BitConverter.GetBytes(AuxVal4), 0, dataBytes, 100, 4);
+                Buffer.BlockCopy(BitConverter.GetBytes(AuxVal5), 0, dataBytes, 104, 4);
+                Buffer.BlockCopy(BitConverter.GetBytes(AuxVal6), 0, dataBytes, 108, 4);
+                Buffer.BlockCopy(BitConverter.GetBytes(SpeedLog), 0, dataBytes, 112, 4);
+                Buffer.BlockCopy(BitConverter.GetBytes(Turbidity), 0, dataBytes, 116, 4);
+                Buffer.BlockCopy(BitConverter.GetBytes(ShipSpeed), 0, dataBytes, 120, 4);
+                Buffer.BlockCopy(BitConverter.GetBytes(ShipGyro), 0, dataBytes, 124, 4);
+                Buffer.BlockCopy(BitConverter.GetBytes(ShipYcoordinate), 0, dataBytes, 128, 8);
+                Buffer.BlockCopy(BitConverter.GetBytes(ShipXcoordinate), 0, dataBytes, 136, 8);
+                Buffer.BlockCopy(BitConverter.GetBytes(ShipAltitude), 0, dataBytes, 144, 2);
+                Buffer.BlockCopy(BitConverter.GetBytes(ShipDepth), 0, dataBytes, 146, 2);
+                dataBytes[148] = FixTimeHour;
+                dataBytes[149] = FixTimeMinute;
+                dataBytes[150] = FixTimeSecond;
+                dataBytes[151] = FixTimeHSecond;
+                Buffer.BlockCopy(BitConverter.GetBytes(SensorSpeed), 0, dataBytes, 152, 4);
+                Buffer.BlockCopy(BitConverter.GetBytes(KP), 0, dataBytes, 156, 4);
+                Buffer.BlockCopy(BitConverter.GetBytes(SensorYcoordinate), 0, dataBytes, 160, 8);
+                Buffer.BlockCopy(BitConverter.GetBytes(SensorXcoordinate), 0, dataBytes, 168, 8);
+                Buffer.BlockCopy(BitConverter.GetBytes(SonarStatus), 0, dataBytes, 176, 2);
+                Buffer.BlockCopy(BitConverter.GetBytes(RangeToFish), 0, dataBytes, 178, 2);
+                Buffer.BlockCopy(BitConverter.GetBytes(BearingToFish), 0, dataBytes, 180, 2);
+                Buffer.BlockCopy(BitConverter.GetBytes(CableOut), 0, dataBytes, 182, 2);
+                Buffer.BlockCopy(BitConverter.GetBytes(Layback), 0, dataBytes, 184, 4);
+                Buffer.BlockCopy(BitConverter.GetBytes(CableTension), 0, dataBytes, 188, 4);
+                Buffer.BlockCopy(BitConverter.GetBytes(SensorDepth), 0, dataBytes, 192, 4);
+                Buffer.BlockCopy(BitConverter.GetBytes(SensorPrimaryAltitude), 0, dataBytes, 196, 4);
+                Buffer.BlockCopy(BitConverter.GetBytes(SensorAuxAltitude), 0, dataBytes, 200, 4);
+                Buffer.BlockCopy(BitConverter.GetBytes(SensorPitch), 0, dataBytes, 204, 4);
+                Buffer.BlockCopy(BitConverter.GetBytes(SensorRoll), 0, dataBytes, 208, 4);
+                Buffer.BlockCopy(BitConverter.GetBytes(SensorHeading), 0, dataBytes, 212, 4);
+                Buffer.BlockCopy(BitConverter.GetBytes(Heave), 0, dataBytes, 216, 4);
+                Buffer.BlockCopy(BitConverter.GetBytes(Yaw), 0, dataBytes, 220, 4);
+                Buffer.BlockCopy(BitConverter.GetBytes(AttitudeTimeTag), 0, dataBytes, 224, 4);
+                Buffer.BlockCopy(BitConverter.GetBytes(DOT), 0, dataBytes, 228, 4);
+                Buffer.BlockCopy(BitConverter.GetBytes(NavFixMilliseconds), 0, dataBytes, 232, 4);
+                dataBytes[236] = ComputerClockHour;
+                dataBytes[237] = ComputerClockMinute;
+                dataBytes[238] = ComputerClockSecond;
+                dataBytes[239] = ComputerClockHsec;
+                Buffer.BlockCopy(BitConverter.GetBytes(FishPositionDeltaX), 0, dataBytes, 240, 2);
+                Buffer.BlockCopy(BitConverter.GetBytes(FishPositionDeltaY), 0, dataBytes, 242, 2);
+                dataBytes[244] = FishPositionErrorCode;
+                return dataBytes;
             }
         };
 
@@ -669,6 +762,15 @@ namespace Survey
             public XTFPINGCHANHEADER()
             {
                 ReservedSpace = new byte[4];
+            }
+
+            public byte[] Pack()
+            {
+                byte[] dataBytes = new byte[64];
+                Buffer.BlockCopy(BitConverter.GetBytes(ChannelNumber), 0, dataBytes, 0, 2);
+                Buffer.BlockCopy(BitConverter.GetBytes(SlantRange), 0, dataBytes, 4, 4);
+                Buffer.BlockCopy(BitConverter.GetBytes(NumSamples), 0, dataBytes, 42, 4);
+                return dataBytes;
             }
         };
 

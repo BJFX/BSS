@@ -12,7 +12,7 @@ namespace Survey.Forms
 {
     public partial class MainForm : OfficeForm
     {
-        private string Title = "Version 2.01 BSS Sonar Processing System –UAI（北京联合声信海洋技术有限公司）";
+        public string Title = "Version 2.01 BSS Sonar Processing System –UAI（北京联合声信海洋技术有限公司）";
         private XTFFILEHEADER Header = new XTFFILEHEADER();
         private XTFPINGCHANHEADER PingchanHeader = new XTFPINGCHANHEADER();
         private XTFPINGHEADER PingHeader = new XTFPINGHEADER();
@@ -129,6 +129,8 @@ namespace Survey.Forms
                 DataSaveBox.BackColor = Color.Red;
                 Configuration.bSaveXTF = false;
                 Configuration.bNewXTF = false;
+                if(netcore.XtfFile.WriteOpened)
+                    netcore.XtfFile.Close();
             }
         }
 
@@ -164,6 +166,7 @@ namespace Survey.Forms
                 BssView2.option.Fq = Frequence.Low;
             }
             SetWorkingState();
+            DataSaveBox.PerformClick();
         }
 
         private void InitConfigure()
@@ -189,7 +192,7 @@ namespace Survey.Forms
                 Closeing = true;
                 if(netcore!=null)
                     netcore.Stop();
-
+                netcore.XtfFile.Close();
             }
             
 
@@ -214,7 +217,7 @@ namespace Survey.Forms
             //读数据包
             if (offset >= fi.Length)//end
             {
-                playbackFileStream.Close();
+                
                 PlaybackTime.Enabled = false;
                 float persentage = offset * 100 / fi.Length;
                 this.Text = Title + "-回放" + " - " + filename + "(" + persentage.ToString("F01") + "%)";
@@ -244,6 +247,8 @@ namespace Survey.Forms
                     return;
                 if (PingHeader.HeaderType == 0) //测扫
                 {
+                    string highrange = "";
+                    string lowrange = "";
                     while (true)
                     {
 
@@ -264,9 +269,15 @@ namespace Survey.Forms
                             BssView2.DisplayChart((int)PingchanHeader.ChannelNumber, (int)DataNeedToRead, buf);
                             
                         }
+                        if (PingchanHeader.ChannelNumber == 0 || PingchanHeader.ChannelNumber == 1)
+                            lowrange = PingchanHeader.SlantRange.ToString("F0");
+                        if (PingchanHeader.ChannelNumber == 2 || PingchanHeader.ChannelNumber == 3)
+                            highrange = PingchanHeader.SlantRange.ToString("F0");
+                        DisplayRTRange(highrange, lowrange);
                         if (offset >= fi.Length)
                             goto ReadMagic;//file end 
                     }
+                    
 
                 }
                 else//测深包
@@ -1166,6 +1177,7 @@ namespace Survey.Forms
             StartWorkToolStripMenuItem.Enabled = false;
             StopWorkToolStripMenuItem.Enabled = false;
             StatusLabel.Text = "正在回放...";
+            Configuration.DiskMode = true;
         }
         private void SetPauseState()
         {
@@ -1181,6 +1193,7 @@ namespace Survey.Forms
             StartWorkToolStripMenuItem.Enabled = false;
             StopWorkToolStripMenuItem.Enabled = false;
             StatusLabel.Text = "暂停回放";
+            Configuration.DiskMode = true;
         }
         private void SetReplayState()
         {
@@ -1196,6 +1209,7 @@ namespace Survey.Forms
             StartWorkToolStripMenuItem.Enabled = false;
             StopWorkToolStripMenuItem.Enabled = false;
             StatusLabel.Text = "准备回放";
+            Configuration.DiskMode = true;
         }
         private void SetWorkingState()
         {
@@ -1204,6 +1218,7 @@ namespace Survey.Forms
             ExitReplayToolStripMenuItem.Enabled = false;
             OpenToolStripMenuItem.Enabled = true;
             StatusLabel.Text = "监听实时数据中...";
+            Configuration.DiskMode = false;
         }
 
         private void toolStripStopBtn_Click(object sender, EventArgs e)
@@ -1304,38 +1319,32 @@ namespace Survey.Forms
             option.Show();
         }
 
-        internal void DisplayRTRange(BSSResultData resultData)
+        internal void DisplayRTRange(string highrange, string Lowrange)
         {
-            if (resultData == null)
-            {
-                return;
-            }
-            var highrange = (resultData.Parameter.Ts/2) * 750 / 65121;//
-            var Lowrange = (resultData.Parameter.Ts) * 750 / 64737;//
             //display
             string title = "";
             if (BssView1 != null && BssView1.option.Fq == Frequence.High)
             {
                 //BssView1.DisplayChart(ChannelNumber, buf.Length, buf);
-                title = "拖鱼, " + "高频, " + highrange.ToString() + "米";
+                title = ((Configuration.DiskMode==true)?"回放,":"实时,") + "高频, " + highrange + "米";
                 BssView1.SetTitle(title);
             }
             if (BssView1 != null && BssView1.option.Fq == Frequence.Low)
             {
                 //BssView1.DisplayChart(ChannelNumber, buf.Length, buf);
-                title = "拖鱼, " + "低频, " + Lowrange.ToString() + "米";
+                title = ((Configuration.DiskMode == true) ? "回放," : "实时,") + "低频, " + Lowrange + "米";
                 BssView1.SetTitle(title);
             }
             if (BssView2 != null && BssView2.option.Fq == Frequence.High)
             {
                 //BssView2.DisplayChart(ChannelNumber, buf.Length, buf);
-                title = "拖鱼, " + "高频, " + highrange.ToString() + "米";
+                title = ((Configuration.DiskMode == true) ? "回放," : "实时,") + "高频, " + highrange + "米";
                 BssView2.SetTitle(title);
             }
             if (BssView2 != null && BssView2.option.Fq == Frequence.Low)
             {
                 //BssView2.DisplayChart(ChannelNumber, buf.Length, buf);
-                title = "拖鱼, " + "低频, " + Lowrange.ToString() + "米";
+                title = ((Configuration.DiskMode == true) ? "回放," : "实时,") + "低频, " + Lowrange + "米";
                 BssView2.SetTitle(title);
             }
 
