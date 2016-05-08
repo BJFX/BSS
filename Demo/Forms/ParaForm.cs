@@ -11,8 +11,8 @@ namespace Survey.Forms
 {
     public partial class ParaForm : Office2007Form
     {
-        public BSSParameter Highpara = new BSSParameter();
-        public BSSParameter Lowpara = new BSSParameter();
+        public BSSParameter Highpara = new BSSParameter(true);
+        public BSSParameter Lowpara = new BSSParameter(false);
         public bool CurrentType = false;
         public ParaForm()
         {
@@ -21,24 +21,31 @@ namespace Survey.Forms
 
         public void Show(bool type)//1:high,0:low
         {
+            BSSParameter para = null;
             if (NetEngine.bConnect)
             {
                 CurrentType = type;
-                //MainForm.mf.CmdWindow.Show();
+                
                 if (CurrentType)
                 {
+                    this.Text = "设置高频声纳参数";
+                    RangeInput.MaxValue = 100;
+                    para = Highpara;
                     if (MainForm.mf.netcore.SendCommand(Command.GetHighParaCMD()) == false)
                     {
                         MainForm.mf.CmdWindow.DisplayAns("无法得到最新高频参数：" + MainForm.mf.netcore.Status);
-                        return;
+                        this.Text = "设置高频声纳参数" + "-无法得到最新高频参数";
                     }
                 }
                 else
                 {
+                    this.Text = "设置低频声纳参数";
+                    RangeInput.MaxValue = 200;
+                    para = Lowpara;
                     if (MainForm.mf.netcore.SendCommand(Command.GetLowParaCMD()) == false)
                     {
                         MainForm.mf.CmdWindow.DisplayAns("无法得到最新低频参数：" + MainForm.mf.netcore.Status);
-                        return;
+                        this.Text = "设置低频声纳参数" + "-无法得到最新低频参数";
                     }
                 }
                 
@@ -50,16 +57,14 @@ namespace Survey.Forms
             }
             //得到参数，显示UI
             this.Show();
-            if (CurrentType)
-                this.Text = "设置高频声纳参数";
-            else
-            {
-                this.Text = "设置低频声纳参数";
-            }
+            
+            
             //显示参数
-            //
-            //
-            //
+            RangeInput.Value = para.Range;
+            TvbG.Value = para.TvgG;
+            PortBandWidth.Value = (int)para.PortBandWidth;
+            StartBandWidth.Value = (int)para.StarBoardBandWidth;
+
         }
 
         private void ConfirmBtn_Click(object sender, EventArgs e)
@@ -68,8 +73,19 @@ namespace Survey.Forms
             if (NetEngine.bConnect)
             {
                 MainForm.mf.CmdWindow.Show();
-                BSSParameter para = new BSSParameter();
-                para.Ts = (ushort)(RangeInput.Value * 65121 / 750 );
+                BSSParameter para = null;
+                if (CurrentType)
+                {
+                    para = Highpara;
+                }
+                else
+                {
+                    para = Lowpara;
+                }   
+                para.Range = (ushort)RangeInput.Value;
+                para.TvgG = (short)TvbG.Value;
+                para.PortBandWidth = (uint)PortBandWidth.Value;
+                para.StarBoardBandWidth = (uint)StartBandWidth.Value;
                 if (CurrentType)
                 {
 
@@ -103,6 +119,12 @@ namespace Survey.Forms
             {
                 MessageBox.Show("网络未连接，请检查网络");
             }
+        }
+
+        private void ParaForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            e.Cancel = true;
+            this.Hide();
         }
     }
 }

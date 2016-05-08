@@ -188,6 +188,7 @@ namespace Survey
                 {
                     try
                     {
+                        hasRecv = false;
                         server.DataClient = server._dataListener.AcceptTcpClient();
                         NetworkStream stream = server.DataClient.GetStream();
                         while (stream.CanRead)
@@ -295,8 +296,8 @@ namespace Survey
                             SaveXTF(datalist, resultData.Parameter);
                         }
                         datalist.Clear();
-                        var highrange = (resultData.Parameter.Ts / 2) * 750 / 65121;//
-                        var Lowrange = (resultData.Parameter.Ts) * 750 / 64737;//
+                        var highrange = resultData.Parameter.Range ;//
+                        var Lowrange = resultData.Parameter.Range;//
                         MainForm.mf.DisplayRTRange(highrange.ToString(), Lowrange.ToString());
                         MainForm.mf.CmdWindow.DisplayAns(str);
                         
@@ -338,7 +339,7 @@ namespace Survey
                 if (bssObject.ID == (uint) ObjectID.PortLowBssData)
                 {
                     PingchanHeader.ChannelNumber = 0;
-                    PingchanHeader.SlantRange = parameter.Ts*750/Header.ChanInfo[0].Frequency;
+                    PingchanHeader.SlantRange = parameter.Range;
                     PingchanHeader.NumSamples = (uint)bssObject.DataBytes/Header.ChanInfo[0].bytesPerSample;
                     XtfFile.Write(PingchanHeader.Pack());
                     
@@ -346,7 +347,7 @@ namespace Survey
                 else if (bssObject.ID == (uint)ObjectID.StartboardLowBssData)
                 {
                     PingchanHeader.ChannelNumber = 1;
-                    PingchanHeader.SlantRange = parameter.Ts * 750 / Header.ChanInfo[1].Frequency;
+                    PingchanHeader.SlantRange = parameter.Range;
                     PingchanHeader.NumSamples = (uint)bssObject.DataBytes / Header.ChanInfo[1].bytesPerSample;
                     XtfFile.Write(PingchanHeader.Pack());
                     
@@ -354,7 +355,7 @@ namespace Survey
                 else if (bssObject.ID == (uint)ObjectID.PortHighBssData)
                 {
                     PingchanHeader.ChannelNumber = 2;
-                    PingchanHeader.SlantRange = parameter.Ts/2 * 750 / Header.ChanInfo[2].Frequency;
+                    PingchanHeader.SlantRange = parameter.Range;
                     PingchanHeader.NumSamples = (uint)bssObject.DataBytes / Header.ChanInfo[2].bytesPerSample;
                     XtfFile.Write(PingchanHeader.Pack());
 
@@ -362,7 +363,7 @@ namespace Survey
                 else if (bssObject.ID == (uint)ObjectID.StartboardHighBssData)
                 {
                     PingchanHeader.ChannelNumber = 3;
-                    PingchanHeader.SlantRange = parameter.Ts/2 * 750 / Header.ChanInfo[3].Frequency;
+                    PingchanHeader.SlantRange = parameter.Range;
                     PingchanHeader.NumSamples = (uint)bssObject.DataBytes / Header.ChanInfo[3].bytesPerSample;
                     XtfFile.Write(PingchanHeader.Pack());
                 }
@@ -403,27 +404,24 @@ namespace Survey
                 
                 StringBuilder sb = new StringBuilder();
                 sb.AppendLine("设备序列号:"+p.DeviceID);
-                sb.AppendLine("左舷发射起始频率:" + p.PortStartFq);
-                sb.AppendLine("右舷发射起始频率:" + p.StarBoardStartFq);
+                sb.AppendLine("左舷发射中心频率:" + p.PortCentralFq);
+                sb.AppendLine("右舷发射中心频率:" + p.StarBoardCentralFq);
                 sb.AppendLine("脉冲长度:" + p.Ls);
-                sb.AppendLine("左舷发射扫频速率:" + p.PortFqRate);
-                sb.AppendLine("右舷发射扫频速率:" + p.StarBoardFqRate);
+                sb.AppendLine("左舷发射信号带宽:" + p.PortBandWidth);
+                sb.AppendLine("右舷发射信号带宽:" + p.StarBoardBandWidth);
                 sb.AppendLine("接收延时:" + p.RcvDelay);
-                sb.AppendLine("采样时间:" + p.Ts);
-                sb.AppendLine("发射间隔时间:" + p.Tt);
+                sb.AppendLine("探测距离:" + p.Range);
+                sb.AppendLine("工作周期:" + p.Period);
                 sb.AppendLine("AD数据采样率:" + p.ADSamples);
-                sb.AppendLine("收发状态标识:" + p.Flag);
+                sb.AppendLine("控制标识:" + p.Flag);
                 sb.AppendLine("TVG延时:" + p.TVGDelay);
                 sb.AppendLine("TVG更新速率:" + p.TVGReRate);
-                sb.AppendLine("TVG控制:" + p.TVGCtl);
                 sb.AppendLine("TVG比例因子:" + p.TvgBeta);
                 sb.AppendLine("TVG吸收衰减:" + p.TvgAlpha);
                 sb.AppendLine("TVG起始增益:" + p.TvgG);
                 sb.AppendLine("命令标识:" + p.Com);
                 sb.AppendLine("返回数据类型标识:" + p.RetID);
                 sb.AppendLine("固定TVG:" + p.FixedTVG);
-                sb.AppendLine("TVG发送长度:" + p.TVGLength);
-                sb.AppendLine("TVG模式选择:" + p.TVGMode);
                 return sb.ToString();
             }
             else

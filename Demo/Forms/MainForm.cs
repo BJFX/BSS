@@ -121,7 +121,6 @@ namespace Survey.Forms
                 DataSaveBox.BackColor = Color.Green;
                 Configuration.bSaveXTF = true;
                 Configuration.bNewXTF = true;
-
             }
             else
             {
@@ -222,7 +221,8 @@ namespace Survey.Forms
                 float persentage = offset * 100 / fi.Length;
                 this.Text = Title + "-回放" + " - " + filename + "(" + persentage.ToString("F01") + "%)";
                 offset = 0;
-
+                playbackFileStream.BaseStream.Seek(offset, SeekOrigin.Begin);
+                SetReplayState();
                 return;
             }
             var magic = playbackFileStream.ReadUInt16();
@@ -1139,7 +1139,7 @@ namespace Survey.Forms
         {
             PlaybackTime.Interval /= 2;
             SlowBtn.Enabled = true;
-            if (PlaybackTime.Interval == 2)
+            if (PlaybackTime.Interval == 1)
             {
                 SpeedBtn.Enabled = false;
             }
@@ -1164,7 +1164,7 @@ namespace Survey.Forms
             退出回放ToolStripMenuItem.Enabled = true;
             SlowBtn.Enabled = true;
             SpeedBtn.Enabled = true;
-            if (PlaybackTime.Interval == 2)
+            if (PlaybackTime.Interval == 1)
             {
                 SpeedBtn.Enabled = false;
             }

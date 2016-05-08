@@ -155,6 +155,7 @@ namespace Survey
             public XTFFILEHEADER()
             {
                 FileFormat = 0x7B;
+                NumberOfSonarChannels = 4;
                 RecordingProgramName = new char[8];
                 RecordingProgramVersion = new char[8];
                 SonarName = new char[16];
@@ -531,6 +532,7 @@ namespace Survey
             {
                 MagicNumber = 0xFACE;
                 HeaderType = 0;
+                NumChansToFollow = 4;
                 Reserved1= new ushort[2];
                 ReservedSpace2 = new byte[11];
             }

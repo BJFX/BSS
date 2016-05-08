@@ -998,7 +998,7 @@
             this.exitToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("exitToolStripMenuItem.Image")));
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
-            this.exitToolStripMenuItem.Text = "Exit";
+            this.exitToolStripMenuItem.Text = "退出";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // 回放控制ToolStripMenuItem
@@ -1018,7 +1018,7 @@
             // 
             this.回放ToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("回放ToolStripMenuItem.Image")));
             this.回放ToolStripMenuItem.Name = "回放ToolStripMenuItem";
-            this.回放ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.回放ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.回放ToolStripMenuItem.Text = "回放";
             this.回放ToolStripMenuItem.Click += new System.EventHandler(this.回放ToolStripMenuItem_Click);
             // 
@@ -1026,7 +1026,7 @@
             // 
             this.暂停ToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("暂停ToolStripMenuItem.Image")));
             this.暂停ToolStripMenuItem.Name = "暂停ToolStripMenuItem";
-            this.暂停ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.暂停ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.暂停ToolStripMenuItem.Text = "暂停";
             this.暂停ToolStripMenuItem.Click += new System.EventHandler(this.暂停ToolStripMenuItem_Click);
             // 
@@ -1034,7 +1034,7 @@
             // 
             this.重置ToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("重置ToolStripMenuItem.Image")));
             this.重置ToolStripMenuItem.Name = "重置ToolStripMenuItem";
-            this.重置ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.重置ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.重置ToolStripMenuItem.Text = "重置";
             this.重置ToolStripMenuItem.Click += new System.EventHandler(this.重置ToolStripMenuItem_Click);
             // 
@@ -1042,7 +1042,7 @@
             // 
             this.SpeedBtn.Image = ((System.Drawing.Image)(resources.GetObject("SpeedBtn.Image")));
             this.SpeedBtn.Name = "SpeedBtn";
-            this.SpeedBtn.Size = new System.Drawing.Size(152, 22);
+            this.SpeedBtn.Size = new System.Drawing.Size(124, 22);
             this.SpeedBtn.Text = "加速";
             this.SpeedBtn.Click += new System.EventHandler(this.SpeedBtn_Click);
             // 
@@ -1050,7 +1050,7 @@
             // 
             this.SlowBtn.Image = ((System.Drawing.Image)(resources.GetObject("SlowBtn.Image")));
             this.SlowBtn.Name = "SlowBtn";
-            this.SlowBtn.Size = new System.Drawing.Size(152, 22);
+            this.SlowBtn.Size = new System.Drawing.Size(124, 22);
             this.SlowBtn.Text = "减速";
             this.SlowBtn.Click += new System.EventHandler(this.SlowBtn_Click);
             // 
@@ -1058,7 +1058,7 @@
             // 
             this.退出回放ToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("退出回放ToolStripMenuItem.Image")));
             this.退出回放ToolStripMenuItem.Name = "退出回放ToolStripMenuItem";
-            this.退出回放ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.退出回放ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.退出回放ToolStripMenuItem.Text = "关闭文件";
             this.退出回放ToolStripMenuItem.Click += new System.EventHandler(this.退出回放ToolStripMenuItem_Click);
             // 

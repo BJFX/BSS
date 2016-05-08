@@ -17,7 +17,7 @@ namespace ChartBox
         private int _displayWidthMax = 16000;
         private int _displayAmpMax = 32767;
         private ChartFrame GisFrame = null;
-
+        private int _gain = 3;
         
 
         public ChartG()
@@ -38,7 +38,19 @@ namespace ChartBox
             DisplayLength = len;
             DisplayAmpMax = max;
             DisplayWidthMax = width;
+            Gain = 3;
             GisFrame = new ChartFrame(bytepersample,DisplayLength, DisplayAmpMax, DisplayWidthMax);
+        }
+
+        public int Gain
+        {
+            get { return _gain; }
+            set
+            {
+                _gain = value;
+                if (GisFrame != null)
+                    GisFrame.ChartGain = _gain;
+            }
         }
         public int BytePerSample
         {
@@ -76,6 +88,7 @@ namespace ChartBox
             if(GisFrame == null)
                 return;
             GisFrame.Clear();
+            Gain = 1;
             Graphics g = GisChart.CreateGraphics();
             g.Clear(Color.Black);
             g.Dispose();

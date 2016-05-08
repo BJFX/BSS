@@ -81,6 +81,10 @@ namespace Survey.Forms
                     LayOutSideChange(option.Side);
                     chartLeft.SetColor(option.StartColor,option.EndColor,option.Gamma);
                     chartRight.SetColor(option.StartColor, option.EndColor, option.Gamma);
+                    chartLeft.Gain = option.Gain;
+                    chartRight.Gain = option.Gain;
+                    waveLeft.DisplayAmpMax = option.RawMax;
+                    waveRight.DisplayAmpMax = option.RawMax;
                     //do something
 
                 }
@@ -140,38 +144,48 @@ namespace Survey.Forms
             }
             else
             {
-                if ((option.Fq == Frequence.High && ChannelNumber == 2) || (option.Fq == Frequence.Low && ChannelNumber == 0))
+                if ((option.Fq == Frequence.High && ChannelNumber == 2) ||
+                    (option.Fq == Frequence.Low && ChannelNumber == 0))
                 {
                     if (!BinitailChart1 || chartLeft.DisplayLength != DataNeedToRead/2)
                     {
-                        chartLeft.Initialize(2, (int)DataNeedToRead / 2, 4096, 100);
-                        waveLeft.Initialize(2, (int)DataNeedToRead / 2, 4096, 100);
-                    }
-                    BinitailChart1 = true;
-                    if (option.Side != ShowSide.Starboard)
-                    {
-                        chartLeft.Display(buf, false);
-                        if (MainForm.mf.bShowRaw)
-                            waveLeft.Display(buf, false);
+                        chartLeft.Initialize(2, (int) DataNeedToRead/2, option.RawMax, 100);
+                        waveLeft.Initialize(2, (int) DataNeedToRead/2, option.RawMax, 100);
+                        LayOutSideChange(option.Side);
+                        chartLeft.SetColor(option.StartColor, option.EndColor, option.Gamma);
+
+                        chartLeft.Gain = option.Gain;
+
+                        waveLeft.DisplayAmpMax = option.RawMax;
+                        BinitailChart1 = true;
                     }
 
+                    chartLeft.Display(buf, false);
+                    if (MainForm.mf.bShowRaw)
+                        waveLeft.Display(buf, false);
+
                 }
-                if ((option.Fq == Frequence.High && ChannelNumber == 3) || (option.Fq == Frequence.Low && ChannelNumber == 1))
+                if ((option.Fq == Frequence.High && ChannelNumber == 3) ||
+                    (option.Fq == Frequence.Low && ChannelNumber == 1))
                 {
                     if (!BinitailChart2 || chartRight.DisplayLength != DataNeedToRead/2)
                     {
-                        chartRight.Initialize(2, (int)DataNeedToRead / 2, 4096, 100);
-                        waveRight.Initialize(2, (int)DataNeedToRead / 2, 4096, 100);
-                    }
-                    BinitailChart2 = true;
+                        chartRight.Initialize(2, (int) DataNeedToRead/2, 4096, 100);
+                        waveRight.Initialize(2, (int) DataNeedToRead/2, 4096, 100);
+                        LayOutSideChange(option.Side);
+                        chartRight.SetColor(option.StartColor, option.EndColor, option.Gamma);
 
-                    if (option.Side != ShowSide.Port)
-                    {
-                        chartRight.Display(buf, false);
-                        if (MainForm.mf.bShowRaw)
-                            waveRight.Display(buf, false);
+                        chartRight.Gain = option.Gain;
+
+                        waveRight.DisplayAmpMax = option.RawMax;
+                        BinitailChart2 = true;
                     }
 
+
+
+                    chartRight.Display(buf, false);
+                    if (MainForm.mf.bShowRaw)
+                        waveRight.Display(buf, false);
                 }
             }
             

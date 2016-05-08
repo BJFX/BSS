@@ -21,12 +21,14 @@ namespace ChartBox
         public int Xmax = 100;//宽度
         private Bitmap fftcanvas;
         int BytePerSample =2;
+        public int ChartGain = 3;
         public ChartFrame(int  bytepersample, int len, int amp, int width)
         {
             BytePerSample = bytepersample;
             wave = new double[len];
             Ymax = amp;
             Xmax = width;
+            ChartGain = 3;
             fftcanvas = new Bitmap(644, 416);
             Graphics g = Graphics.FromImage(fftcanvas);
             g.Clear(Color.Black);
@@ -141,7 +143,7 @@ namespace ChartBox
                         for (int y = 0; y < width; y++)
                         {
                             double amplitude = (wave[(int)(distance * y)]);
-
+                            amplitude *= ChartGain * ChartGain;
                             byte color = GetColor(amplitude,0);
                             pixel[0] = color;
                             color = GetColor(amplitude, 1);

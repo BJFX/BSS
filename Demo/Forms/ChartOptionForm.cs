@@ -29,6 +29,8 @@ namespace Survey.Forms
             OwnedOption.EndColor = ChunkEndBtn.SelectedColor;
             OwnedOption.Gamma = ((float) GammaSlider.Value)/100.0f;
             OwnedOption.Fq = HighRd.Checked ? Frequence.High : Frequence.Low;
+            OwnedOption.Gain = GainSlider.Value;
+            OwnedOption.RawMax = (RawMaxBox.SelectedIndex + 1)*4096;
         }
 
         private void checkAutoTVG_CheckedChanged(object sender, EventArgs e)
@@ -124,6 +126,8 @@ namespace Survey.Forms
             ChunkStartBtn.SelectedColor = OwnedOption.StartColor;
             ChunkEndBtn.SelectedColor = OwnedOption.EndColor;
             checkAutoTVG.Checked = OwnedOption.AutoTVG;
+            GainSlider.Value = OwnedOption.Gain;
+            RawMaxBox.SelectedIndex = OwnedOption.RawMax/4096-1;
         }
 
         private void AutoTVGSlide_ValueChanged(object sender, EventArgs e)
@@ -174,6 +178,12 @@ namespace Survey.Forms
         private void PortRd_CheckedChanged(object sender, EventArgs e)
         {
             OwnedOption.Side = ShowSide.Port;
+        }
+
+        private void GainSlider_ValueChanged(object sender, EventArgs e)
+        {
+            GainSlider.Text = GainSlider.Value.ToString();
+            OwnedOption.Gain = GainSlider.Value;
         }
     }
 }

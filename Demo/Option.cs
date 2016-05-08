@@ -33,7 +33,9 @@ namespace Survey
         public Color StartColor;
         public Color EndColor;
         public float Gamma;
-
+        public int Gain;
+        public int RawMax;
+        public bool bShowRangeLine;
         public ChartOption()
         {
             Fq = Frequence.High;
@@ -41,6 +43,7 @@ namespace Survey
             AutoTVG = true;
             FreezeTVG =true;
             TVG = 1;
+            Gain = 5;
             Gamma = 1;
             PortA =50;
             PortB = 50;
@@ -50,6 +53,8 @@ namespace Survey
             StarboardC = 50;
             StartColor = Color.Black;
             EndColor = Color.White;
+            RawMax = 8192;
+            bShowRangeLine = true;
         }
     }
 

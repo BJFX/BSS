@@ -52,7 +52,12 @@ namespace ChartBox
         public int DisplayAmpMax
         {
             get { return _displayAmpMax; }
-            set { _displayAmpMax = value; }
+            set
+            {
+                _displayAmpMax = value;
+                if (waveFrame != null)
+                    waveFrame.Ymax = _displayAmpMax;
+            }
         }
 
         public void Clear()

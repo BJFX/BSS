@@ -14,7 +14,7 @@ namespace ChartBox
         private double[] wave;
         double min = double.MaxValue;
         double max = double.MinValue;
-        public int Ymax = 8192;//数据最大值
+        public int Ymax = 16384;//数据最大值
         public int Xmax = 100;//宽度
         private Bitmap canvas;
         int BytePerSample =2;
