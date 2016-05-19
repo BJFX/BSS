@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Survey</RootNamespace>
     <AssemblyName>Survey</AssemblyName>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -65,6 +65,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BasicConf.cs" />
     <Compile Include="Command.cs" />
     <Compile Include="csFile.cs" />
     <Compile Include="Forms\AboutBox.cs">
@@ -134,6 +135,7 @@
     </Compile>
     <Compile Include="MapCustmize\MapToolTip.cs" />
     <Compile Include="NetEngine.cs" />
+    <Compile Include="NMEA0183.cs" />
     <Compile Include="Option.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -149,6 +151,8 @@
     <Compile Include="Forms\WizardForm.Designer.cs">
       <DependentUpon>WizardForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="SerialService.cs" />
+    <Compile Include="XmlHelper.cs" />
     <Compile Include="XtfParserHeader.cs" />
     <EmbeddedResource Include="Forms\AboutBox.resx">
       <DependentUpon>AboutBox.cs</DependentUpon>

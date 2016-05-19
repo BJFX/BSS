@@ -173,6 +173,7 @@
             this.comboItem12 = new DevComponents.Editors.ComboItem();
             this.openXtfFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.NetWorkTimer = new System.Windows.Forms.Timer(this.components);
+            this.GpsStatusLabel = new DevComponents.DotNetBar.LabelItem();
             this.DataPanel.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -216,7 +217,8 @@
             this.StatusLabel,
             this.LatLabel,
             this.LongLabel,
-            this.LinkStatusLabel});
+            this.LinkStatusLabel,
+            this.GpsStatusLabel});
             this.StatusBar.Location = new System.Drawing.Point(0, 700);
             this.StatusBar.Margin = new System.Windows.Forms.Padding(4);
             this.StatusBar.Name = "StatusBar";
@@ -1456,6 +1458,12 @@
             this.NetWorkTimer.Enabled = true;
             this.NetWorkTimer.Tick += new System.EventHandler(this.NetWorkTimer_Tick);
             // 
+            // GpsStatusLabel
+            // 
+            this.GpsStatusLabel.Name = "GpsStatusLabel";
+            this.GpsStatusLabel.Text = "等待网络连接";
+            this.GpsStatusLabel.Width = 200;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -1647,5 +1655,6 @@
         private System.Windows.Forms.ToolStripMenuItem 工程设置ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 高频参数设置ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 低频参数设置ToolStripMenuItem;
+        private DevComponents.DotNetBar.LabelItem GpsStatusLabel;
     }
 }

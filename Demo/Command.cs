@@ -40,8 +40,8 @@ namespace Survey
         public UInt32 PortCentralFq;
         public UInt32 StarBoardCentralFq;
         public UInt16 Ls;
-        public UInt32 PortBandWidth;
-        public UInt32 StarBoardBandWidth;
+        public Int32 PortBandWidth;
+        public Int32 StarBoardBandWidth;
         public UInt16 RcvDelay;
         public UInt16 Range;
         public UInt16 Period;
@@ -52,11 +52,10 @@ namespace Survey
         public UInt16 TvgBeta;
         public UInt16 TvgAlpha;
         public Int16 TvgG;
-        public Int32 Com;
+        public UInt32 Com;
         public BitArray ComArray;
         public UInt16 RetID;
         public UInt16 FixedTVG;
-
 
         /// <summary>
         /// 
@@ -64,30 +63,30 @@ namespace Survey
         /// <param name="fq">false:low,true:high</param>
         public BSSParameter(bool fq = false)
         {
-            if (fq == false) //low frequence
+            if (fq == true) //high frequence
             {
                 DeviceID = 0x02;
                 PortCentralFq = 667500;
                 StarBoardCentralFq = 667500;
                 Ls = 200;
-                PortBandWidth = 30000;
-                StarBoardBandWidth = 30000;
-                RcvDelay = 0;
+                PortBandWidth = 60000;
+                StarBoardBandWidth = 60000;
+                RcvDelay = 100;
                 Range = 100;
-                Period = 2;
-                ADSamples = 65536;
+                Period = 1;
+                ADSamples = 242727;
                 Flag = 0x00DB;
                 TVGDelay = 0;
                 TVGReRate = 7473;
                 TvgBeta = 300;
                 TvgAlpha = 12000;
                 TvgG = -200;
-                Com = 0x05600002;
+                Com = 0x01FC008A;
                 ComArray = new BitArray(BitConverter.GetBytes(Com));
                 RetID = 0x0030;
                 FixedTVG = 800;
             }
-            else //high
+            else //low
             {
                 DeviceID = 0x02;
                 PortCentralFq = 307500;
@@ -97,15 +96,15 @@ namespace Survey
                 StarBoardBandWidth = 30000;
                 RcvDelay = 100;
                 Range = 200;
-                Period = 2;
-                ADSamples = 65536;
+                Period = 1;
+                ADSamples = 136667;
                 Flag = 0x00DB;
                 TVGDelay = 0;
                 TVGReRate = 7473;
                 TvgBeta = 300;
                 TvgAlpha = 2600;
                 TvgG = -200;
-                Com = 0x05600002;
+                Com = 0x01FC008A;
                 ComArray = new BitArray(BitConverter.GetBytes(Com));
                 RetID = 0x0030;
                 FixedTVG = 800;
@@ -122,8 +121,8 @@ namespace Survey
                 PortCentralFq = BitConverter.ToUInt32(dataBytes, 2);
                 StarBoardCentralFq = BitConverter.ToUInt32(dataBytes, 6);
                 Ls = BitConverter.ToUInt16(dataBytes, 10);
-                PortBandWidth = BitConverter.ToUInt32(dataBytes, 12);
-                StarBoardBandWidth = BitConverter.ToUInt32(dataBytes, 16);
+                PortBandWidth = BitConverter.ToInt32(dataBytes, 12);
+                StarBoardBandWidth = BitConverter.ToInt32(dataBytes, 16);
                 RcvDelay = BitConverter.ToUInt16(dataBytes, 20);
                 Range = BitConverter.ToUInt16(dataBytes, 22);
                 Period = BitConverter.ToUInt16(dataBytes, 24);
@@ -134,11 +133,10 @@ namespace Survey
                 TvgBeta = BitConverter.ToUInt16(dataBytes, 36);
                 TvgAlpha = BitConverter.ToUInt16(dataBytes, 38);
                 TvgG = BitConverter.ToInt16(dataBytes, 40);
-                Com = BitConverter.ToInt32(dataBytes, 42);
+                Com = BitConverter.ToUInt32(dataBytes, 42);
                 ComArray = new BitArray(BitConverter.GetBytes(Com));
                 RetID = BitConverter.ToUInt16(dataBytes, 46);
                 FixedTVG = BitConverter.ToUInt16(dataBytes, 48);
-
             }
             catch (Exception)
             {
@@ -342,15 +340,19 @@ namespace Survey
                 ID = BitConverter.ToUInt16(dataBytes, idx);
                 DataBytes = BitConverter.ToInt32(dataBytes, 2 + idx);
                 FrameNo = BitConverter.ToUInt32(dataBytes, 6 + idx);
-                BssBytes = new byte[DataBytes];
-                Buffer.BlockCopy(dataBytes, idx+10, BssBytes,0, DataBytes);
-                if ((ID == (uint)ObjectID.PortLowBssData) || (ID == (uint)ObjectID.PortHighBssData))//reverse port data
+                if (DataBytes > 0)
                 {
-                    var reversearray = new ushort[DataBytes/2];
-                    Buffer.BlockCopy(BssBytes, 0, reversearray, 0, DataBytes);
-                    Array.Reverse(reversearray);
-                    Buffer.BlockCopy(reversearray, 0, BssBytes, 0, DataBytes);
+                    BssBytes = new byte[DataBytes];
+                    Buffer.BlockCopy(dataBytes, idx + 10, BssBytes, 0, DataBytes);
+                    if ((ID == (uint)ObjectID.PortLowBssData) || (ID == (uint)ObjectID.PortHighBssData))//reverse port data
+                    {
+                        var reversearray = new ushort[DataBytes / 2];
+                        Buffer.BlockCopy(BssBytes, 0, reversearray, 0, DataBytes);
+                        Array.Reverse(reversearray);
+                        Buffer.BlockCopy(reversearray, 0, BssBytes, 0, DataBytes);
+                    }
                 }
+                
                 return DataBytes;
             }
             catch (Exception)
@@ -376,8 +378,6 @@ namespace Survey
             {
                 BSSObject bssObject = new BSSObject();
                 int n = bssObject.Parse(d, readlength);
-                if (n == 0)
-                    break;
                 readlength += n+10;
                 ALLData.Enqueue(bssObject);
             } while (readlength != d.Length);

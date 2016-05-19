@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
+using System.IO.Ports;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Threading;
 using System.Windows.Forms;
 using DevComponents.DotNetBar;
 using DevComponents.DotNetBar.Controls;
+using NMEA0183;
 
 namespace Survey.Forms
 {
@@ -41,13 +43,21 @@ namespace Survey.Forms
         private bool bPanel2triger;
         public static MainForm mf;
         public NetEngine netcore;
+        public GPSSerialService gpscore;
         public MainForm()
         {
             InitializeComponent();
             netcore = new NetEngine();
+            gpscore = new GPSSerialService();
+            
             NetworkAvailabilityChangedEventHandler e =new NetworkAvailabilityChangedEventHandler(AvailabilityChangedCallback);
             Command.Init();
-
+            if (
+                gpscore.Init(new SerialPort(BasicConf.GetInstance().GetCommGPS(),
+                    int.Parse(BasicConf.GetInstance().GetGPSDataRate()))))
+            {
+                gpscore.Start();
+            }
         }
         private void AvailabilityChangedCallback(object sender, EventArgs e)
         {
@@ -1038,7 +1048,26 @@ namespace Survey.Forms
             {
                 LinkStatusLabel.Text = "等待网络连接";
             }
-            
+            if (Configuration.DiskMode != true && gpscore.ReturnSerialPort() != null && gpscore.ReturnSerialPort().IsOpen) //live & gps port is open
+            {
+                GpsStatusLabel.Text = gpscore.Status;
+                if (GPS.Latitude > 0)
+                    Lat.Text = GPS.Latitude.ToString("F06") + "°" + "N";
+                else
+                {
+                    Lat.Text = GPS.Latitude.ToString("F06") + "°" + "S";
+                }
+                LatLabel.Text = Lat.Text;
+                if (GPS.Longitude > 0)
+                    Long.Text = GPS.Longitude.ToString("F06") + "°" + "N";
+                else
+                {
+                    Long.Text = GPS.Longitude.ToString("F06") + "°" + "S";
+                }
+                LongLabel.Text = Long.Text;
+                HeadLabel.Text = GPS.Heading.ToString("F2");
+                SpeedLabel.Text = GPS.Speed.ToString("F2") + "knot";
+            }
         }
 
         internal void DisplayRTBSS(BSSObject resultData)
@@ -1067,7 +1096,8 @@ namespace Survey.Forms
                 ChannelNumber = 1;
                 
             }
-            DisplayChart(ChannelNumber, resultData.BssBytes);
+            if (resultData.DataBytes>0)
+                DisplayChart(ChannelNumber, resultData.BssBytes);
         }
 
         private void DisplayChart(int ChannelNumber, byte[] buf)

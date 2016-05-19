@@ -9,6 +9,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
+using NMEA0183;
 using Survey.Forms;
 
 namespace Survey
@@ -235,7 +236,7 @@ namespace Survey
         private void ParseNetworkPacket(byte[] ReadBuffer, int PacketLength)
         {
             byte[] myReadBuffer = new byte[PacketLength+8];
-            Buffer.BlockCopy(ReadBuffer,0,myReadBuffer,0,PacketLength);
+            Buffer.BlockCopy(ReadBuffer,0,myReadBuffer,0,PacketLength+8);
             switch (BitConverter.ToUInt16(myReadBuffer,0))
             {
                 case (int)ComID.Ans:
@@ -333,9 +334,23 @@ namespace Survey
             PingHeader.Second = (byte)dt.Second;
             PingHeader.HSeconds = (byte)(dt.Millisecond/ 10);
             PingHeader.PingNumber = datalist[0].FrameNo;
+            PingHeader.NumbytesThisRecord = 256;
+            foreach (var bssObject in datalist)
+            {
+                if (bssObject.DataBytes == 0)
+                    continue;
+                PingHeader.NumbytesThisRecord += 64;//pingchannel header length
+                PingHeader.NumbytesThisRecord += (uint)bssObject.DataBytes;
+            }
+            PingHeader.SensorSpeed = GPS.Speed;
+            PingHeader.SensorHeading = GPS.Heading;
+            PingHeader.ShipXcoordinate = GPS.Longitude;
+            PingHeader.ShipYcoordinate = GPS.Latitude;
             XtfFile.Write(PingHeader.pack());
             foreach (var bssObject in datalist)
             {
+                if (bssObject.DataBytes==0)
+                    continue;
                 if (bssObject.ID == (uint) ObjectID.PortLowBssData)
                 {
                     PingchanHeader.ChannelNumber = 0;

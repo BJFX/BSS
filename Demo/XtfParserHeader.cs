@@ -169,13 +169,13 @@ namespace Survey
                     ChanInfo.Add(new CHANINFO());
                 }
                 
-                ChanInfo[0].Frequency = 64737;
+               // ChanInfo[0].Frequency = 64737;
                 ChanInfo[0].bytesPerSample = 2;
-                ChanInfo[1].Frequency = 64737;
+               // ChanInfo[1].Frequency = 64737;
                 ChanInfo[1].bytesPerSample = 2;
-                ChanInfo[2].Frequency = 65121;
+                //ChanInfo[2].Frequency = 65121;
                 ChanInfo[2].bytesPerSample = 2;
-                ChanInfo[3].Frequency = 65121;
+                //ChanInfo[3].Frequency = 65121;
                 ChanInfo[3].bytesPerSample = 2;
 
             }
