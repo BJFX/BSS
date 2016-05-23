@@ -1059,14 +1059,19 @@ namespace Survey.Forms
                 }
                 LatLabel.Text = Lat.Text;
                 if (GPS.Longitude > 0)
-                    Long.Text = GPS.Longitude.ToString("F06") + "°" + "N";
+                    Long.Text = GPS.Longitude.ToString("F06") + "°" + "E";
                 else
                 {
-                    Long.Text = GPS.Longitude.ToString("F06") + "°" + "S";
+                    Long.Text = GPS.Longitude.ToString("F06") + "°" + "W";
                 }
                 LongLabel.Text = Long.Text;
                 HeadLabel.Text = GPS.Heading.ToString("F2");
                 SpeedLabel.Text = GPS.Speed.ToString("F2") + "knot";
+                PingTimeLabel.Text = GPS.UTCTime.ToLongTimeString();
+                if (NaviView != null)
+                {
+                    NaviView.AddLocation(GPS.Latitude, GPS.Longitude, GPS.Heading);
+                }
             }
         }
 

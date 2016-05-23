@@ -37,6 +37,12 @@ namespace Survey.Forms
                         MainForm.mf.CmdWindow.DisplayAns("无法得到最新高频参数：" + MainForm.mf.netcore.Status);
                         this.Text = "设置高频声纳参数" + "-无法得到最新高频参数";
                     }
+                    else
+                    {
+                        MainForm.mf.CmdWindow.DisplayAns("收到最新高频参数：");
+                        this.Text = "设置高频声纳参数";
+                    }
+
                 }
                 else
                 {
@@ -47,6 +53,11 @@ namespace Survey.Forms
                     {
                         MainForm.mf.CmdWindow.DisplayAns("无法得到最新低频参数：" + MainForm.mf.netcore.Status);
                         this.Text = "设置低频声纳参数" + "-无法得到最新低频参数";
+                    }
+                    else
+                    {
+                        MainForm.mf.CmdWindow.DisplayAns("收到最新低频参数：");
+                        this.Text = "设置低频声纳参数";
                     }
                 }
                 

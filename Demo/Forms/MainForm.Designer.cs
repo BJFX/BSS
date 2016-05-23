@@ -38,6 +38,7 @@
             this.LatLabel = new DevComponents.DotNetBar.LabelItem();
             this.LongLabel = new DevComponents.DotNetBar.LabelItem();
             this.LinkStatusLabel = new DevComponents.DotNetBar.LabelItem();
+            this.GpsStatusLabel = new DevComponents.DotNetBar.LabelItem();
             this.dockContainerItem1 = new DevComponents.DotNetBar.DockContainerItem();
             this.DataPanel = new DevComponents.DotNetBar.PanelEx();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
@@ -173,7 +174,6 @@
             this.comboItem12 = new DevComponents.Editors.ComboItem();
             this.openXtfFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.NetWorkTimer = new System.Windows.Forms.Timer(this.components);
-            this.GpsStatusLabel = new DevComponents.DotNetBar.LabelItem();
             this.DataPanel.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -250,6 +250,12 @@
             this.LinkStatusLabel.Name = "LinkStatusLabel";
             this.LinkStatusLabel.Text = "等待网络连接";
             this.LinkStatusLabel.Width = 200;
+            // 
+            // GpsStatusLabel
+            // 
+            this.GpsStatusLabel.Name = "GpsStatusLabel";
+            this.GpsStatusLabel.Text = "GPS端口未打开";
+            this.GpsStatusLabel.Width = 200;
             // 
             // dockContainerItem1
             // 
@@ -1457,12 +1463,6 @@
             // 
             this.NetWorkTimer.Enabled = true;
             this.NetWorkTimer.Tick += new System.EventHandler(this.NetWorkTimer_Tick);
-            // 
-            // GpsStatusLabel
-            // 
-            this.GpsStatusLabel.Name = "GpsStatusLabel";
-            this.GpsStatusLabel.Text = "等待网络连接";
-            this.GpsStatusLabel.Width = 200;
             // 
             // MainForm
             // 

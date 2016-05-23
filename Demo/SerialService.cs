@@ -98,7 +98,8 @@ namespace Survey
         {
             var bytes = new byte[queue.Count];
             queue.CopyTo(bytes);
-            if((bytes[queue.Count-2]=='\r')&&(bytes[queue.Count-1]=='\n'))
+
+            if (queue.Count > 2&&(bytes[queue.Count - 2] == '\r') && (bytes[queue.Count - 1] == '\n'))
 
             {
                 var strcmd = Encoding.ASCII.GetString(bytes);

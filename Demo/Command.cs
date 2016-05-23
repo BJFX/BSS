@@ -104,7 +104,7 @@ namespace Survey
                 TvgBeta = 300;
                 TvgAlpha = 2600;
                 TvgG = -200;
-                Com = 0x01FC008A;
+                Com = 0x0160008A;
                 ComArray = new BitArray(BitConverter.GetBytes(Com));
                 RetID = 0x0030;
                 FixedTVG = 800;
@@ -161,7 +161,7 @@ namespace Survey
             Buffer.BlockCopy(BitConverter.GetBytes(ADSamples), 0, pkg, 26, 4);
             Buffer.BlockCopy(BitConverter.GetBytes(Flag), 0, pkg, 30, 2);
             Buffer.BlockCopy(BitConverter.GetBytes(TVGDelay), 0, pkg, 32, 2);
-            Buffer.BlockCopy(BitConverter.GetBytes(TVGReRate), 0, pkg, 32, 2);
+            Buffer.BlockCopy(BitConverter.GetBytes(TVGReRate), 0, pkg, 34, 2);
             Buffer.BlockCopy(BitConverter.GetBytes(TvgBeta), 0, pkg, 36, 2);
             Buffer.BlockCopy(BitConverter.GetBytes(TvgAlpha), 0, pkg, 38, 2);
             Buffer.BlockCopy(BitConverter.GetBytes(TvgG), 0, pkg, 40, 2);

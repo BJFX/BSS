@@ -46,28 +46,28 @@
             this.labelX7 = new DevComponents.DotNetBar.LabelX();
             this.labelX8 = new DevComponents.DotNetBar.LabelX();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.StartBox = new System.Windows.Forms.ComboBox();
+            this.PortBox = new System.Windows.Forms.ComboBox();
+            this.StartSendEnable = new System.Windows.Forms.CheckBox();
+            this.PortSendEnable = new System.Windows.Forms.CheckBox();
+            this.labelX14 = new DevComponents.DotNetBar.LabelX();
+            this.labelX13 = new DevComponents.DotNetBar.LabelX();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.SingleWorkValid = new System.Windows.Forms.CheckBox();
+            this.CalcTVG = new System.Windows.Forms.CheckBox();
+            this.EnableStartBSS = new System.Windows.Forms.CheckBox();
+            this.EnablePortBSS = new System.Windows.Forms.CheckBox();
+            this.TrigerMode = new System.Windows.Forms.CheckBox();
+            this.StartFqBox = new System.Windows.Forms.ComboBox();
+            this.PortFqBox = new System.Windows.Forms.ComboBox();
+            this.labelX16 = new DevComponents.DotNetBar.LabelX();
+            this.labelX15 = new DevComponents.DotNetBar.LabelX();
             this.TVGDelay = new DevComponents.Editors.IntegerInput();
             this.labelX9 = new DevComponents.DotNetBar.LabelX();
             this.TvgBeta = new DevComponents.Editors.IntegerInput();
             this.labelX10 = new DevComponents.DotNetBar.LabelX();
             this.TvgAlpha = new DevComponents.Editors.IntegerInput();
             this.labelX11 = new DevComponents.DotNetBar.LabelX();
-            this.PortSendEnable = new System.Windows.Forms.CheckBox();
-            this.StartSendEnable = new System.Windows.Forms.CheckBox();
-            this.PortBox = new System.Windows.Forms.ComboBox();
-            this.StartBox = new System.Windows.Forms.ComboBox();
-            this.labelX13 = new DevComponents.DotNetBar.LabelX();
-            this.labelX14 = new DevComponents.DotNetBar.LabelX();
-            this.TrigerMode = new System.Windows.Forms.CheckBox();
-            this.labelX15 = new DevComponents.DotNetBar.LabelX();
-            this.PortFqBox = new System.Windows.Forms.ComboBox();
-            this.labelX16 = new DevComponents.DotNetBar.LabelX();
-            this.StartFqBox = new System.Windows.Forms.ComboBox();
-            this.EnablePortBSS = new System.Windows.Forms.CheckBox();
-            this.EnableStartBSS = new System.Windows.Forms.CheckBox();
-            this.CalcTVG = new System.Windows.Forms.CheckBox();
-            this.SingleWorkValid = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.RangeInput)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.TvbG)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PortBandWidth)).BeginInit();
@@ -356,6 +356,84 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "发射控制标识";
             // 
+            // StartBox
+            // 
+            this.StartBox.FormattingEnabled = true;
+            this.StartBox.Items.AddRange(new object[] {
+            "12.5",
+            "25",
+            "37.5",
+            "50",
+            "62.5",
+            "75"});
+            this.StartBox.Location = new System.Drawing.Point(233, 47);
+            this.StartBox.Name = "StartBox";
+            this.StartBox.Size = new System.Drawing.Size(71, 20);
+            this.StartBox.TabIndex = 1;
+            // 
+            // PortBox
+            // 
+            this.PortBox.FormattingEnabled = true;
+            this.PortBox.Items.AddRange(new object[] {
+            "12.5",
+            "25",
+            "37.5",
+            "50",
+            "62.5",
+            "75"});
+            this.PortBox.Location = new System.Drawing.Point(233, 22);
+            this.PortBox.Name = "PortBox";
+            this.PortBox.Size = new System.Drawing.Size(71, 20);
+            this.PortBox.TabIndex = 1;
+            // 
+            // StartSendEnable
+            // 
+            this.StartSendEnable.AutoSize = true;
+            this.StartSendEnable.Checked = true;
+            this.StartSendEnable.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.StartSendEnable.Location = new System.Drawing.Point(11, 51);
+            this.StartSendEnable.Name = "StartSendEnable";
+            this.StartSendEnable.Size = new System.Drawing.Size(96, 16);
+            this.StartSendEnable.TabIndex = 0;
+            this.StartSendEnable.Text = "右舷发射允许";
+            this.StartSendEnable.UseVisualStyleBackColor = true;
+            // 
+            // PortSendEnable
+            // 
+            this.PortSendEnable.AutoSize = true;
+            this.PortSendEnable.Checked = true;
+            this.PortSendEnable.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.PortSendEnable.Location = new System.Drawing.Point(11, 24);
+            this.PortSendEnable.Name = "PortSendEnable";
+            this.PortSendEnable.Size = new System.Drawing.Size(96, 16);
+            this.PortSendEnable.TabIndex = 0;
+            this.PortSendEnable.Text = "左舷发射允许";
+            this.PortSendEnable.UseVisualStyleBackColor = true;
+            // 
+            // labelX14
+            // 
+            // 
+            // 
+            // 
+            this.labelX14.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX14.Location = new System.Drawing.Point(131, 44);
+            this.labelX14.Name = "labelX14";
+            this.labelX14.Size = new System.Drawing.Size(84, 23);
+            this.labelX14.TabIndex = 2;
+            this.labelX14.Text = "右舷功率选择";
+            // 
+            // labelX13
+            // 
+            // 
+            // 
+            // 
+            this.labelX13.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX13.Location = new System.Drawing.Point(131, 19);
+            this.labelX13.Name = "labelX13";
+            this.labelX13.Size = new System.Drawing.Size(84, 23);
+            this.labelX13.TabIndex = 2;
+            this.labelX13.Text = "左舷功率选择";
+            // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.SingleWorkValid);
@@ -373,6 +451,108 @@
             this.groupBox2.TabIndex = 6;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "命令标识";
+            // 
+            // SingleWorkValid
+            // 
+            this.SingleWorkValid.AutoSize = true;
+            this.SingleWorkValid.Location = new System.Drawing.Point(6, 174);
+            this.SingleWorkValid.Name = "SingleWorkValid";
+            this.SingleWorkValid.Size = new System.Drawing.Size(96, 16);
+            this.SingleWorkValid.TabIndex = 0;
+            this.SingleWorkValid.Text = "单次工作有效";
+            this.SingleWorkValid.UseVisualStyleBackColor = true;
+            // 
+            // CalcTVG
+            // 
+            this.CalcTVG.AutoSize = true;
+            this.CalcTVG.Checked = true;
+            this.CalcTVG.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.CalcTVG.Location = new System.Drawing.Point(6, 152);
+            this.CalcTVG.Name = "CalcTVG";
+            this.CalcTVG.Size = new System.Drawing.Size(66, 16);
+            this.CalcTVG.TabIndex = 0;
+            this.CalcTVG.Text = "计算TVG";
+            this.CalcTVG.UseVisualStyleBackColor = true;
+            // 
+            // EnableStartBSS
+            // 
+            this.EnableStartBSS.AutoSize = true;
+            this.EnableStartBSS.Checked = true;
+            this.EnableStartBSS.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.EnableStartBSS.Location = new System.Drawing.Point(6, 130);
+            this.EnableStartBSS.Name = "EnableStartBSS";
+            this.EnableStartBSS.Size = new System.Drawing.Size(144, 16);
+            this.EnableStartBSS.TabIndex = 0;
+            this.EnableStartBSS.Text = "处理右舷侧扫数据允许";
+            this.EnableStartBSS.UseVisualStyleBackColor = true;
+            // 
+            // EnablePortBSS
+            // 
+            this.EnablePortBSS.AutoSize = true;
+            this.EnablePortBSS.Checked = true;
+            this.EnablePortBSS.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.EnablePortBSS.Location = new System.Drawing.Point(6, 108);
+            this.EnablePortBSS.Name = "EnablePortBSS";
+            this.EnablePortBSS.Size = new System.Drawing.Size(144, 16);
+            this.EnablePortBSS.TabIndex = 0;
+            this.EnablePortBSS.Text = "处理左舷侧扫数据允许";
+            this.EnablePortBSS.UseVisualStyleBackColor = true;
+            // 
+            // TrigerMode
+            // 
+            this.TrigerMode.AutoSize = true;
+            this.TrigerMode.Location = new System.Drawing.Point(7, 28);
+            this.TrigerMode.Name = "TrigerMode";
+            this.TrigerMode.Size = new System.Drawing.Size(60, 16);
+            this.TrigerMode.TabIndex = 0;
+            this.TrigerMode.Text = "外触发";
+            this.TrigerMode.UseVisualStyleBackColor = true;
+            // 
+            // StartFqBox
+            // 
+            this.StartFqBox.FormattingEnabled = true;
+            this.StartFqBox.Items.AddRange(new object[] {
+            "UP",
+            "DOWN"});
+            this.StartFqBox.Location = new System.Drawing.Point(109, 82);
+            this.StartFqBox.Name = "StartFqBox";
+            this.StartFqBox.Size = new System.Drawing.Size(71, 20);
+            this.StartFqBox.TabIndex = 1;
+            // 
+            // PortFqBox
+            // 
+            this.PortFqBox.FormattingEnabled = true;
+            this.PortFqBox.Items.AddRange(new object[] {
+            "UP",
+            "DOWN"});
+            this.PortFqBox.Location = new System.Drawing.Point(109, 53);
+            this.PortFqBox.Name = "PortFqBox";
+            this.PortFqBox.Size = new System.Drawing.Size(71, 20);
+            this.PortFqBox.TabIndex = 1;
+            // 
+            // labelX16
+            // 
+            // 
+            // 
+            // 
+            this.labelX16.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX16.Location = new System.Drawing.Point(7, 79);
+            this.labelX16.Name = "labelX16";
+            this.labelX16.Size = new System.Drawing.Size(84, 23);
+            this.labelX16.TabIndex = 2;
+            this.labelX16.Text = "右舷调频方向";
+            // 
+            // labelX15
+            // 
+            // 
+            // 
+            // 
+            this.labelX15.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX15.Location = new System.Drawing.Point(7, 50);
+            this.labelX15.Name = "labelX15";
+            this.labelX15.Size = new System.Drawing.Size(84, 23);
+            this.labelX15.TabIndex = 2;
+            this.labelX15.Text = "左舷调频方向";
             // 
             // TVGDelay
             // 
@@ -465,186 +645,6 @@
             this.labelX11.Size = new System.Drawing.Size(76, 23);
             this.labelX11.TabIndex = 2;
             this.labelX11.Text = "TVG吸收衰减";
-            // 
-            // PortSendEnable
-            // 
-            this.PortSendEnable.AutoSize = true;
-            this.PortSendEnable.Checked = true;
-            this.PortSendEnable.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.PortSendEnable.Location = new System.Drawing.Point(11, 24);
-            this.PortSendEnable.Name = "PortSendEnable";
-            this.PortSendEnable.Size = new System.Drawing.Size(96, 16);
-            this.PortSendEnable.TabIndex = 0;
-            this.PortSendEnable.Text = "左舷发射允许";
-            this.PortSendEnable.UseVisualStyleBackColor = true;
-            // 
-            // StartSendEnable
-            // 
-            this.StartSendEnable.AutoSize = true;
-            this.StartSendEnable.Checked = true;
-            this.StartSendEnable.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.StartSendEnable.Location = new System.Drawing.Point(11, 51);
-            this.StartSendEnable.Name = "StartSendEnable";
-            this.StartSendEnable.Size = new System.Drawing.Size(96, 16);
-            this.StartSendEnable.TabIndex = 0;
-            this.StartSendEnable.Text = "右舷发射允许";
-            this.StartSendEnable.UseVisualStyleBackColor = true;
-            // 
-            // PortBox
-            // 
-            this.PortBox.FormattingEnabled = true;
-            this.PortBox.Items.AddRange(new object[] {
-            "12.5",
-            "25",
-            "37.5",
-            "50",
-            "62.5",
-            "75"});
-            this.PortBox.Location = new System.Drawing.Point(233, 22);
-            this.PortBox.Name = "PortBox";
-            this.PortBox.Size = new System.Drawing.Size(71, 20);
-            this.PortBox.TabIndex = 1;
-            // 
-            // StartBox
-            // 
-            this.StartBox.FormattingEnabled = true;
-            this.StartBox.Items.AddRange(new object[] {
-            "12.5",
-            "25",
-            "37.5",
-            "50",
-            "62.5",
-            "75"});
-            this.StartBox.Location = new System.Drawing.Point(233, 47);
-            this.StartBox.Name = "StartBox";
-            this.StartBox.Size = new System.Drawing.Size(71, 20);
-            this.StartBox.TabIndex = 1;
-            // 
-            // labelX13
-            // 
-            // 
-            // 
-            // 
-            this.labelX13.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX13.Location = new System.Drawing.Point(131, 19);
-            this.labelX13.Name = "labelX13";
-            this.labelX13.Size = new System.Drawing.Size(84, 23);
-            this.labelX13.TabIndex = 2;
-            this.labelX13.Text = "左舷功率选择";
-            // 
-            // labelX14
-            // 
-            // 
-            // 
-            // 
-            this.labelX14.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX14.Location = new System.Drawing.Point(131, 44);
-            this.labelX14.Name = "labelX14";
-            this.labelX14.Size = new System.Drawing.Size(84, 23);
-            this.labelX14.TabIndex = 2;
-            this.labelX14.Text = "右舷功率选择";
-            // 
-            // TrigerMode
-            // 
-            this.TrigerMode.AutoSize = true;
-            this.TrigerMode.Location = new System.Drawing.Point(7, 28);
-            this.TrigerMode.Name = "TrigerMode";
-            this.TrigerMode.Size = new System.Drawing.Size(72, 16);
-            this.TrigerMode.TabIndex = 0;
-            this.TrigerMode.Text = "触发模式";
-            this.TrigerMode.UseVisualStyleBackColor = true;
-            // 
-            // labelX15
-            // 
-            // 
-            // 
-            // 
-            this.labelX15.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX15.Location = new System.Drawing.Point(7, 50);
-            this.labelX15.Name = "labelX15";
-            this.labelX15.Size = new System.Drawing.Size(84, 23);
-            this.labelX15.TabIndex = 2;
-            this.labelX15.Text = "左舷调频方向";
-            // 
-            // PortFqBox
-            // 
-            this.PortFqBox.FormattingEnabled = true;
-            this.PortFqBox.Items.AddRange(new object[] {
-            "UP",
-            "DOWN"});
-            this.PortFqBox.Location = new System.Drawing.Point(109, 53);
-            this.PortFqBox.Name = "PortFqBox";
-            this.PortFqBox.Size = new System.Drawing.Size(71, 20);
-            this.PortFqBox.TabIndex = 1;
-            // 
-            // labelX16
-            // 
-            // 
-            // 
-            // 
-            this.labelX16.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX16.Location = new System.Drawing.Point(7, 79);
-            this.labelX16.Name = "labelX16";
-            this.labelX16.Size = new System.Drawing.Size(84, 23);
-            this.labelX16.TabIndex = 2;
-            this.labelX16.Text = "右舷调频方向";
-            // 
-            // StartFqBox
-            // 
-            this.StartFqBox.FormattingEnabled = true;
-            this.StartFqBox.Items.AddRange(new object[] {
-            "UP",
-            "DOWN"});
-            this.StartFqBox.Location = new System.Drawing.Point(109, 82);
-            this.StartFqBox.Name = "StartFqBox";
-            this.StartFqBox.Size = new System.Drawing.Size(71, 20);
-            this.StartFqBox.TabIndex = 1;
-            // 
-            // EnablePortBSS
-            // 
-            this.EnablePortBSS.AutoSize = true;
-            this.EnablePortBSS.Checked = true;
-            this.EnablePortBSS.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.EnablePortBSS.Location = new System.Drawing.Point(6, 108);
-            this.EnablePortBSS.Name = "EnablePortBSS";
-            this.EnablePortBSS.Size = new System.Drawing.Size(144, 16);
-            this.EnablePortBSS.TabIndex = 0;
-            this.EnablePortBSS.Text = "处理左舷侧扫数据允许";
-            this.EnablePortBSS.UseVisualStyleBackColor = true;
-            // 
-            // EnableStartBSS
-            // 
-            this.EnableStartBSS.AutoSize = true;
-            this.EnableStartBSS.Checked = true;
-            this.EnableStartBSS.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.EnableStartBSS.Location = new System.Drawing.Point(6, 130);
-            this.EnableStartBSS.Name = "EnableStartBSS";
-            this.EnableStartBSS.Size = new System.Drawing.Size(144, 16);
-            this.EnableStartBSS.TabIndex = 0;
-            this.EnableStartBSS.Text = "处理右舷侧扫数据允许";
-            this.EnableStartBSS.UseVisualStyleBackColor = true;
-            // 
-            // CalcTVG
-            // 
-            this.CalcTVG.AutoSize = true;
-            this.CalcTVG.Checked = true;
-            this.CalcTVG.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.CalcTVG.Location = new System.Drawing.Point(6, 152);
-            this.CalcTVG.Name = "CalcTVG";
-            this.CalcTVG.Size = new System.Drawing.Size(66, 16);
-            this.CalcTVG.TabIndex = 0;
-            this.CalcTVG.Text = "计算TVG";
-            this.CalcTVG.UseVisualStyleBackColor = true;
-            // 
-            // SingleWorkValid
-            // 
-            this.SingleWorkValid.AutoSize = true;
-            this.SingleWorkValid.Location = new System.Drawing.Point(6, 174);
-            this.SingleWorkValid.Name = "SingleWorkValid";
-            this.SingleWorkValid.Size = new System.Drawing.Size(96, 16);
-            this.SingleWorkValid.TabIndex = 0;
-            this.SingleWorkValid.Text = "单次工作有效";
-            this.SingleWorkValid.UseVisualStyleBackColor = true;
             // 
             // ParaForm
             // 

@@ -77,6 +77,7 @@
             // 
             this.GpsBaudRate.FormattingEnabled = true;
             this.GpsBaudRate.Items.AddRange(new object[] {
+            "110",
             "4800",
             "9600",
             "19200",

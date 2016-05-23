@@ -26,13 +26,13 @@ namespace NMEA0183
             try
             {
                 string[] gpsinfo = newcomming.Split(charSeparators, StringSplitOptions.None);
-                if (CalculateCheckSum(newcomming).ToUpper() != gpsinfo[gpsinfo.Length - 1])
+                /*if (CalculateCheckSum(newcomming).ToUpper() != gpsinfo[gpsinfo.Length - 1])
                 {
                     Status = 97;
                     ret = false;
                     return ret;
                 }
-                
+                */
                 switch (gpsinfo[1])
                 {
                     case "GPRMC":
@@ -80,8 +80,30 @@ namespace NMEA0183
                     case "GPGSV":
                         SatNum = UInt16.Parse(gpsinfo[4]);
                         break;
-                    case "GPGGA":
+                    case "GNGGA":
                         Status = uint.Parse(gpsinfo[7]);
+                        if (gpsinfo[4] == "S")
+                                Latitude =
+                                    -((uint)(float.Parse(gpsinfo[3]) / 100) + (float.Parse(gpsinfo[3]) % 100) / 60);
+                            else
+                            {
+                                Latitude = (uint)(float.Parse(gpsinfo[3]) / 100) + (float.Parse(gpsinfo[3])%100) / 60;
+                            }
+                            if (gpsinfo[6] == "W")
+                                Longitude =
+                                    -((uint)(float.Parse(gpsinfo[5]) / 100) + (float.Parse(gpsinfo[5]) % 100) / 60);
+                            else
+                            {
+                                Longitude = (uint)(float.Parse(gpsinfo[5]) / 100) + (float.Parse(gpsinfo[5]) % 100) / 60;
+                            }
+                        break;
+                    case "GPZDA":
+                                UTCTime = new DateTime(UInt16.Parse(gpsinfo[5]),
+                                UInt16.Parse(gpsinfo[4]),
+                                UInt16.Parse(gpsinfo[3]),
+                                UInt16.Parse(gpsinfo[2].Substring(0, 2)),
+                                UInt16.Parse(gpsinfo[2].Substring(2, 2)),
+                                UInt16.Parse(gpsinfo[2].Substring(4, 2)), 0);
                         break;
                     default:
                         break;
