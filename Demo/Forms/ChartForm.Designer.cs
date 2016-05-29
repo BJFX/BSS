@@ -71,7 +71,7 @@
             this.SideTable.RowCount = 2;
             this.SideTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 100F));
             this.SideTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 380F));
-            this.SideTable.Size = new System.Drawing.Size(1300, 522);
+            this.SideTable.Size = new System.Drawing.Size(1391, 616);
             this.SideTable.TabIndex = 13;
             this.SideTable.MouseClick += new System.Windows.Forms.MouseEventHandler(this.SideTable_MouseClick);
             // 
@@ -85,10 +85,10 @@
             this.waveRight.DisplayWidthMax = 16000;
             this.waveRight.Dock = System.Windows.Forms.DockStyle.Fill;
             this.waveRight.Font = new System.Drawing.Font("宋体", 12F);
-            this.waveRight.Location = new System.Drawing.Point(651, 0);
+            this.waveRight.Location = new System.Drawing.Point(696, 0);
             this.waveRight.Margin = new System.Windows.Forms.Padding(1, 0, 0, 0);
             this.waveRight.Name = "waveRight";
-            this.waveRight.Size = new System.Drawing.Size(649, 100);
+            this.waveRight.Size = new System.Drawing.Size(695, 100);
             this.waveRight.TabIndex = 4;
             this.waveRight.MouseClick += new System.Windows.Forms.MouseEventHandler(this.waveRight_MouseClick);
             // 
@@ -98,7 +98,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(3, 103);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(644, 416);
+            this.panel1.Size = new System.Drawing.Size(689, 510);
             this.panel1.TabIndex = 2;
             // 
             // chartLeft
@@ -107,13 +107,14 @@
             this.chartLeft.BytePerSample = 2;
             this.chartLeft.DisplayAmpMax = 32767;
             this.chartLeft.DisplayLength = 2048;
-            this.chartLeft.DisplayWidthMax = 16000;
+            this.chartLeft.DisplayWidthMax = 200;
             this.chartLeft.Dock = System.Windows.Forms.DockStyle.Fill;
             this.chartLeft.Font = new System.Drawing.Font("宋体", 12F);
+            this.chartLeft.Gain = 3;
             this.chartLeft.Location = new System.Drawing.Point(0, 0);
             this.chartLeft.Margin = new System.Windows.Forms.Padding(0);
             this.chartLeft.Name = "chartLeft";
-            this.chartLeft.Size = new System.Drawing.Size(644, 416);
+            this.chartLeft.Size = new System.Drawing.Size(689, 510);
             this.chartLeft.TabIndex = 1;
             this.chartLeft.MouseClick += new System.Windows.Forms.MouseEventHandler(this.chartLeft_MouseClick);
             // 
@@ -129,7 +130,7 @@
             this.waveLeft.Location = new System.Drawing.Point(0, 0);
             this.waveLeft.Margin = new System.Windows.Forms.Padding(0, 0, 1, 0);
             this.waveLeft.Name = "waveLeft";
-            this.waveLeft.Size = new System.Drawing.Size(649, 100);
+            this.waveLeft.Size = new System.Drawing.Size(694, 100);
             this.waveLeft.TabIndex = 3;
             this.waveLeft.MouseClick += new System.Windows.Forms.MouseEventHandler(this.waveLeft_MouseClick);
             // 
@@ -137,9 +138,9 @@
             // 
             this.panel2.Controls.Add(this.chartRight);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(653, 103);
+            this.panel2.Location = new System.Drawing.Point(698, 103);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(644, 416);
+            this.panel2.Size = new System.Drawing.Size(690, 510);
             this.panel2.TabIndex = 5;
             // 
             // chartRight
@@ -148,13 +149,14 @@
             this.chartRight.BytePerSample = 2;
             this.chartRight.DisplayAmpMax = 32767;
             this.chartRight.DisplayLength = 2048;
-            this.chartRight.DisplayWidthMax = 16000;
+            this.chartRight.DisplayWidthMax = 200;
             this.chartRight.Dock = System.Windows.Forms.DockStyle.Fill;
             this.chartRight.Font = new System.Drawing.Font("宋体", 12F);
+            this.chartRight.Gain = 3;
             this.chartRight.Location = new System.Drawing.Point(0, 0);
             this.chartRight.Margin = new System.Windows.Forms.Padding(0);
             this.chartRight.Name = "chartRight";
-            this.chartRight.Size = new System.Drawing.Size(644, 416);
+            this.chartRight.Size = new System.Drawing.Size(690, 510);
             this.chartRight.TabIndex = 2;
             this.chartRight.MouseClick += new System.Windows.Forms.MouseEventHandler(this.chartRight_MouseClick);
             // 
@@ -162,7 +164,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1300, 522);
+            this.ClientSize = new System.Drawing.Size(1391, 616);
             this.Controls.Add(this.SideTable);
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));

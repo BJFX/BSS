@@ -22,14 +22,13 @@ namespace ChartBox
         private Bitmap fftcanvas;
         int BytePerSample =2;
         public int ChartGain = 3;
-        public ChartFrame(int  bytepersample, int len, int amp, int width)
+        public ChartFrame(int  bytepersample, int len, int amp)
         {
             BytePerSample = bytepersample;
             wave = new double[len];
             Ymax = amp;
-            Xmax = width;
             ChartGain = 3;
-            fftcanvas = new Bitmap(644, 416);
+            fftcanvas = new Bitmap(761, 494);
             Graphics g = Graphics.FromImage(fftcanvas);
             g.Clear(Color.Black);
             g.Dispose();
@@ -108,19 +107,19 @@ namespace ChartBox
             int width = fftcanvas.Width;
             int height = fftcanvas.Height;
 
-            double range = 65535;
             // lock image
             PixelFormat format = fftcanvas.PixelFormat;
             BitmapData data = fftcanvas.LockBits(new Rectangle(0, 0, width, height), ImageLockMode.ReadOnly, format);
             int stride = data.Stride;
             int offset = stride - width * 4;
             double distance = (double)wave.Length / (double)width;
+            int markheight = 10;
             try
             {
                 unsafe
                 {
                     //move rect
-                    for (int y = height-1; y >= slide; y--)
+                    for (int y = height - 1; y >= markheight + slide; y--)
                     {
                         byte* pixel = (byte*) data.Scan0.ToPointer();
                         pixel += (y-slide)* stride; //src
@@ -135,7 +134,7 @@ namespace ChartBox
                         }
                     }
                     //new points
-                    for (int i = 0; i < slide; i++)
+                    for (int i = markheight; i < slide + markheight; i++)
                     {
                         byte* pixel = (byte*)data.Scan0.ToPointer();
                         pixel += i * stride;

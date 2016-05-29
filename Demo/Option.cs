@@ -52,7 +52,7 @@ namespace Survey
             StarboardB = 50;
             StarboardC = 50;
             StartColor = Color.Black;
-            EndColor = Color.White;
+            EndColor = Color.Gold;
             RawMax = 8192;
             bShowRangeLine = true;
         }

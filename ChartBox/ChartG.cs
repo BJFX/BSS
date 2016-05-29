@@ -39,9 +39,19 @@ namespace ChartBox
             DisplayAmpMax = max;
             DisplayWidthMax = width;
             Gain = 3;
-            GisFrame = new ChartFrame(bytepersample,DisplayLength, DisplayAmpMax, DisplayWidthMax);
+            GisFrame = new ChartFrame(bytepersample,DisplayLength, DisplayAmpMax);
         }
 
+        public int DisplayWidthMax
+        {
+            get { return _displayWidthMax; }
+            set
+            {
+                _displayWidthMax = value;
+                if (GisFrame != null)
+                    GisFrame.Xmax = _displayWidthMax;
+            } 
+        }
         public int Gain
         {
             get { return _gain; }
@@ -61,12 +71,6 @@ namespace ChartBox
         {
             get { return _displayLength; }
             set { _displayLength = value; }
-        }
-
-        public int DisplayWidthMax
-        {
-            get { return _displayWidthMax; }
-            set { _displayWidthMax = value; }
         }
         public void SetColor(Color startColor,Color endColor,float gamma)
         {

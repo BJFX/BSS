@@ -12,6 +12,8 @@ namespace Survey.Forms
             OwnedOption = option;
             InitializeComponent();
             OptionTab.SelectedTabIndex = idx;
+            ChunkEndBtn.SelectedColor = Color.Gold;
+            ColorBar.ChunkColor = Color.Gold;
         }
 
         private void ConfirmBtn_Click(object sender, EventArgs e)

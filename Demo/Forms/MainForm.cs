@@ -23,7 +23,7 @@ namespace Survey.Forms
         public FileInfo fi = null;
         public long offset = 0;
         public string filename;
-        public int tick = 128;
+        public int tick = 64;
         //show flag of windows
         public bool bShowNavi = false;
         public bool bShowSensor = false;
@@ -1185,7 +1185,7 @@ namespace Survey.Forms
         {
             PlaybackTime.Interval *= 2;
             SpeedBtn.Enabled = true;
-            if (PlaybackTime.Interval == 1024)
+            if (PlaybackTime.Interval == 64)
             {
                 SlowBtn.Enabled = false;
             }
