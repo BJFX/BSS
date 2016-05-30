@@ -41,24 +41,24 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="DevComponents.DotNetBar.Design">
-      <HintPath>..\..\..\..\ioa\参考开源软件\DotNetBar\DevComponents.DotNetBar.Design.dll</HintPath>
+      <HintPath>..\..\tool\DotNetBar\DevComponents.DotNetBar.Design.dll</HintPath>
     </Reference>
     <Reference Include="DevComponents.DotNetBar.Schedule">
-      <HintPath>..\..\..\..\ioa\参考开源软件\DotNetBar\DevComponents.DotNetBar.Schedule.dll</HintPath>
+      <HintPath>..\..\tool\DotNetBar\DevComponents.DotNetBar.Schedule.dll</HintPath>
     </Reference>
     <Reference Include="DevComponents.DotNetBar2">
-      <HintPath>..\..\..\..\ioa\参考开源软件\DotNetBar\DevComponents.DotNetBar2.dll</HintPath>
+      <HintPath>..\..\tool\DotNetBar\DevComponents.DotNetBar2.dll</HintPath>
     </Reference>
     <Reference Include="GMap.NET.Core">
-      <HintPath>..\..\..\..\ioa\水声通信网\吊放调试程序\ACN运行程序\GMap.NET.Core.dll</HintPath>
+      <HintPath>..\..\tool\GMap.NET.Core.dll</HintPath>
     </Reference>
     <Reference Include="GMap.NET.WindowsForms">
-      <HintPath>..\..\..\..\ioa\水声通信网\吊放调试程序\ACN运行程序\GMap.NET.WindowsForms.dll</HintPath>
+      <HintPath>..\..\tool\GMap.NET.WindowsForms.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.SQLite">
-      <HintPath>..\..\..\..\ioa\水声通信网\吊放调试程序\ACN运行程序\System.Data.SQLite.DLL</HintPath>
+      <HintPath>..\..\tool\System.Data.SQLite.DLL</HintPath>
     </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
