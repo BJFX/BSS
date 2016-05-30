@@ -45,18 +45,18 @@ namespace ChartBox
         /// </summary>
         /// <param name="wave"></param>
         
-        public void AddData(byte[] buf, bool reverse=false)
+        public void AddData(byte[] buf)
         {
             int h = 0;
             Array.Clear(wave,0,wave.Length);
             for (int i = 0; i < buf.Length / BytePerSample; i++)
             {
-                if (reverse==false)
+                //if (reverse==false)
                     wave[i] = BitConverter.ToInt16(buf,h);
-                else
-                {
-                    wave[wave.Length - i-1] = BitConverter.ToInt16(buf, h);
-                }
+                //else
+                //{
+                //    wave[wave.Length - i-1] = BitConverter.ToInt16(buf, h);
+                //}
                 h += BytePerSample;
             }
         }
@@ -99,7 +99,7 @@ namespace ChartBox
         /// Render waterfall Gis to PictureBox
         /// </summary>
         /// <param name="pictureBox"></param>
-        public void RenderGis(ref PictureBox pictureBox,int slide)
+        public void RenderGis(ref PictureBox pictureBox, int slide, bool reverse = false)
         {
 
             Graphics offScreenDC = Graphics.FromImage(fftcanvas);
@@ -113,7 +113,7 @@ namespace ChartBox
             int stride = data.Stride;
             int offset = stride - width * 4;
             double distance = (double)wave.Length / (double)width;
-            int markheight = 10;
+            int markheight = 30;
             try
             {
                 unsafe
@@ -163,7 +163,27 @@ namespace ChartBox
            
             // unlock image
             fftcanvas.UnlockBits(data);
+            Pen p1 = new Pen(Color.White, 2);
+            //Pen p2 = new Pen(Color.White, 1);
+            SolidBrush sb = new SolidBrush(Color.White);
+            int scale = width / 10;
             
+            for (int j = 1; j <= 9; j++)
+            {
+                if (reverse)
+                {
+                    offScreenDC.DrawLine(p1, width - scale * j, 0, width - scale * j, 26);//刻度线
+                    string tempy = (Xmax / 10 * j).ToString("0"); ;
+                    offScreenDC.DrawString(tempy, new Font("Arial Regular", 8), sb, width - scale * j + 4, 10);
+                }
+                else
+                {
+                    offScreenDC.DrawLine(p1, scale * j, 0, scale * j, 26);//刻度线
+                    string tempy = (Xmax / 10 * j).ToString("0"); ;
+                    offScreenDC.DrawString(tempy, new Font("Arial Regular", 8), sb, scale * j + 4, 10);
+                }
+
+            }
             // Clean up
             offScreenDC.Dispose();
             pictureBox.Image = fftcanvas;

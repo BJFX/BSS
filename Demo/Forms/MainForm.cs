@@ -165,7 +165,7 @@ namespace Survey.Forms
                 netcore.Start();
             }
             OpenBssView.PerformClick();
-            OpenBssView.PerformClick();
+            //OpenBssView.PerformClick();
             if (BssView1!=null)
             {
                 BssView1.option.Fq = Frequence.High;
@@ -1172,7 +1172,9 @@ namespace Survey.Forms
         }
         private void SpeedBtn_Click(object sender, EventArgs e)
         {
+            PlaybackTime.Enabled = false;
             PlaybackTime.Interval /= 2;
+            PlaybackTime.Enabled = true;
             SlowBtn.Enabled = true;
             if (PlaybackTime.Interval == 1)
             {
@@ -1183,9 +1185,11 @@ namespace Survey.Forms
 
         private void SlowBtn_Click(object sender, EventArgs e)
         {
+            PlaybackTime.Enabled = false;
             PlaybackTime.Interval *= 2;
+            PlaybackTime.Enabled = true;
             SpeedBtn.Enabled = true;
-            if (PlaybackTime.Interval == 64)
+            if (PlaybackTime.Interval == 128)
             {
                 SlowBtn.Enabled = false;
             }
@@ -1362,25 +1366,29 @@ namespace Survey.Forms
             {
                 //BssView1.DisplayChart(ChannelNumber, buf.Length, buf);
                 title = ((Configuration.DiskMode==true)?"回放,":"实时,") + "高频, " + highrange + "米";
-                BssView1.SetTitle(title);
+                if (highrange!="")
+                    BssView1.SetTitle(title, int.Parse(highrange));
             }
             if (BssView1 != null && BssView1.option.Fq == Frequence.Low)
             {
                 //BssView1.DisplayChart(ChannelNumber, buf.Length, buf);
                 title = ((Configuration.DiskMode == true) ? "回放," : "实时,") + "低频, " + Lowrange + "米";
-                BssView1.SetTitle(title);
+                if (Lowrange != "")
+                    BssView1.SetTitle(title, int.Parse(Lowrange));
             }
             if (BssView2 != null && BssView2.option.Fq == Frequence.High)
             {
                 //BssView2.DisplayChart(ChannelNumber, buf.Length, buf);
                 title = ((Configuration.DiskMode == true) ? "回放," : "实时,") + "高频, " + highrange + "米";
-                BssView2.SetTitle(title);
+                if (highrange != "")
+                    BssView2.SetTitle(title, int.Parse(highrange));
             }
             if (BssView2 != null && BssView2.option.Fq == Frequence.Low)
             {
                 //BssView2.DisplayChart(ChannelNumber, buf.Length, buf);
                 title = ((Configuration.DiskMode == true) ? "回放," : "实时,") + "低频, " + Lowrange + "米";
-                BssView2.SetTitle(title);
+                if (Lowrange != "")
+                    BssView2.SetTitle(title, int.Parse(Lowrange));
             }
 
         }

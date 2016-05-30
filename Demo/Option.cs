@@ -43,7 +43,7 @@ namespace Survey
             AutoTVG = true;
             FreezeTVG =true;
             TVG = 1;
-            Gain = 5;
+            Gain = 9;
             Gamma = 1;
             PortA =50;
             PortB = 50;

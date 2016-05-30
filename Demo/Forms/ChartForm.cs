@@ -10,7 +10,7 @@ namespace Survey.Forms
         private bool BinitailChart1 = false;
         private bool BinitailChart2 = false;
         private delegate void DisplayDelegate(int ChannelNumber, int DataNeedToRead, byte[] buf);
-        private delegate void DisplayTitleDelegate(string title);
+        private delegate void DisplayTitleDelegate(string title, int width);
         public ChartOption option = new ChartOption();
         public ChartForm(MainForm mf)
         {
@@ -160,7 +160,7 @@ namespace Survey.Forms
                         BinitailChart1 = true;
                     }
 
-                    chartLeft.Display(buf, false);
+                    chartLeft.Display(buf, true);
                     if (MainForm.mf.bShowRaw)
                         waveLeft.Display(buf, false);
 
@@ -210,16 +210,18 @@ namespace Survey.Forms
         }
 
 
-        public void SetTitle(string title)
+        public void SetTitle(string title, int width)
         {
             if (SideTable.InvokeRequired)
             {
                 DisplayTitleDelegate d = new DisplayTitleDelegate(SetTitle);
-                this.Invoke(d, new object[] { title });
+                this.Invoke(d, new object[] { title ,width });
             }
             else
             {
                 this.Text = title;
+                chartLeft.DisplayWidthMax = width;
+                chartRight.DisplayWidthMax = width;
             }
 
         }
