@@ -106,7 +106,7 @@ namespace Survey.Forms
 
             if (NetEngine.bConnect)
             {
-                MainForm.mf.CmdWindow.Show();
+                //MainForm.mf.CmdWindow.Show();
                 BSSParameter para = null;
                 if (CurrentType)
                 {

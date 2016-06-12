@@ -87,8 +87,12 @@
             // 
             this.ConfirmBtn.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.ConfirmBtn.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+<<<<<<< HEAD
             this.ConfirmBtn.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.ConfirmBtn.Location = new System.Drawing.Point(598, 273);
+=======
+            this.ConfirmBtn.Location = new System.Drawing.Point(541, 241);
+>>>>>>> 增加一个右键菜单
             this.ConfirmBtn.Name = "ConfirmBtn";
             this.ConfirmBtn.Size = new System.Drawing.Size(75, 25);
             this.ConfirmBtn.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -448,7 +452,11 @@
             this.groupBox2.Controls.Add(this.labelX15);
             this.groupBox2.Location = new System.Drawing.Point(405, 16);
             this.groupBox2.Name = "groupBox2";
+<<<<<<< HEAD
             this.groupBox2.Size = new System.Drawing.Size(279, 209);
+=======
+            this.groupBox2.Size = new System.Drawing.Size(226, 193);
+>>>>>>> 增加一个右键菜单
             this.groupBox2.TabIndex = 6;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "命令标识";
@@ -651,7 +659,11 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+<<<<<<< HEAD
             this.ClientSize = new System.Drawing.Size(696, 311);
+=======
+            this.ClientSize = new System.Drawing.Size(646, 287);
+>>>>>>> 增加一个右键菜单
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.labelX6);

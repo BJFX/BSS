@@ -226,9 +226,21 @@ namespace Survey.Forms
 
         }
 
+        private void 图像参数ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PopUpOption(0);
+        }
 
+        private void 控制参数ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if(option.Fq == Frequence.High)
+                MainForm.mf.para.Show(true);
+            else
+            {
+                MainForm.mf.para.Show(false);
+            }
+        }
 
-        
        
         #region menu
         
