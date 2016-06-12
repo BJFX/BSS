@@ -1407,6 +1407,8 @@ namespace Survey.Forms
             testToolStripMenuItem.Enabled = state;
             低频参数设置ToolStripMenuItem.Enabled = state;
             高频参数设置ToolStripMenuItem.Enabled = state;
+            StartWorkToolStripMenuItem.Enabled = state;
+            StopWorkToolStripMenuItem.Enabled = state;
         }
     }
 }
