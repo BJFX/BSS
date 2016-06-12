@@ -58,6 +58,7 @@ namespace Survey.Forms
             {
                 gpscore.Start();
             }
+            SetConnnectState(false);
         }
         private void AvailabilityChangedCallback(object sender, EventArgs e)
         {
@@ -1031,10 +1032,12 @@ namespace Survey.Forms
         {
             if (!netcore.Initialed)
                 LinkStatusLabel.Text = "";
+            SetConnnectState(false);
             if (netcore.CmdClient!=null&&netcore.DataClient!=null)
             {
                 NetEngine.bConnect = true;
                 LinkStatusLabel.Text = "终端节点已连接";
+                SetConnnectState(true);
             }
             else if (netcore.CmdClient != null)
             {
@@ -1391,6 +1394,19 @@ namespace Survey.Forms
                     BssView2.SetTitle(title, int.Parse(Lowrange));
             }
 
+        }
+        
+        /// <summary>
+        /// 设置程序的连接状态，false未连接，ture连接
+        /// </summary>
+        /// <param name="state"></param>
+        public void SetConnnectState(bool state = false)
+        {
+            toolStripStartBtn.Enabled = state;
+            toolStripStopBtn.Enabled = state;
+            testToolStripMenuItem.Enabled = state;
+            低频参数设置ToolStripMenuItem.Enabled = state;
+            高频参数设置ToolStripMenuItem.Enabled = state;
         }
     }
 }
