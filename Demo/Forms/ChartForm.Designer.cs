@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.openXtfFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.controlContainerItem1 = new DevComponents.DotNetBar.ControlContainerItem();
             this.SideTable = new System.Windows.Forms.TableLayoutPanel();
@@ -37,9 +38,13 @@
             this.waveLeft = new ChartBox.WaveBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.chartRight = new ChartBox.ChartG();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.图像参数ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.控制参数ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SideTable.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
+            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // openXtfFileDialog
@@ -160,11 +165,34 @@
             this.chartRight.TabIndex = 2;
             this.chartRight.MouseClick += new System.Windows.Forms.MouseEventHandler(this.chartRight_MouseClick);
             // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.图像参数ToolStripMenuItem,
+            this.控制参数ToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(153, 70);
+            // 
+            // 图像参数ToolStripMenuItem
+            // 
+            this.图像参数ToolStripMenuItem.Name = "图像参数ToolStripMenuItem";
+            this.图像参数ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.图像参数ToolStripMenuItem.Text = "图像参数";
+            this.图像参数ToolStripMenuItem.Click += new System.EventHandler(this.图像参数ToolStripMenuItem_Click);
+            // 
+            // 控制参数ToolStripMenuItem
+            // 
+            this.控制参数ToolStripMenuItem.Name = "控制参数ToolStripMenuItem";
+            this.控制参数ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.控制参数ToolStripMenuItem.Text = "控制参数";
+            this.控制参数ToolStripMenuItem.Click += new System.EventHandler(this.控制参数ToolStripMenuItem_Click);
+            // 
             // ChartForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1391, 616);
+            this.ContextMenuStrip = this.contextMenuStrip1;
             this.Controls.Add(this.SideTable);
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -183,6 +211,7 @@
             this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -201,6 +230,9 @@
         private ChartBox.WaveBox waveRight;
         private System.Windows.Forms.Panel panel2;
         private ChartBox.ChartG chartRight;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem 图像参数ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 控制参数ToolStripMenuItem;
     }
 }
 

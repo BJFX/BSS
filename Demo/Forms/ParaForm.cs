@@ -106,7 +106,7 @@ namespace Survey.Forms
 
             if (NetEngine.bConnect)
             {
-                MainForm.mf.CmdWindow.Show();
+                //MainForm.mf.CmdWindow.Show();
                 BSSParameter para = null;
                 if (CurrentType)
                 {
@@ -239,6 +239,7 @@ namespace Survey.Forms
                     if (MainForm.mf.netcore.SendCommand(Command.SetupHighBSS(para)) == false)
                     {
                         MainForm.mf.CmdWindow.DisplayAns("下发命令不成功：" + MainForm.mf.netcore.Status);
+                        MessageBox.Show("设置高频声纳工作参数失败！");
                     }
                     else
                     {
@@ -253,12 +254,14 @@ namespace Survey.Forms
                     if (MainForm.mf.netcore.SendCommand(Command.SetupLowBSS(para)) == false)
                     {
                         MainForm.mf.CmdWindow.DisplayAns("下发命令不成功：" + MainForm.mf.netcore.Status);
+                        MessageBox.Show("设置低频声纳工作参数失败！");
                     }
                     else
                     {
                         MessageBox.Show("设置低频声纳工作参数成功！");
                     }
                 }
+                this.Hide();
             }
             else
             {

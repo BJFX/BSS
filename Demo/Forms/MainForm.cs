@@ -1267,7 +1267,7 @@ namespace Survey.Forms
         {
             if (NetEngine.bConnect)
             {
-                CmdWindow.Show();
+                //CmdWindow.Show();
                 CmdWindow.DisplayCommand("下发命令：停止工作");
                 if (netcore.SendCommand(Command.StopCMD()) == false)
                 {
@@ -1285,7 +1285,7 @@ namespace Survey.Forms
         {
             if (NetEngine.bConnect)
             {
-                CmdWindow.Show();
+                //CmdWindow.Show();
                 CmdWindow.DisplayCommand("下发命令：开始工作");
                 if (netcore.SendCommand(Command.StartCMD()) == false)
                 {
@@ -1407,6 +1407,8 @@ namespace Survey.Forms
             testToolStripMenuItem.Enabled = state;
             低频参数设置ToolStripMenuItem.Enabled = state;
             高频参数设置ToolStripMenuItem.Enabled = state;
+            StartWorkToolStripMenuItem.Enabled = state;
+            StopWorkToolStripMenuItem.Enabled = state;
         }
     }
 }
