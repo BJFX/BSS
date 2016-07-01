@@ -171,19 +171,19 @@
             this.图像参数ToolStripMenuItem,
             this.控制参数ToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(153, 70);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(123, 48);
             // 
             // 图像参数ToolStripMenuItem
             // 
             this.图像参数ToolStripMenuItem.Name = "图像参数ToolStripMenuItem";
-            this.图像参数ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.图像参数ToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
             this.图像参数ToolStripMenuItem.Text = "图像参数";
             this.图像参数ToolStripMenuItem.Click += new System.EventHandler(this.图像参数ToolStripMenuItem_Click);
             // 
             // 控制参数ToolStripMenuItem
             // 
             this.控制参数ToolStripMenuItem.Name = "控制参数ToolStripMenuItem";
-            this.控制参数ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.控制参数ToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
             this.控制参数ToolStripMenuItem.Text = "控制参数";
             this.控制参数ToolStripMenuItem.Click += new System.EventHandler(this.控制参数ToolStripMenuItem_Click);
             // 
@@ -192,7 +192,6 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1391, 616);
-            this.ContextMenuStrip = this.contextMenuStrip1;
             this.Controls.Add(this.SideTable);
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
